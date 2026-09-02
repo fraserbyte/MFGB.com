@@ -1,0 +1,19 @@
+# Keep the Docker build context (and final image) lean.
+
+.git
+.github
+.history
+node_modules
+
+docker-compose.yml
+.dockerignore
+Makefile
+README.md
+*.md
+
+# Local editor / OS noise
+.DS_Store
+Thumbs.db
+*.swp
+.idea
+.vscode

@@ -1,0 +1,285 @@
+<!DOCTYPE html>
+<html lang="en-GB" data-theme="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="theme-color" content="#334155">
+  <meta name="color-scheme" content="dark light">
+
+  <title>History | Messerschmitt Foundation of Great Britain</title>
+  <meta name="title" content="History of the Messerschmitt Microcar">
+  <meta name="description" content="A timeline of the Messerschmitt Kabinenroller: the 1948 Fend Flitzer, the 1952 Messerschmitt partnership, the KR175, the KR200, and the 1958 ME 200.">
+  <meta name="robots" content="index, follow">
+
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="Messerschmitt Foundation of Great Britain">
+  <meta property="og:title" content="Milestones of the Kabinenroller">
+  <meta property="og:description" content="From the Fend Flitzer in Rosenheim to the KR200 production peak — trace the engineering legacy of Fritz Fend.">
+  <meta property="og:url" content="https://your-username.github.io/messerschmitt-foundation-gb/history.html">
+
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='6' fill='%23334155'/%3E%3Ctext x='16' y='22' font-family='Georgia,serif' font-size='16' fill='%238C6A35' text-anchor='middle'%3EM%3C/text%3E%3C/svg%3E">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Montserrat:wght@600;700;800&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="styles.css">
+</head>
+
+<body data-page="history">
+  <!-- KR200 dashboard controls -->
+  <div class="micro-dashboard" id="micro-dashboard" role="group" aria-label="KR200 dashboard controls">
+    <button class="dash-choke" id="choke-control" type="button" aria-pressed="false" aria-label="Pull the choke to prime the engine">
+      <span class="choke-knob" aria-hidden="true"></span>
+    </button>
+    <button class="dash-switch" id="turn-switch" type="button" role="switch" aria-checked="false" aria-label="Turn the ignition switch">
+      <span class="switch-key" aria-hidden="true"></span>
+    </button>
+    <button class="dash-red" id="theme-toggle" type="button" role="switch" aria-checked="false" aria-label="Toggle light and dark mode">
+      <span class="red-dot" aria-hidden="true"></span>
+    </button>
+  </div>
+
+  <a class="skip-link" href="#main-content">Skip to main content</a>
+
+  <!-- ============ SITE HEADER ============ -->
+  <header class="site-header" id="site-header">
+    <div class="container header-inner">
+      <a class="brand" href="index.html" aria-label="Messerschmitt Foundation of Great Britain — home">
+        <img class="brand-logo" src="assets/images/mfgb-logo.png" alt="" width="676" height="369">
+        <span class="brand-text">MESSERSCHMITT<br>FOUNDATION OF GREAT BRITAIN</span>
+      </a>
+
+      <button
+        class="nav-toggle"
+        id="nav-toggle"
+        type="button"
+        aria-expanded="false"
+        aria-controls="main-nav"
+        aria-label="Toggle navigation">
+        <span class="nav-toggle-bar" aria-hidden="true"></span>
+        <span class="nav-toggle-bar" aria-hidden="true"></span>
+        <span class="nav-toggle-bar" aria-hidden="true"></span>
+      </button>
+
+      <nav class="main-nav" id="main-nav" aria-label="Primary navigation" aria-hidden="true">
+        <ul class="nav-list">
+          <li><a class="nav-link" href="index.html">Home</a></li>
+          <li><a class="nav-link" href="about.html">About</a></li>
+          <li><a class="nav-link" href="history.html">History</a></li>
+          <li><a class="nav-link" href="imports.html">UK Imports</a></li>
+          <li><a class="nav-link" href="exhibits.html">Our Exhibits</a></li>
+          <li><a class="nav-link" href="contact.html">Contact</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <main id="main-content" class="history-page-shell">
+    <div class="history-spotlight" aria-hidden="true">
+      <div class="history-spotlight-image-wrap">
+        <img id="history-spotlight-image" src="1938%20image.jpg" alt="" class="is-front">
+        <img id="history-spotlight-image-next" src="1938%20image.jpg" alt="" aria-hidden="true">
+      </div>
+      <div class="history-spotlight-gradient"></div>
+    </div>
+
+    <!-- ============ PAGE HERO ============ -->
+    <section class="page-hero">
+      <div class="container">
+        <p class="eyebrow">Historical Timeline</p>
+        <h1 class="page-title">Milestones of the Kabinenroller</h1>
+        <p class="page-subtitle">
+          From an invalid carriage in Rosenheim to a two-stroke icon on the roads of
+          Britain — trace the journey of Fritz Fend and the machines that bear the
+          Messerschmitt name.
+        </p>
+      </div>
+    </section>
+
+    <!-- ============ HISTORY TIMELINE ============ -->
+    <section id="history" class="section section-alt" aria-labelledby="history-title">
+      <div class="container">
+        <h2 class="visually-hidden" id="history-title">Messerschmitt microcar historical timeline</h2>
+
+        <ol class="timeline" aria-label="Messerschmitt microcar historical timeline">
+          <li class="timeline-item is-active" data-year="1948" data-image="1938%20image.jpg">
+            <div class="timeline-marker" aria-hidden="true"></div>
+            <div class="timeline-body">
+              <div class="timeline-meta">
+                <time class="timeline-year" datetime="1948">1948</time>
+              </div>
+              <h3 class="timeline-title">Fritz Fend creates the Fend Flitzer</h3>
+              <p class="timeline-text">
+                In Rosenheim, technical designer Fritz Fend develops the Fend Flitzer,
+                a single-seat invalid carriage with an aircraft-style control column —
+                the direct ancestor of the Messerschmitt Kabinenroller.
+              </p>
+            </div>
+          </li>
+
+          <li class="timeline-item" data-year="1952" data-image="1955.jpg">
+            <div class="timeline-marker" aria-hidden="true"></div>
+            <div class="timeline-body">
+              <div class="timeline-meta">
+                <time class="timeline-year" datetime="1952">1952</time>
+              </div>
+              <h3 class="timeline-title">Partnership with Willy Messerschmitt</h3>
+              <p class="timeline-text">
+                Fend establishes a partnership with Professor Willy Messerschmitt in
+                Regensburg. With the aircraft factory turned to peacetime production,
+                the Fend designs are developed under the Messerschmitt name.
+              </p>
+            </div>
+          </li>
+
+          <li class="timeline-item" data-year="1953" data-image="Messerschmitt_KR175.jpg">
+            <div class="timeline-marker" aria-hidden="true"></div>
+            <div class="timeline-body">
+              <div class="timeline-meta">
+                <time class="timeline-year" datetime="1953">1953</time>
+              </div>
+              <h3 class="timeline-title">Launch of the KR175 Kabinenroller</h3>
+              <p class="timeline-text">
+                The KR175 enters production — a compact cabin scooter with tandem
+                seating, a 175cc Fichtel &amp; Sachs two-stroke engine, and a
+                side-hinged acrylic canopy inspired by the cockpit of a fighter.
+              </p>
+            </div>
+          </li>
+
+          <li class="timeline-item" data-year="1955" data-image="1954%20kr200.jpg">
+            <div class="timeline-marker" aria-hidden="true"></div>
+            <div class="timeline-body">
+              <div class="timeline-meta">
+                <time class="timeline-year" datetime="1955">1955</time>
+              </div>
+              <h3 class="timeline-title">Debut of the updated KR200</h3>
+              <p class="timeline-text">
+                The KR200 arrives with an enlarged 191cc Fichtel &amp; Sachs engine and
+                an improved, independent front suspension — delivering higher output
+                and a markedly better ride over its predecessor.
+              </p>
+            </div>
+          </li>
+
+          <li class="timeline-item" data-year="1958" data-image="123123123dfa%20dxgv(1).jpeg">
+            <div class="timeline-marker" aria-hidden="true"></div>
+            <div class="timeline-body">
+              <div class="timeline-meta">
+                <time class="timeline-year" datetime="1958">1958</time>
+              </div>
+              <h3 class="timeline-title">Production peak &amp; the ME 200</h3>
+              <p class="timeline-text">
+                Production peaks as demand for affordable mobility soars. From this era
+                comes our featured exhibit, <strong>ME 200</strong> — a 1958 KR200
+                in original specification, its patina preserved by the Foundation.
+              </p>
+            </div>
+          </li>
+
+          <li class="timeline-item is-today" data-year="Today" data-image="assets/images/today-placeholder.svg">
+            <div class="timeline-marker" aria-hidden="true"></div>
+            <div class="timeline-body">
+              <div class="timeline-meta">
+                <time class="timeline-year" datetime="2026">Today</time>
+              </div>
+              <h3 class="timeline-title">The Foundation today</h3>
+              <p class="timeline-text">
+                The Messerschmitt Foundation of Great Britain carries on Fritz Fend's
+                legacy across the country — preserving surviving Kabinenroller,
+                verifying provenance and chassis numbers against our archive, and
+                helping owners keep their two-strokes on the road through restoration
+                guidance, events, and the community registry.
+              </p>
+            </div>
+          </li>
+        </ol>
+      </div>
+    </section>
+
+    <!-- ============ ARCHIVE CATALOG ============ -->
+    <section class="section" aria-labelledby="archive-title">
+      <div class="container">
+        <div class="section-heading">
+          <p class="eyebrow">Archive</p>
+          <h2 class="section-title" id="archive-title">Historical document catalogue</h2>
+          <p class="section-subtitle">
+            A grouped index of the research papers, reference documents, and archive images preserved in the Foundation's historical folder.
+          </p>
+        </div>
+
+        <div class="archive-layout">
+          <div class="archive-group card">
+            <h3 class="archive-group-title">Foundation and model history</h3>
+            <ul class="archive-list">
+              <li><a href="histroy%20of%20the%20mfgb%20file/CompleteHistoryRSM_FMR181128.pdf" target="_blank" rel="noopener noreferrer">Complete History RSM (FMR 181128)</a><span>PDF · Full historical overview</span></li>
+              <li><a href="histroy%20of%20the%20mfgb%20file/FromKr175toKR200RegensburgHistory190719.pdf" target="_blank" rel="noopener noreferrer">From KR175 to KR200 — Regensburg history</a><span>PDF · Transition study</span></li>
+              <li><a href="histroy%20of%20the%20mfgb%20file/KR201History.pdf" target="_blank" rel="noopener noreferrer">KR201 History</a><span>PDF · Model record</span></li>
+              <li><a href="histroy%20of%20the%20mfgb%20file/KR%20201%20HistoryNumber200310.pdf" target="_blank" rel="noopener noreferrer">KR 201 History Number 200310</a><span>PDF · Production history</span></li>
+              <li><a href="histroy%20of%20the%20mfgb%20file/end%20of%20Messerschmitt.pdf" target="_blank" rel="noopener noreferrer">End of Messerschmitt</a><span>PDF · Closure and legacy</span></li>
+            </ul>
+          </div>
+
+          <div class="archive-group card">
+            <h3 class="archive-group-title">Technical and manufacturing records</h3>
+            <ul class="archive-list">
+              <li><a href="histroy%20of%20the%20mfgb%20file/Copy%20of%20SachsHistory181201.pdf" target="_blank" rel="noopener noreferrer">Sachs History (copy)</a><span>PDF · Engine chronology</span></li>
+              <li><a href="histroy%20of%20the%20mfgb%20file/WagonData190529.pdf" target="_blank" rel="noopener noreferrer">Wagon data record</a><span>PDF · Vehicle specification sheet</span></li>
+            </ul>
+          </div>
+
+          <div class="archive-group card">
+            <h3 class="archive-group-title">Reference photographs and archive images</h3>
+            <ul class="archive-list">
+              <li><a href="histroy%20of%20the%20mfgb%20file/Document190425.jpg" target="_blank" rel="noopener noreferrer">Document 190425</a><span>JPG · Archive image</span></li>
+              <li><a href="histroy%20of%20the%20mfgb%20file/E677-(ZF-10399-05356-1-002).jpg" target="_blank" rel="noopener noreferrer">E677 reference photograph</a><span>JPG · Archive record</span></li>
+              <li><a href="histroy%20of%20the%20mfgb%20file/kr%20175%20panflet.jpeg" target="_blank" rel="noopener noreferrer">KR 175 sales pamphlet</a><span>JPG · 1955 Beulah Hill price list</span></li>
+              <li><a href="histroy%20of%20the%20mfgb%20file/Tg500Brochure.pdf" target="_blank" rel="noopener noreferrer">Tg500 brochure</a><span>PDF · Sales brochure</span></li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- ============ FOOTER ============ -->
+  <footer class="site-footer">
+    <div class="container footer-grid">
+      <div class="footer-brand">
+        <img class="footer-logo" src="assets/images/mfgb-logo.png" alt="" width="676" height="369">
+        <p class="footer-title">MESSERSCHMITT FOUNDATION OF GREAT BRITAIN</p>
+        <p class="footer-text">Dedicated to preserving automotive engineering history.</p>
+      </div>
+
+      <nav class="footer-nav" aria-label="Footer navigation">
+        <p class="footer-heading">Quick Links</p>
+        <ul>
+          <li><a href="index.html">Home</a></li>
+          <li><a href="about.html">About</a></li>
+          <li><a href="history.html">History</a></li>
+          <li><a href="imports.html">UK Imports</a></li>
+          <li><a href="exhibits.html">Our Exhibits</a></li>
+          <li><a href="contact.html">Contact</a></li>
+        </ul>
+      </nav>
+
+      <div class="footer-legal">
+        <p class="footer-heading">Information</p>
+        <ul>
+          <li><a href="contact.html">Accessibility Statement</a></li>
+          <li><a href="contact.html#visitor-policy">Visitor Policy</a></li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="container footer-bottom">
+      <p>© 2026 Messerschmitt Foundation of Great Britain. Dedicated to preserving automotive engineering history.</p>
+      <button class="back-to-top" id="back-to-top" type="button" aria-label="Back to top" hidden>&uarr;</button>
+    </div>
+  </footer>
+
+  <script src="app.js"></script>
+</body>
+</html>

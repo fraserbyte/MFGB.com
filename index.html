@@ -1,0 +1,275 @@
+<!DOCTYPE html>
+<html lang="en-GB" data-theme="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="theme-color" content="#334155">
+  <meta name="color-scheme" content="dark light">
+
+  <!-- Primary Meta Tags -->
+  <title>Messerschmitt Foundation of Great Britain | Preserving Messerschmitt Microcars &amp; the Legacy of Fritz Fend</title>
+  <meta name="title" content="Messerschmitt Foundation of Great Britain">
+  <meta name="description" content="The Messerschmitt Foundation of Great Britain is dedicated to the historical preservation, technical archivism, restoration mentorship, and public education of Messerschmitt microcars, Kabinenroller, and the engineering legacy of Fritz Fend.">
+  <meta name="keywords" content="Messerschmitt, KR175, KR200, FMR Tg500, Kabinenroller, Fritz Fend, microcar, bubble car, classic car, restoration, foundation, Great Britain">
+  <meta name="author" content="Messerschmitt Foundation of Great Britain">
+  <meta name="robots" content="index, follow">
+  <meta name="language" content="English (Great Britain)">
+
+  <!-- Open Graph / Social -->
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="Messerschmitt Foundation of Great Britain">
+  <meta property="og:title" content="Messerschmitt Foundation of Great Britain">
+  <meta property="og:description" content="Dedicated to the history and preservation of Messerschmitt cars and the work of Fritz Fend. Home of the ME 200 — a 1958 KR200 featured exhibit.">
+  <meta property="og:url" content="https://your-username.github.io/messerschmitt-foundation-gb/">
+  <meta property="og:locale" content="en_GB">
+  <meta property="og:image" content="https://your-username.github.io/messerschmitt-foundation-gb/assets/images/og-cover.jpg">
+
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Messerschmitt Foundation of Great Britain">
+  <meta name="twitter:description" content="Dedicated to the history and preservation of Messerschmitt cars and the work of Fritz Fend.">
+
+  <!-- Favicon (inline SVG data URI — no external asset required) -->
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='6' fill='%23334155'/%3E%3Ctext x='16' y='22' font-family='Georgia,serif' font-size='16' fill='%238C6A35' text-anchor='middle'%3EM%3C/text%3E%3C/svg%3E">
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Montserrat:wght@600;700;800&display=swap" rel="stylesheet">
+
+  <!-- Styles -->
+  <link rel="stylesheet" href="styles.css">
+
+  <!-- Structured Data: Organization & WebSite Schema -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Organization",
+    "name": "Messerschmitt Foundation of Great Britain",
+    "alternateName": "MFGB",
+    "url": "https://your-username.github.io/messerschmitt-foundation-gb/",
+    "description": "Historical preservation, technical archivism, restoration mentorship, and public education concerning Messerschmitt microcars, Kabinenroller, and the engineering legacy of technical designer Fritz Fend.",
+    "areaServed": "GB",
+    "knowsAbout": [
+      "Messerschmitt KR175",
+      "Messerschmitt KR200",
+      "FMR Tg500",
+      "Fritz Fend",
+      "Kabinenroller"
+    ],
+    "subjectOf": {
+      "@type": "Vehicle",
+      "name": "ME 200",
+      "description": "An original-specification 1958 Messerschmitt KR200 microcar with honest patina, featured exhibit of the Foundation.",
+      "model": "KR200",
+      "brand": {
+        "@type": "Brand",
+        "name": "Messerschmitt"
+      },
+      "productionDate": "1958",
+      "vehicleEngine": {
+        "@type": "EngineSpecification",
+        "name": "Fichtel & Sachs 191cc two-stroke",
+        "engineDisplacement": "191cc",
+        "engineType": "Single-cylinder, two-stroke, air-cooled"
+      }
+    }
+  }
+  </script>
+</head>
+
+<body data-page="home">
+  <!-- KR200 dashboard controls -->
+  <div class="micro-dashboard" id="micro-dashboard" role="group" aria-label="KR200 dashboard controls">
+    <button class="dash-choke" id="choke-control" type="button" aria-pressed="false" aria-label="Pull the choke to prime the engine">
+      <span class="choke-knob" aria-hidden="true"></span>
+    </button>
+    <button class="dash-switch" id="turn-switch" type="button" role="switch" aria-checked="false" aria-label="Turn the ignition switch">
+      <span class="switch-key" aria-hidden="true"></span>
+    </button>
+    <button class="dash-red" id="theme-toggle" type="button" role="switch" aria-checked="false" aria-label="Toggle light and dark mode">
+      <span class="red-dot" aria-hidden="true"></span>
+    </button>
+  </div>
+
+  <a class="skip-link" href="#main-content">Skip to main content</a>
+
+  <!-- ============ SITE HEADER ============ -->
+  <header class="site-header" id="site-header">
+    <div class="container header-inner">
+      <a class="brand" href="index.html" aria-label="Messerschmitt Foundation of Great Britain — home">
+        <img class="brand-logo" src="assets/images/mfgb-logo.png" alt="" width="676" height="369">
+        <span class="brand-text">MESSERSCHMITT<br>FOUNDATION OF GREAT BRITAIN</span>
+      </a>
+
+      <button
+        class="nav-toggle"
+        id="nav-toggle"
+        type="button"
+        aria-expanded="false"
+        aria-controls="main-nav"
+        aria-label="Toggle navigation">
+        <span class="nav-toggle-bar" aria-hidden="true"></span>
+        <span class="nav-toggle-bar" aria-hidden="true"></span>
+        <span class="nav-toggle-bar" aria-hidden="true"></span>
+      </button>
+
+      <nav class="main-nav" id="main-nav" aria-label="Primary navigation" aria-hidden="true">
+        <ul class="nav-list">
+          <li><a class="nav-link" href="index.html">Home</a></li>
+          <li><a class="nav-link" href="about.html">About</a></li>
+          <li><a class="nav-link" href="history.html">History</a></li>
+          <li><a class="nav-link" href="imports.html">UK Imports</a></li>
+          <li><a class="nav-link" href="exhibits.html">Our Exhibits</a></li>
+          <li><a class="nav-link" href="contact.html">Contact</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <main id="main-content">
+
+    <!-- ============ HERO SECTION ============ -->
+    <section id="home" class="hero-section section" data-nav-target="home">
+      <div class="container hero-grid">
+        <div class="hero-content">
+          <p class="eyebrow">Est. Great Britain · Heritage Preservation &amp; Technical Archivism</p>
+          <h1 class="hero-title">Dedicated to the history and preservation of Messerschmitt cars and the work of Fritz Fend</h1>
+          <p class="hero-lede">
+            From the KR175 Kabinenroller of 1953 to the high-performance FMR Tg500,
+            the Messerschmitt Foundation of Great Britain safeguards the story of
+            post-war microcar engineering and the man who designed it.
+          </p>
+          <div class="callout-box" role="note">
+            <strong>Exhibit Spotlight:</strong> ME 200 — a 1958 KR200 — is now one of
+            our featured exhibits.
+          </div>
+          <div class="hero-actions">
+            <a class="btn btn-primary" href="exhibits.html">View Our Exhibits</a>
+            <a class="btn btn-secondary" href="history.html">Learn About Fritz Fend</a>
+          </div>
+        </div>
+
+        <div class="media-placeholder hero-placeholder has-photo" role="img" aria-label="The ME 200, a 1958 Messerschmitt KR200, returned to Fend House">
+          <img class="media-photo" src="ME200%20returned%20to%20Fend%20House.jpg" alt="The ME 200, a 1958 Messerschmitt KR200, returned to Fend House">
+          <span class="placeholder-badge">ME 200 · Featured</span>
+          <span class="placeholder-caption">Returned to Fend House</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ EXPLORE SECTION (ME 200 in the wild background) ============ -->
+    <section id="explore" class="section section-alt section-explore-bg" aria-labelledby="explore-title">
+      <div class="container">
+        <div class="section-heading">
+          <p class="eyebrow">Explore the Foundation</p>
+          <h2 class="section-title" id="explore-title">Journey through the collection</h2>
+          <p class="section-subtitle">
+            Every chapter of the Messerschmitt microcar story is one click away —
+            from the engineering legacy of Fritz Fend to our current exhibits.
+          </p>
+        </div>
+
+        <div class="explore-grid">
+          <a class="card explore-card" href="about.html">
+            <div class="card-icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M12 2l8 4v6c0 5-3.5 8.5-8 10-4.5-1.5-8-5-8-10V6z"></path>
+                <path d="M9 12l2 2 4-4"></path>
+              </svg>
+            </div>
+            <h3 class="card-title">About</h3>
+            <p class="card-text">Our mission, our work, and the three pillars of preservation.</p>
+          </a>
+
+          <a class="card explore-card" href="history.html">
+            <div class="card-icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+                <circle cx="12" cy="12" r="9"></circle>
+                <path d="M12 7v5l3 2"></path>
+              </svg>
+            </div>
+            <h3 class="card-title">History</h3>
+            <p class="card-text">From the 1948 Fend Flitzer to the KR200 production peak.</p>
+          </a>
+
+          <a class="card explore-card" href="imports.html">
+            <div class="card-icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M12 22V8"></path>
+                <path d="M5 12H2a10 10 0 0 0 20 0h-3"></path>
+                <circle cx="12" cy="5" r="3"></circle>
+              </svg>
+            </div>
+            <h3 class="card-title">UK Imports</h3>
+            <p class="card-text">3,186 KR200s traced from the invoice book — the chassis register.</p>
+          </a>
+
+          <a class="card explore-card" href="exhibits.html">
+            <div class="card-icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path>
+                <circle cx="12" cy="12" r="3"></circle>
+              </svg>
+            </div>
+            <h3 class="card-title">Our Exhibits</h3>
+            <p class="card-text">The ME 200, the KR175, and the FMR Tg500 — with full specs.</p>
+          </a>
+
+          <a class="card explore-card" href="contact.html">
+            <div class="card-icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M4 4h16v12H7l-3 3z"></path>
+              </svg>
+            </div>
+            <h3 class="card-title">Contact</h3>
+            <p class="card-text">Verifications, exhibit access, and technical assistance.</p>
+          </a>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- ============ FOOTER ============ -->
+  <footer class="site-footer">
+    <div class="container footer-grid">
+      <div class="footer-brand">
+        <img class="footer-logo" src="assets/images/mfgb-logo.png" alt="" width="676" height="369">
+        <p class="footer-title">MESSERSCHMITT FOUNDATION OF GREAT BRITAIN</p>
+        <p class="footer-text">
+          Dedicated to preserving automotive engineering history.
+        </p>
+      </div>
+
+      <nav class="footer-nav" aria-label="Footer navigation">
+        <p class="footer-heading">Quick Links</p>
+        <ul>
+          <li><a href="index.html">Home</a></li>
+          <li><a href="about.html">About</a></li>
+          <li><a href="history.html">History</a></li>
+          <li><a href="imports.html">UK Imports</a></li>
+          <li><a href="exhibits.html">Our Exhibits</a></li>
+          <li><a href="contact.html">Contact</a></li>
+        </ul>
+      </nav>
+
+      <div class="footer-legal">
+        <p class="footer-heading">Information</p>
+        <ul>
+          <li><a href="contact.html#accessibility">Accessibility Statement</a></li>
+          <li><a href="contact.html#visitor-policy">Visitor Policy</a></li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="container footer-bottom">
+      <p>© 2026 Messerschmitt Foundation of Great Britain. Dedicated to preserving automotive engineering history.</p>
+      <button class="back-to-top" id="back-to-top" type="button" aria-label="Back to top" hidden>&uarr;</button>
+    </div>
+  </footer>
+
+  <script src="app.js"></script>
+</body>
+</html>

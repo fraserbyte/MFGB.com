@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="en-GB" data-theme="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="theme-color" content="#334155">
+  <meta name="color-scheme" content="dark light">
+
+  <title>Our Exhibits | Messerschmitt Foundation of Great Britain</title>
+  <meta name="title" content="Our Exhibits — Messerschmitt Microcars">
+  <meta name="description" content="Explore the Foundation's collection: the ME 200 (1958 KR200) featured exhibit, the 1954 KR175, and the 1959 FMR Tg500 — with full technical specifications.">
+  <meta name="robots" content="index, follow">
+
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="Messerschmitt Foundation of Great Britain">
+  <meta property="og:title" content="Our Exhibits">
+  <meta property="og:description" content="ME 200 — a 1958 KR200 — is our featured exhibit, alongside the KR175 and the FMR Tg500 Tiger.">
+  <meta property="og:url" content="https://your-username.github.io/messerschmitt-foundation-gb/exhibits.html">
+
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='6' fill='%23334155'/%3E%3Ctext x='16' y='22' font-family='Georgia,serif' font-size='16' fill='%238C6A35' text-anchor='middle'%3EM%3C/text%3E%3C/svg%3E">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Montserrat:wght@600;700;800&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="styles.css">
+</head>
+
+<body data-page="exhibits">
+  <!-- KR200 dashboard controls -->
+  <div class="micro-dashboard" id="micro-dashboard" role="group" aria-label="KR200 dashboard controls">
+    <button class="dash-choke" id="choke-control" type="button" aria-pressed="false" aria-label="Pull the choke to prime the engine">
+      <span class="choke-knob" aria-hidden="true"></span>
+    </button>
+    <button class="dash-switch" id="turn-switch" type="button" role="switch" aria-checked="false" aria-label="Turn the ignition switch">
+      <span class="switch-key" aria-hidden="true"></span>
+    </button>
+    <button class="dash-red" id="theme-toggle" type="button" role="switch" aria-checked="false" aria-label="Toggle light and dark mode">
+      <span class="red-dot" aria-hidden="true"></span>
+    </button>
+  </div>
+
+  <a class="skip-link" href="#main-content">Skip to main content</a>
+
+  <!-- ============ SITE HEADER ============ -->
+  <header class="site-header" id="site-header">
+    <div class="container header-inner">
+      <a class="brand" href="index.html" aria-label="Messerschmitt Foundation of Great Britain — home">
+        <img class="brand-logo" src="assets/images/mfgb-logo.png" alt="" width="676" height="369">
+        <span class="brand-text">MESSERSCHMITT<br>FOUNDATION OF GREAT BRITAIN</span>
+      </a>
+
+      <button
+        class="nav-toggle"
+        id="nav-toggle"
+        type="button"
+        aria-expanded="false"
+        aria-controls="main-nav"
+        aria-label="Toggle navigation">
+        <span class="nav-toggle-bar" aria-hidden="true"></span>
+        <span class="nav-toggle-bar" aria-hidden="true"></span>
+        <span class="nav-toggle-bar" aria-hidden="true"></span>
+      </button>
+
+      <nav class="main-nav" id="main-nav" aria-label="Primary navigation" aria-hidden="true">
+        <ul class="nav-list">
+          <li><a class="nav-link" href="index.html">Home</a></li>
+          <li><a class="nav-link" href="about.html">About</a></li>
+          <li><a class="nav-link" href="history.html">History</a></li>
+          <li><a class="nav-link" href="imports.html">UK Imports</a></li>
+          <li><a class="nav-link" href="exhibits.html">Our Exhibits</a></li>
+          <li><a class="nav-link" href="contact.html">Contact</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <main id="main-content">
+
+    <!-- ============ PAGE HERO ============ -->
+    <section class="page-hero">
+      <div class="container">
+        <p class="eyebrow">The Collection</p>
+        <h1 class="page-title">Our Exhibits</h1>
+        <p class="page-subtitle">
+          A curated selection from the Foundation's collection, spanning the full
+          arc of the Messerschmitt microcar story.
+        </p>
+      </div>
+    </section>
+
+    <!-- ============ EXHIBITS GRID ============ -->
+    <section id="exhibits" class="section section-alt" aria-labelledby="exhibits-title">
+      <div class="container">
+        <h2 class="visually-hidden" id="exhibits-title">Foundation exhibit collection</h2>
+
+        <div class="exhibits-grid">
+          <!-- Exhibit Card 1: ME 200 (Featured) -->
+          <article class="card exhibit-card exhibit-featured">
+            <div class="media-placeholder exhibit-placeholder has-photo" role="img" aria-label="The ME 200, a 1958 Messerschmitt KR200, returned to Fend House">
+              <img class="media-photo" src="ME200%20returned%20to%20Fend%20House.jpg" alt="The ME 200, a 1958 Messerschmitt KR200, returned to Fend House">
+              <span class="placeholder-badge">ME 200 · Featured</span>
+              <span class="placeholder-caption">Returned to Fend House</span>
+            </div>
+            <div class="exhibit-body">
+              <p class="exhibit-tag">Featured Exhibit</p>
+              <h3 class="card-title">ME 200 — 1958 Messerschmitt KR200</h3>
+              <p class="card-text">
+                An original-specification 1958 KR200 in full running order, still wearing its original patina.
+                Tandem seating sits beneath a side-hinged, aircraft-style acrylic
+                canopy, while a 191cc Fichtel &amp; Sachs two-stroke drives a 4-speed
+                gearbox via a cockpit-side hand lever. A remarkable survivor.
+              </p>
+              <table class="spec-table" aria-label="ME 200 technical specifications">
+                <caption class="visually-hidden">ME 200 — 1958 Messerschmitt KR200 technical specifications</caption>
+                <tbody>
+                  <tr><th scope="row">Engine</th><td>191cc Fichtel &amp; Sachs two-stroke, air-cooled, single-cylinder</td></tr>
+                  <tr><th scope="row">Power</th><td>10 PS (approx. 9.8 bhp)</td></tr>
+                  <tr><th scope="row">Weight</th><td>Approx. 225 kg (kerb)</td></tr>
+                  <tr><th scope="row">Top Speed</th><td>Approx. 100 km/h (62 mph)</td></tr>
+                  <tr><th scope="row">Transmission</th><td>4-speed manual, hand-operated cockpit lever; engine starts in both directions for reverse</td></tr>
+                </tbody>
+              </table>
+            </div>
+          </article>
+
+          <!-- Exhibit Card 2: KR175 -->
+          <article class="card exhibit-card">
+            <div class="media-placeholder exhibit-placeholder has-photo" role="img" aria-label="The Foundation's 1954 Messerschmitt KR175">
+              <img class="media-photo" src="Messerschmitt_KR175.jpg" alt="The Foundation's 1954 Messerschmitt KR175">
+              <span class="placeholder-badge">KR175</span>
+              <span class="placeholder-caption">1954 · Early Production</span>
+            </div>
+            <div class="exhibit-body">
+              <p class="exhibit-tag">Early Production</p>
+              <h3 class="card-title">1954 Messerschmitt KR175</h3>
+              <p class="card-text">
+                An early production Kabinenroller featuring the initial canopy design
+                and hand-crank starting. This example represents the very first chapter
+                of the Messerschmitt microcar story on British roads.
+              </p>
+            </div>
+          </article>
+
+          <!-- Exhibit Card 3: FMR Tg500 -->
+          <article class="card exhibit-card">
+            <div class="media-placeholder exhibit-placeholder has-photo" role="img" aria-label="The Foundation's 1959 FMR Tg500 Tiger">
+              <img class="media-photo" src="tg%20500%20.png" alt="The Foundation's 1959 FMR Tg500 Tiger">
+              <span class="placeholder-badge">FMR Tg500</span>
+              <span class="placeholder-caption">The Foundation's Tiger</span>
+            </div>
+            <div class="exhibit-body">
+              <p class="exhibit-tag">High Performance</p>
+              <h3 class="card-title">1959 FMR Tg500</h3>
+              <p class="card-text">
+                The "Tiger" — the high-performance twin-cylinder, tandem-seat microcar
+                that pushed the Kabinenroller concept to its limits with a 493cc
+                two-stroke engine and a genuine four-wheeled sporting character.
+              </p>
+            </div>
+          </article>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- ============ FOOTER ============ -->
+  <footer class="site-footer">
+    <div class="container footer-grid">
+      <div class="footer-brand">
+        <img class="footer-logo" src="assets/images/mfgb-logo.png" alt="" width="676" height="369">
+        <p class="footer-title">MESSERSCHMITT FOUNDATION OF GREAT BRITAIN</p>
+        <p class="footer-text">Dedicated to preserving automotive engineering history.</p>
+      </div>
+
+      <nav class="footer-nav" aria-label="Footer navigation">
+        <p class="footer-heading">Quick Links</p>
+        <ul>
+          <li><a href="index.html">Home</a></li>
+          <li><a href="about.html">About</a></li>
+          <li><a href="history.html">History</a></li>
+          <li><a href="imports.html">UK Imports</a></li>
+          <li><a href="exhibits.html">Our Exhibits</a></li>
+          <li><a href="contact.html">Contact</a></li>
+        </ul>
+      </nav>
+
+      <div class="footer-legal">
+        <p class="footer-heading">Information</p>
+        <ul>
+          <li><a href="contact.html">Accessibility Statement</a></li>
+          <li><a href="contact.html#visitor-policy">Visitor Policy</a></li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="container footer-bottom">
+      <p>© 2026 Messerschmitt Foundation of Great Britain. Dedicated to preserving automotive engineering history.</p>
+      <button class="back-to-top" id="back-to-top" type="button" aria-label="Back to top" hidden>&uarr;</button>
+    </div>
+  </footer>
+
+  <script src="app.js"></script>
+</body>
+</html>

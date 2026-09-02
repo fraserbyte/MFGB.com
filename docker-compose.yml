@@ -1,0 +1,24 @@
+# ============================================================================
+# Messerschmitt Foundation of Great Britain — Docker Compose
+#
+# One-command deploy on a Hetzner VPS (or any Docker host):
+#   docker compose up -d --build
+#
+# Update an existing deployment:
+#   git pull && docker compose up -d --build
+# ============================================================================
+
+services:
+  web:
+    build: .
+    image: mfgb-site:latest
+    container_name: mfgb-site
+    restart: unless-stopped
+    ports:
+      - "80:80"
+    healthcheck:
+      test: ["CMD", "wget", "-q", "-O", "/dev/null", "http://localhost/"]
+      interval: 30s
+      timeout: 5s
+      retries: 3
+      start_period: 10s

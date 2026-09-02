@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="en-GB" data-theme="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="theme-color" content="#334155">
+  <meta name="color-scheme" content="dark light">
+
+  <title>Contact | Messerschmitt Foundation of Great Britain</title>
+  <meta name="title" content="Contact the Messerschmitt Foundation of Great Britain">
+  <meta name="description" content="Contact the Messerschmitt Foundation of Great Britain for general inquiries, vehicle verification, exhibit access, or technical assistance. View our visitor policy and registry details.">
+  <meta name="robots" content="index, follow">
+
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="Messerschmitt Foundation of Great Britain">
+  <meta property="og:title" content="Contact the Foundation">
+  <meta property="og:description" content="General inquiries, vehicle verification, exhibit access, and technical assistance.">
+  <meta property="og:url" content="https://your-username.github.io/messerschmitt-foundation-gb/contact.html">
+
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='6' fill='%23334155'/%3E%3Ctext x='16' y='22' font-family='Georgia,serif' font-size='16' fill='%238C6A35' text-anchor='middle'%3EM%3C/text%3E%3C/svg%3E">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Montserrat:wght@600;700;800&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="styles.css">
+</head>
+
+<body data-page="contact">
+  <!-- KR200 dashboard controls -->
+  <div class="micro-dashboard" id="micro-dashboard" role="group" aria-label="KR200 dashboard controls">
+    <button class="dash-choke" id="choke-control" type="button" aria-pressed="false" aria-label="Pull the choke to prime the engine">
+      <span class="choke-knob" aria-hidden="true"></span>
+    </button>
+    <button class="dash-switch" id="turn-switch" type="button" role="switch" aria-checked="false" aria-label="Turn the ignition switch">
+      <span class="switch-key" aria-hidden="true"></span>
+    </button>
+    <button class="dash-red" id="theme-toggle" type="button" role="switch" aria-checked="false" aria-label="Toggle light and dark mode">
+      <span class="red-dot" aria-hidden="true"></span>
+    </button>
+  </div>
+
+  <a class="skip-link" href="#main-content">Skip to main content</a>
+
+  <!-- ============ SITE HEADER ============ -->
+  <header class="site-header" id="site-header">
+    <div class="container header-inner">
+      <a class="brand" href="index.html" aria-label="Messerschmitt Foundation of Great Britain — home">
+        <img class="brand-logo" src="assets/images/mfgb-logo.png" alt="" width="676" height="369">
+        <span class="brand-text">MESSERSCHMITT<br>FOUNDATION OF GREAT BRITAIN</span>
+      </a>
+
+      <button
+        class="nav-toggle"
+        id="nav-toggle"
+        type="button"
+        aria-expanded="false"
+        aria-controls="main-nav"
+        aria-label="Toggle navigation">
+        <span class="nav-toggle-bar" aria-hidden="true"></span>
+        <span class="nav-toggle-bar" aria-hidden="true"></span>
+        <span class="nav-toggle-bar" aria-hidden="true"></span>
+      </button>
+
+      <nav class="main-nav" id="main-nav" aria-label="Primary navigation" aria-hidden="true">
+        <ul class="nav-list">
+          <li><a class="nav-link" href="index.html">Home</a></li>
+          <li><a class="nav-link" href="about.html">About</a></li>
+          <li><a class="nav-link" href="history.html">History</a></li>
+          <li><a class="nav-link" href="imports.html">UK Imports</a></li>
+          <li><a class="nav-link" href="exhibits.html">Our Exhibits</a></li>
+          <li><a class="nav-link" href="contact.html">Contact</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <main id="main-content">
+
+    <!-- ============ PAGE HERO ============ -->
+    <section class="page-hero">
+      <div class="container">
+        <p class="eyebrow">Get in Touch</p>
+        <h1 class="page-title">Contact the Foundation</h1>
+        <p class="page-subtitle">
+          Whether you own a Messerschmitt, need a verification, or wish to arrange
+          access to an exhibit — we would be glad to hear from you.
+        </p>
+      </div>
+    </section>
+
+    <!-- ============ CONTACT CONTENT ============ -->
+    <section id="contact" class="section section-alt" aria-labelledby="contact-title">
+      <div class="container">
+        <h2 class="visually-hidden" id="contact-title">Contact form and Foundation details</h2>
+
+        <div class="contact-grid">
+          <form class="contact-form" id="contact-form" novalidate>
+            <div class="form-field">
+              <label for="full-name">Full Name</label>
+              <input type="text" id="full-name" name="full-name" autocomplete="name" required>
+              <span class="form-error" id="error-full-name" aria-live="polite"></span>
+            </div>
+
+            <div class="form-field">
+              <label for="email">Email Address</label>
+              <input type="email" id="email" name="email" autocomplete="email" required>
+              <span class="form-error" id="error-email" aria-live="polite"></span>
+            </div>
+
+            <div class="form-field">
+              <label for="subject-type">Subject Type</label>
+              <select id="subject-type" name="subject-type" required>
+                <option value="" selected disabled>Select a subject…</option>
+                <option value="general">General Inquiry</option>
+                <option value="verification">Vehicle Verification</option>
+                <option value="exhibit-access">Exhibit Access</option>
+                <option value="technical">Technical Assistance</option>
+              </select>
+              <span class="form-error" id="error-subject-type" aria-live="polite"></span>
+            </div>
+
+            <div class="form-field">
+              <label for="message">Message</label>
+              <textarea id="message" name="message" rows="6" required placeholder="Tell us about your enquiry, vehicle, or exhibit request…"></textarea>
+              <span class="form-error" id="error-message" aria-live="polite"></span>
+            </div>
+
+            <button class="btn btn-primary" type="submit">Send Message</button>
+            <p class="form-status" id="form-status" role="status" aria-live="polite" tabindex="-1"></p>
+          </form>
+
+          <aside class="contact-sidebar">
+            <div class="card contact-card" id="accessibility">
+              <h3 class="card-title">Foundation Details</h3>
+              <address class="contact-address">
+                Messerschmitt Foundation of Great Britain<br>
+                Heritage &amp; Technical Archive Office<br>
+                Great Britain<br>
+                <a href="mailto:enquiries@mfgb.org.uk">enquiries@mfgb.org.uk</a><br>
+                <a href="tel:+442071234567">+44 (0)20 7123 4567</a>
+              </address>
+            </div>
+
+            <div class="card contact-card">
+              <h3 class="card-title">UK Registry</h3>
+              <p class="card-text">
+                Registered vehicle owners may submit chassis and engine details for
+                inclusion in the Community Registry and verification programme.
+                Allow up to 10 working days for an archive review.
+              </p>
+            </div>
+
+            <div class="card contact-card" id="visitor-policy">
+              <h3 class="card-title">Visitor Policy</h3>
+              <ul class="policy-list">
+                <li>Exhibit viewing by prior appointment only.</li>
+                <li>Photography permitted; no flash inside display areas.</li>
+                <li>Accessible entry available — please notify us in advance.</li>
+                <li>Children must be accompanied by an adult at all times.</li>
+              </ul>
+            </div>
+          </aside>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- ============ FOOTER ============ -->
+  <footer class="site-footer">
+    <div class="container footer-grid">
+      <div class="footer-brand">
+        <img class="footer-logo" src="assets/images/mfgb-logo.png" alt="" width="676" height="369">
+        <p class="footer-title">MESSERSCHMITT FOUNDATION OF GREAT BRITAIN</p>
+        <p class="footer-text">Dedicated to preserving automotive engineering history.</p>
+      </div>
+
+      <nav class="footer-nav" aria-label="Footer navigation">
+        <p class="footer-heading">Quick Links</p>
+        <ul>
+          <li><a href="index.html">Home</a></li>
+          <li><a href="about.html">About</a></li>
+          <li><a href="history.html">History</a></li>
+          <li><a href="imports.html">UK Imports</a></li>
+          <li><a href="exhibits.html">Our Exhibits</a></li>
+          <li><a href="contact.html">Contact</a></li>
+        </ul>
+      </nav>
+
+      <div class="footer-legal">
+        <p class="footer-heading">Information</p>
+        <ul>
+          <li><a href="contact.html#accessibility">Accessibility Statement</a></li>
+          <li><a href="contact.html#visitor-policy">Visitor Policy</a></li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="container footer-bottom">
+      <p>© 2026 Messerschmitt Foundation of Great Britain. Dedicated to preserving automotive engineering history.</p>
+      <button class="back-to-top" id="back-to-top" type="button" aria-label="Back to top" hidden>&uarr;</button>
+    </div>
+  </footer>
+
+  <script src="app.js"></script>
+</body>
+</html>
