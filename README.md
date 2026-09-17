@@ -59,13 +59,17 @@ Fend Flitzer to the FMR Tg500 "Tiger" — and showcases the Foundation's feature
   car's longer description and full technical specification table. Content lives in an
   inert `<template>` on `exhibits.html`, so adding another exhibit means adding a
   template plus a button carrying `data-exhibit-detail="<template-id>"`.
-- **Swappable specification panel** — pressing any exhibit photo animates that car's
-  specification sheet into the featured card's panel, replacing the ME 200 sheet, and
-  marks the chosen photo with a brass frame. Each sheet is one source of truth: the
-  ME 200 sheet is authored inline (so it still reads without JavaScript) and the other
-  cars live in `#spec-kr175` / `#spec-tg500` templates that the exhibit pop-up reads
-  too. Add a car by adding a `<template id="spec-<key>">` plus a photo button with
-  `data-spec-select="<key>"`.
+- **Promote any exhibit** — pressing one of the smaller exhibit boxes grows it into the
+  featured slot: it takes the full-width position with its own image, description and
+  specification sheet, and the card that held the slot drops into the gap. Pressing
+  that card promotes it straight back. The position is driven by a class plus grid
+  `order` (re-ordering rather than moving nodes, which would drop focus), and the
+  specification panel is re-parented into whichever card is featured. Each sheet is one
+  source of truth: the ME 200 sheet is authored inline (so the specification still reads
+  without JavaScript) and doubles as the default, while the other cars live in
+  `#spec-<key>` templates that the exhibit pop-up reads too. Add a car with a
+  `<template id="spec-<key>">`, a photo button carrying `data-spec-select="<key>"`, and
+  a `data-tag` on its `.exhibit-tag` to restore its own label when it is demoted.
 - **Clickable photo badges** — the label on a photo ("ME 200 · Featured",
   "KR175 · Early Production") is a link through to the matching exhibit card, and the
   badge/caption bar wraps gracefully when a photo gets too narrow for both.
@@ -101,7 +105,7 @@ messerschmitt-foundation-gb/
 | `about.html` | About page: the Foundation's mission, vehicle verification and maintenance work, plus the three key-pillar cards. |
 | `history.html` | History page: the visual Kabinenroller timeline (1948–1958). |
 | `imports.html` | UK Imports page: embeds the live MFGB Chassis Register dashboard (`fraserbyte.github.io/Messerschmitt`) unchanged in a full-height iframe. |
-| `exhibits.html` | Exhibits page: ME 200 (whose specification panel is the shared sheet display), KR175 (info icon opens its description pop-up), and FMR Tg500 cards. Pressing any exhibit photo swaps that car's spec sheet into the panel. |
+| `exhibits.html` | Exhibits page: ME 200, KR175 (info icon opens its description pop-up) and FMR Tg500 cards. Pressing a smaller box promotes it into the featured slot — image, description, specification sheet and "Featured Exhibit" tag — while the outgoing featured card takes its place. |
 | `contact.html` | Contact page: accessible form, Foundation details, UK registry, and visitor policy. |
 | `styles.css` | All styling. Design tokens live in `:root` (palette, typography, spacing, elevation, radii). Contains the `.media-placeholder` system, card components, page-hero banners, and mobile-first media queries. |
 | `app.js` | Modular IIFE with independent initialisation routines: navigation toggle, active-page highlighting, form validation, back-to-top visibility, header compression, exhibit detail pop-up, specification panel swapping, and the KR200 Racer game. |

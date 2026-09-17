@@ -1145,8 +1145,55 @@ body[data-page="history"] .timeline-item .timeline-body {
 }
 
 .exhibit-featured {
+  order: -1; /* whichever card holds the slot is placed first */
   border-color: rgba(46, 107, 79, 0.4);
   box-shadow: 0 0 0 1px rgba(46, 107, 79, 0.18), var(--shadow-md);
+}
+
+/* The smaller boxes are pressable — pressing one promotes it */
+.exhibit-card:not(.exhibit-featured) {
+  cursor: pointer;
+}
+
+/* Nothing to press on the featured card's own photo, so drop the hint */
+.exhibit-card.exhibit-featured .exhibit-select {
+  cursor: default;
+}
+
+.exhibit-card.exhibit-featured .exhibit-select:hover {
+  border-color: transparent;
+  background: transparent;
+}
+
+/* Promotion / demotion — a quick grow into the featured slot */
+.exhibit-card.is-promoting {
+  animation: exhibit-promote 400ms cubic-bezier(0.2, 0.7, 0.3, 1);
+}
+
+@keyframes exhibit-promote {
+  from {
+    opacity: 0;
+    transform: scale(0.94) translateY(14px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+.exhibit-card.is-demoting {
+  animation: exhibit-demote 340ms ease;
+}
+
+@keyframes exhibit-demote {
+  from {
+    opacity: 0.5;
+    transform: scale(1.02);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
 }
 
 .exhibit-body {

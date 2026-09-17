@@ -1675,11 +1675,21 @@
   }
 
   /* ============================================================
-     11. Exhibit Specification Panel
+     11. Featured Exhibit — promote any exhibit box
      ------------------------------------------------------------
-     Each exhibit photo carries a full-bleed selector button; pressing
-     one slides that car's specification sheet into the featured card's
-     panel, replacing the ME 200 sheet. The ME 200 sheet is authored
+     Pressing one of the smaller exhibit boxes promotes it into the
+     featured slot: that card grows to full width and brings its own
+     image, description and specification sheet with it, while the
+     card that held the slot drops into the gap. Pressing that card
+     promotes it straight back.
+
+     The featured position is driven by the .exhibit-featured class
+     plus `order` — re-ordering rather than moving nodes, because
+     moving a node that holds focus drops focus. The specification
+     panel is the one thing re-parented, into whichever card is
+     featured.
+
+     Each sheet is one source of truth: the ME 200 sheet is authored
      inline in the page (so the specification still reads without
      JavaScript) and doubles as the default; the other cars come from
      inert <template>s — the same sheets the exhibit pop-up reads, so
@@ -1697,44 +1707,76 @@
     );
     if (!body || !carLabel || triggers.length === 0) return;
 
-    // The inline sheet belongs to the car named on the panel itself.
-    const initialKey = panel.getAttribute("data-spec-panel");
-    const sheets = {};
-    sheets[initialKey] = body.innerHTML;
+    const entries = [];
+    triggers.forEach((trigger) => {
+      const card = trigger.closest(".exhibit-card");
+      if (!card) return;
+      entries.push({
+        key: trigger.getAttribute("data-spec-select"),
+        trigger: trigger,
+        card: card,
+        photo: trigger.closest(".media-placeholder"),
+        body: card.querySelector(".exhibit-body")
+      });
+    });
+    if (entries.length === 0) return;
 
-    let activeKey = initialKey;
+    const entryFor = (key) => entries.filter((entry) => entry.key === key)[0];
+    const prefersReducedMotion = () =>
+      window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+    // The inline sheet belongs to the car named on the panel itself.
+    const sheets = {};
+    sheets[panel.getAttribute("data-spec-panel")] = body.innerHTML;
+
+    let featuredKey = panel.getAttribute("data-spec-panel");
     let swapTimer = null;
     let flashTimer = null;
 
-    const keyOf = (trigger) => trigger.getAttribute("data-spec-select");
+    function markFeatured(key) {
+      entries.forEach((entry) => {
+        const isFeatured = entry.key === key;
+        entry.card.classList.toggle("exhibit-featured", isFeatured);
+        entry.trigger.setAttribute("aria-pressed", String(isFeatured));
+        if (entry.photo) entry.photo.classList.toggle("is-selected", isFeatured);
 
-    // On a narrow screen the panel sits far above the photo that was
-    // pressed, so bring it into view — but only when it is genuinely
-    // off-screen, so a desktop press never yanks the page around.
-    function revealPanel() {
-      const box = panel.getBoundingClientRect();
-      const visible =
-        Math.min(box.bottom, window.innerHeight) - Math.max(box.top, 0);
-      if (visible > box.height * 0.5) return;
-      const smooth = window.matchMedia("(prefers-reduced-motion: reduce)").matches
-        ? "auto"
-        : "smooth";
-      panel.scrollIntoView({ behavior: smooth, block: "center" });
-    }
-
-    function markActive(key) {
-      triggers.forEach((trigger) => {
-        const isActive = keyOf(trigger) === key;
-        trigger.setAttribute("aria-pressed", String(isActive));
-        const holder = trigger.closest(".media-placeholder");
-        if (holder) holder.classList.toggle("is-selected", isActive);
+        // "Featured Exhibit" belongs to the slot, not the car — a demoted
+        // card falls back to its own tag from data-tag.
+        const tag = entry.card.querySelector(".exhibit-tag");
+        if (tag) {
+          tag.textContent = isFeatured
+            ? "Featured Exhibit"
+            : tag.getAttribute("data-tag") || tag.textContent;
+        }
       });
     }
 
-    function select(key) {
-      if (key === activeKey) return;
-      const trigger = triggers.filter((item) => keyOf(item) === key)[0];
-      if (!trigger) return;
+    function replay(card, className) {
+      card.classList.remove(className);
+      void card.offsetWidth; // restart the animation
+      card.classList.add(className);
+      window.setTimeout(() => card.classList.remove(className), 440);
+    }
+
+    // Bring the grown card into view when it is off-screen — on a phone a
+    // press would otherwise look like nothing happened.
+    function revealCard(card) {
+      const box = card.getBoundingClientRect();
+      const visible = Math.min(box.bottom, window.innerHeight) - Math.max(box.top, 0);
+      const wanted = Math.min(box.height, window.innerHeight * 0.75);
+      if (visible > wanted * 0.6) return;
+      card.scrollIntoView({
+        behavior: prefersReducedMotion() ? "auto" : "smooth",
+        block: "start"
+      });
+    }
+
+    function promote(key) {
+      if (key === featuredKey) return;
+
+      const entry = entryFor(key);
+      const previous = entryFor(featuredKey);
+      if (!entry || !entry.body) return;
 
       if (!(key in sheets)) {
         const template = document.getElementById("spec-" + key);
@@ -1742,16 +1784,20 @@
         sheets[key] = template.innerHTML;
       }
 
-      activeKey = key;
-      markActive(key);
-      carLabel.textContent = trigger.getAttribute("data-spec-name") || "";
+      featuredKey = key;
+      markFeatured(key);
+      entry.body.appendChild(panel); // the sheet travels with its card
 
+      carLabel.textContent = entry.trigger.getAttribute("data-spec-name") || "";
       if (status) {
-        const full = trigger.getAttribute("data-spec-full") || trigger.getAttribute("data-spec-name") || "";
-        status.textContent = "Showing the technical specification for the " + full + ".";
+        const full =
+          entry.trigger.getAttribute("data-spec-full") ||
+          entry.trigger.getAttribute("data-spec-name") ||
+          "";
+        status.textContent = full + " is now the featured exhibit.";
       }
 
-      // Out, swap, in — quick enough to read as instant.
+      // Sheet out, swap, in — plus a brass flash on the frame.
       window.clearTimeout(swapTimer);
       window.clearTimeout(flashTimer);
       body.classList.remove("is-in");
@@ -1764,18 +1810,31 @@
         body.classList.remove("is-out");
         body.classList.add("is-in");
         window.setTimeout(() => body.classList.remove("is-in"), 260);
-        revealPanel();
       }, 150);
+
+      if (!prefersReducedMotion()) {
+        replay(entry.card, "is-promoting");
+        if (previous && previous !== entry) replay(previous.card, "is-demoting");
+      }
+
+      revealCard(entry.card);
     }
 
-    triggers.forEach((trigger) => {
-      // Only offer the selector once it actually does something.
-      trigger.removeAttribute("hidden");
-      trigger.addEventListener("click", () => select(keyOf(trigger)));
+    entries.forEach((entry) => {
+      // Only offer the photo selector once it actually does something.
+      entry.trigger.removeAttribute("hidden");
+      entry.trigger.addEventListener("click", () => promote(entry.key));
+
+      // The whole small box is pressable; links and the info icon inside
+      // a card keep their own behaviour.
+      entry.card.addEventListener("click", (event) => {
+        if (event.target.closest("a, button:not(.exhibit-select)")) return;
+        promote(entry.key);
+      });
     });
 
-    // Show which sheet is currently in the panel, without animating in.
-    markActive(initialKey);
+    // Mark the card that already holds the featured slot.
+    markFeatured(featuredKey);
   }
 
   /* ============================================================
