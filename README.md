@@ -59,6 +59,13 @@ Fend Flitzer to the FMR Tg500 "Tiger" — and showcases the Foundation's feature
   car's longer description and full technical specification table. Content lives in an
   inert `<template>` on `exhibits.html`, so adding another exhibit means adding a
   template plus a button carrying `data-exhibit-detail="<template-id>"`.
+- **Swappable specification panel** — pressing any exhibit photo animates that car's
+  specification sheet into the featured card's panel, replacing the ME 200 sheet, and
+  marks the chosen photo with a brass frame. Each sheet is one source of truth: the
+  ME 200 sheet is authored inline (so it still reads without JavaScript) and the other
+  cars live in `#spec-kr175` / `#spec-tg500` templates that the exhibit pop-up reads
+  too. Add a car by adding a `<template id="spec-<key>">` plus a photo button with
+  `data-spec-select="<key>"`.
 - **Clickable photo badges** — the label on a photo ("ME 200 · Featured",
   "KR175 · Early Production") is a link through to the matching exhibit card, and the
   badge/caption bar wraps gracefully when a photo gets too narrow for both.
@@ -94,10 +101,10 @@ messerschmitt-foundation-gb/
 | `about.html` | About page: the Foundation's mission, vehicle verification and maintenance work, plus the three key-pillar cards. |
 | `history.html` | History page: the visual Kabinenroller timeline (1948–1958). |
 | `imports.html` | UK Imports page: embeds the live MFGB Chassis Register dashboard (`fraserbyte.github.io/Messerschmitt`) unchanged in a full-height iframe. |
-| `exhibits.html` | Exhibits page: ME 200 (with full technical specification table), KR175 (info icon opens its specification pop-up), and FMR Tg500 cards. |
+| `exhibits.html` | Exhibits page: ME 200 (whose specification panel is the shared sheet display), KR175 (info icon opens its description pop-up), and FMR Tg500 cards. Pressing any exhibit photo swaps that car's spec sheet into the panel. |
 | `contact.html` | Contact page: accessible form, Foundation details, UK registry, and visitor policy. |
 | `styles.css` | All styling. Design tokens live in `:root` (palette, typography, spacing, elevation, radii). Contains the `.media-placeholder` system, card components, page-hero banners, and mobile-first media queries. |
-| `app.js` | Modular IIFE with independent initialisation routines: navigation toggle, active-page highlighting, form validation, back-to-top visibility, header compression, exhibit detail pop-up, and the KR200 Racer game. |
+| `app.js` | Modular IIFE with independent initialisation routines: navigation toggle, active-page highlighting, form validation, back-to-top visibility, header compression, exhibit detail pop-up, specification panel swapping, and the KR200 Racer game. |
 | `README.md` | Documentation for local development, asset replacement, and GitHub Pages deployment. |
 
 > **Note on structure:** GitHub Pages serves the repository root by default, so

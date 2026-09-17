@@ -1649,6 +1649,13 @@
       document.body.style.overflow = "hidden";
       lastFocused = trigger;
 
+      // Fill any specification slot from the shared per-car sheet, so the
+      // pop-up and the featured panel can never drift apart.
+      Array.prototype.forEach.call(shell.querySelectorAll("[data-spec-slot]"), (slot) => {
+        const sheet = document.getElementById("spec-" + slot.getAttribute("data-spec-slot"));
+        if (sheet) slot.appendChild(sheet.content.cloneNode(true));
+      });
+
       const closeBtn = shell.querySelector(".exhibit-modal-close");
       const card = shell.querySelector(".exhibit-modal");
       if (closeBtn) closeBtn.addEventListener("click", close);
@@ -1668,6 +1675,110 @@
   }
 
   /* ============================================================
+     11. Exhibit Specification Panel
+     ------------------------------------------------------------
+     Each exhibit photo carries a full-bleed selector button; pressing
+     one slides that car's specification sheet into the featured card's
+     panel, replacing the ME 200 sheet. The ME 200 sheet is authored
+     inline in the page (so the specification still reads without
+     JavaScript) and doubles as the default; the other cars come from
+     inert <template>s — the same sheets the exhibit pop-up reads, so
+     the two can never drift apart.
+     ============================================================ */
+  function initExhibitSpecPanel() {
+    const panel = document.querySelector("[data-spec-panel]");
+    if (!panel) return;
+
+    const body = panel.querySelector("[data-spec-body]");
+    const carLabel = panel.querySelector("[data-spec-car]");
+    const status = panel.querySelector("[data-spec-status]");
+    const triggers = Array.prototype.slice.call(
+      document.querySelectorAll("[data-spec-select]")
+    );
+    if (!body || !carLabel || triggers.length === 0) return;
+
+    // The inline sheet belongs to the car named on the panel itself.
+    const initialKey = panel.getAttribute("data-spec-panel");
+    const sheets = {};
+    sheets[initialKey] = body.innerHTML;
+
+    let activeKey = initialKey;
+    let swapTimer = null;
+    let flashTimer = null;
+
+    const keyOf = (trigger) => trigger.getAttribute("data-spec-select");
+
+    // On a narrow screen the panel sits far above the photo that was
+    // pressed, so bring it into view — but only when it is genuinely
+    // off-screen, so a desktop press never yanks the page around.
+    function revealPanel() {
+      const box = panel.getBoundingClientRect();
+      const visible =
+        Math.min(box.bottom, window.innerHeight) - Math.max(box.top, 0);
+      if (visible > box.height * 0.5) return;
+      const smooth = window.matchMedia("(prefers-reduced-motion: reduce)").matches
+        ? "auto"
+        : "smooth";
+      panel.scrollIntoView({ behavior: smooth, block: "center" });
+    }
+
+    function markActive(key) {
+      triggers.forEach((trigger) => {
+        const isActive = keyOf(trigger) === key;
+        trigger.setAttribute("aria-pressed", String(isActive));
+        const holder = trigger.closest(".media-placeholder");
+        if (holder) holder.classList.toggle("is-selected", isActive);
+      });
+    }
+
+    function select(key) {
+      if (key === activeKey) return;
+      const trigger = triggers.filter((item) => keyOf(item) === key)[0];
+      if (!trigger) return;
+
+      if (!(key in sheets)) {
+        const template = document.getElementById("spec-" + key);
+        if (!template) return;
+        sheets[key] = template.innerHTML;
+      }
+
+      activeKey = key;
+      markActive(key);
+      carLabel.textContent = trigger.getAttribute("data-spec-name") || "";
+
+      if (status) {
+        const full = trigger.getAttribute("data-spec-full") || trigger.getAttribute("data-spec-name") || "";
+        status.textContent = "Showing the technical specification for the " + full + ".";
+      }
+
+      // Out, swap, in — quick enough to read as instant.
+      window.clearTimeout(swapTimer);
+      window.clearTimeout(flashTimer);
+      body.classList.remove("is-in");
+      body.classList.add("is-out");
+      panel.classList.add("is-swapping");
+      flashTimer = window.setTimeout(() => panel.classList.remove("is-swapping"), 700);
+
+      swapTimer = window.setTimeout(() => {
+        body.innerHTML = sheets[key];
+        body.classList.remove("is-out");
+        body.classList.add("is-in");
+        window.setTimeout(() => body.classList.remove("is-in"), 260);
+        revealPanel();
+      }, 150);
+    }
+
+    triggers.forEach((trigger) => {
+      // Only offer the selector once it actually does something.
+      trigger.removeAttribute("hidden");
+      trigger.addEventListener("click", () => select(keyOf(trigger)));
+    });
+
+    // Show which sheet is currently in the panel, without animating in.
+    markActive(initialKey);
+  }
+
+  /* ============================================================
      09. Initialisation
      ============================================================ */
   function init() {
@@ -1681,6 +1792,7 @@
     initThemeToggle();
     initHeaderCompress();
     initExhibitDetail();
+    initExhibitSpecPanel();
     const game = initKr200Game();
     initEngineToggle(game);
   }

@@ -98,12 +98,20 @@
         <div class="exhibits-grid">
           <!-- Exhibit Card 1: ME 200 (Featured) -->
           <article class="card exhibit-card exhibit-featured" id="exhibit-me200">
-            <div class="media-placeholder exhibit-placeholder has-photo" role="img" aria-label="The ME 200, a 1958 Messerschmitt KR200, returned to Fend House">
+            <div class="media-placeholder exhibit-placeholder has-photo">
               <img class="media-photo" src="ME200%20returned%20to%20Fend%20House.jpg" alt="The ME 200, a 1958 Messerschmitt KR200, returned to Fend House">
               <div class="photo-overlay">
                 <span class="placeholder-badge">ME 200 · Featured</span>
                 <span class="placeholder-caption">Returned to Fend House</span>
               </div>
+              <button
+                class="exhibit-select"
+                type="button"
+                data-spec-select="me200"
+                data-spec-name="ME 200"
+                data-spec-full="1958 Messerschmitt KR200"
+                aria-label="Show the technical specification for the 1958 Messerschmitt KR200"
+                hidden></button>
             </div>
             <div class="exhibit-body">
               <p class="exhibit-tag">Featured Exhibit</p>
@@ -114,16 +122,29 @@
                 canopy, while a 191cc Fichtel &amp; Sachs two-stroke drives a 4-speed
                 gearbox via a cockpit-side hand lever. A remarkable survivor.
               </p>
-              <table class="spec-table" aria-label="ME 200 technical specifications">
-                <caption class="visually-hidden">ME 200 — 1958 Messerschmitt KR200 technical specifications</caption>
-                <tbody>
-                  <tr><th scope="row">Engine</th><td>191cc Fichtel &amp; Sachs two-stroke, air-cooled, single-cylinder</td></tr>
-                  <tr><th scope="row">Power</th><td>10 PS (approx. 9.8 bhp)</td></tr>
-                  <tr><th scope="row">Weight</th><td>Approx. 225 kg (kerb)</td></tr>
-                  <tr><th scope="row">Top Speed</th><td>Approx. 100 km/h (62 mph)</td></tr>
-                  <tr><th scope="row">Transmission</th><td>4-speed manual, hand-operated cockpit lever; engine starts in both directions for reverse</td></tr>
-                </tbody>
-              </table>
+              <!-- Specification panel — pressing any exhibit photo swaps this
+                   sheet for that car's. The ME 200 sheet is authored inline so
+                   the specification still reads with JavaScript disabled; the
+                   other cars ship as <template>s below and are cloned in. -->
+              <div class="spec-panel" id="spec-panel" data-spec-panel="me200">
+                <p class="spec-panel-head">
+                  <span class="spec-panel-eyebrow">Technical Specification</span>
+                  <span class="spec-panel-car" data-spec-car>ME 200</span>
+                </p>
+                <p class="visually-hidden" role="status" aria-live="polite" data-spec-status></p>
+                <div class="spec-panel-body" data-spec-body>
+                  <table class="spec-table" aria-label="ME 200 technical specifications">
+                    <caption class="visually-hidden">ME 200 — 1958 Messerschmitt KR200 technical specifications</caption>
+                    <tbody>
+                      <tr><th scope="row">Engine</th><td>191cc Fichtel &amp; Sachs two-stroke, air-cooled, single-cylinder</td></tr>
+                      <tr><th scope="row">Power</th><td>10 PS (approx. 9.8 bhp)</td></tr>
+                      <tr><th scope="row">Weight</th><td>Approx. 225 kg (kerb)</td></tr>
+                      <tr><th scope="row">Top Speed</th><td>Approx. 100 km/h (62 mph)</td></tr>
+                      <tr><th scope="row">Transmission</th><td>4-speed manual, hand-operated cockpit lever; engine starts in both directions for reverse</td></tr>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
             </div>
           </article>
 
@@ -135,6 +156,14 @@
                 <span class="placeholder-badge">KR175</span>
                 <span class="placeholder-caption">1954 · Early Production</span>
               </div>
+              <button
+                class="exhibit-select"
+                type="button"
+                data-spec-select="kr175"
+                data-spec-name="KR175"
+                data-spec-full="1954 Messerschmitt KR175"
+                aria-label="Show the technical specification for the 1954 Messerschmitt KR175"
+                hidden></button>
               <button
                 class="exhibit-info"
                 id="kr175-info"
@@ -162,12 +191,20 @@
 
           <!-- Exhibit Card 3: FMR Tg500 -->
           <article class="card exhibit-card" id="exhibit-tg500">
-            <div class="media-placeholder exhibit-placeholder has-photo" role="img" aria-label="The Foundation's 1959 FMR Tg500 Tiger">
+            <div class="media-placeholder exhibit-placeholder has-photo">
               <img class="media-photo" src="the%20blue%20one.jpeg" alt="The Foundation's 1959 FMR Tg500 Tiger">
               <div class="photo-overlay">
                 <span class="placeholder-badge">FMR Tg500</span>
                 <span class="placeholder-caption">The Foundation's Tiger</span>
               </div>
+              <button
+                class="exhibit-select"
+                type="button"
+                data-spec-select="tg500"
+                data-spec-name="FMR Tg500"
+                data-spec-full="1959 FMR Tg500"
+                aria-label="Show the technical specification for the 1959 FMR Tg500"
+                hidden></button>
             </div>
             <div class="exhibit-body">
               <p class="exhibit-tag">High Performance</p>
@@ -216,19 +253,43 @@
             story on British roads — an early production car with the initial canopy design.
           </p>
 
-          <table class="spec-table" aria-label="1954 Messerschmitt KR175 technical specifications">
-            <caption class="visually-hidden">1954 Messerschmitt KR175 technical specifications</caption>
-            <tbody>
-              <tr><th scope="row">Engine</th><td>173cc Fichtel &amp; Sachs two-stroke, air-cooled, single-cylinder</td></tr>
-              <tr><th scope="row">Power</th><td>9 PS (approx. 8.9 bhp)</td></tr>
-              <tr><th scope="row">Weight</th><td>Approx. 220 kg (kerb)</td></tr>
-              <tr><th scope="row">Top Speed</th><td>Approx. 80 km/h (50 mph)</td></tr>
-              <tr><th scope="row">Transmission</th><td>3-speed manual, hand-operated cockpit lever; engine started in both directions for reverse</td></tr>
-              <tr><th scope="row">Layout</th><td>Two front wheels, single rear wheel; tandem two-seat cabin</td></tr>
-            </tbody>
-          </table>
+          <!-- Filled from the shared sheet below, so the pop-up and the
+               featured panel always show identical figures. -->
+          <div class="exhibit-modal-spec" data-spec-slot="kr175"></div>
         </div>
       </div>
+    </template>
+
+    <!-- ============ PER-CAR SPECIFICATION SHEETS ============
+         One source of truth per car. Each sheet is cloned into the
+         featured specification panel when its photo is pressed, and
+         into the exhibit pop-up via data-spec-slot.
+         The Tg500 figures are provisional, publicly available numbers
+         — replace them with Foundation-sourced data when ready. -->
+    <template id="spec-kr175">
+      <table class="spec-table" aria-label="1954 Messerschmitt KR175 technical specifications">
+        <caption class="visually-hidden">1954 Messerschmitt KR175 technical specifications</caption>
+        <tbody>
+          <tr><th scope="row">Engine</th><td>173cc Fichtel &amp; Sachs two-stroke, air-cooled, single-cylinder</td></tr>
+          <tr><th scope="row">Power</th><td>9 PS (approx. 8.9 bhp)</td></tr>
+          <tr><th scope="row">Weight</th><td>Approx. 220 kg (kerb)</td></tr>
+          <tr><th scope="row">Top Speed</th><td>Approx. 80 km/h (50 mph)</td></tr>
+          <tr><th scope="row">Transmission</th><td>3-speed manual, hand-operated cockpit lever; engine started in both directions for reverse</td></tr>
+        </tbody>
+      </table>
+    </template>
+
+    <template id="spec-tg500">
+      <table class="spec-table" aria-label="1959 FMR Tg500 technical specifications">
+        <caption class="visually-hidden">1959 FMR Tg500 technical specifications</caption>
+        <tbody>
+          <tr><th scope="row">Engine</th><td>493cc Fichtel &amp; Sachs two-stroke, air-cooled, twin-cylinder</td></tr>
+          <tr><th scope="row">Power</th><td>19.5 PS (approx. 19 bhp) at 5,000 rpm</td></tr>
+          <tr><th scope="row">Weight</th><td>Approx. 390 kg (kerb)</td></tr>
+          <tr><th scope="row">Top Speed</th><td>Approx. 125 km/h (78 mph)</td></tr>
+          <tr><th scope="row">Transmission</th><td>4-speed manual with reverse gear; rear-wheel drive</td></tr>
+        </tbody>
+      </table>
     </template>
   </main>
 
