@@ -397,10 +397,26 @@ nginx directly.)
 cd /opt/mfgb
 git pull
 docker compose up -d --build
+
+# confirm the caching policy is live (expect: Cache-Control: no-cache)
+curl -sI http://localhost/styles.css | grep -i cache-control
 ```
 
-HTML is served with `no-cache` so browsers revalidate immediately after each
-deploy; media is served with long-lived immutable caching for speed.
+If a deploy ever leaves the site looking unstyled, the browser is holding an old
+stylesheet: check that the HTML links carry the current `?v=` token and that the
+`curl` above answers `no-cache`.
+
+HTML, CSS and JavaScript are served with `no-cache`, so browsers revalidate on
+nearly every request: a deploy can never pair fresh markup with a stale
+stylesheet. Media is cached for a day and then revalidated — rename a file to
+publish a replacement instantly, or overwrite one with its old name and allow up
+to a day for it to appear.
+
+The `?v=` token on `styles.css` and `app.js` in every page was added on
+2026-09-17, when the asset caching policy changed, to force browsers holding the
+previous year-long copy to fetch the files again. It needs no maintenance while
+CSS and JS keep revalidating, but bumping it is the quickest way to push an
+urgent style fix out to everyone at once.
 
 ---
 
