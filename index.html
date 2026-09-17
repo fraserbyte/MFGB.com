@@ -151,49 +151,57 @@
           </div>
         </div>
 
-        <div class="media-placeholder hero-placeholder has-photo">
-          <img class="media-photo" src="ME200%20returned%20to%20Fend%20House.jpg" alt="The ME 200, a 1958 Messerschmitt KR200, returned to Fend House">
-          <div class="photo-overlay">
-            <a class="placeholder-badge badge-link" href="exhibits.html#exhibit-me200">
-              <span>ME 200 · Featured</span>
-              <svg class="badge-link-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false">
-                <path d="M7 17 17 7"></path>
-                <path d="M8 7h9v9"></path>
-              </svg>
-            </a>
-            <span class="placeholder-caption">Returned to Fend House</span>
-          </div>
-        </div>
-      </div>
-    </section>
+        <!-- ============ COLLECTION STACK ============
+             Each widget opens Our Exhibits with that car already
+             promoted to the featured slot (see app.js module 10). -->
+        <div class="hero-collection">
+          <h2 class="eyebrow">The Collection</h2>
 
-    <!-- ============ COLLECTION BAND (KR175) ============ -->
-    <section id="collection" class="section" aria-labelledby="collection-title">
-      <div class="container collection-band">
-        <div class="media-placeholder ratio-4-3 has-photo">
-          <img class="media-photo" src="histroy%20of%20the%20mfgb%20file/messerschmitt-KR175.jpg" alt="The Foundation's 1954 Messerschmitt KR175">
-          <div class="photo-overlay">
-            <a class="placeholder-badge badge-link" href="exhibits.html#exhibit-kr175">
-              <span>KR175 · Early Production</span>
-              <svg class="badge-link-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false">
-                <path d="M7 17 17 7"></path>
-                <path d="M8 7h9v9"></path>
-              </svg>
+          <div class="car-stack">
+            <a class="car-widget" href="exhibits.html#exhibit-me200" aria-label="View the ME 200 — 1958 Messerschmitt KR200 on Our Exhibits">
+              <span class="car-widget-media">
+                <img src="ME200%20returned%20to%20Fend%20House.jpg" alt="">
+              </span>
+              <span class="car-widget-label">
+                <span class="placeholder-badge">ME 200</span>
+                <span class="placeholder-caption">1958 KR200</span>
+              </span>
+              <span class="car-widget-go" aria-hidden="true">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" focusable="false">
+                  <path d="M9 5l7 7-7 7"></path>
+                </svg>
+              </span>
             </a>
-            <span class="placeholder-caption">From the Foundation's collection</span>
-          </div>
-        </div>
 
-        <div class="collection-band-body">
-          <p class="eyebrow">From the Collection</p>
-          <h2 class="section-title" id="collection-title">The 1954 KR175 Kabinenroller</h2>
-          <p class="section-subtitle">
-            The car that started it all: a 173cc Fichtel &amp; Sachs two-stroke, tandem
-            seating under a side-hinged acrylic canopy, and a silhouette borrowed from
-            the aircraft factory at Regensburg.
-          </p>
-          <div class="hero-actions">
-            <a class="btn btn-primary" href="exhibits.html#exhibit-kr175">View the KR175 exhibit</a>
+            <a class="car-widget" href="exhibits.html#exhibit-kr175" aria-label="View the 1954 Messerschmitt KR175 on Our Exhibits">
+              <span class="car-widget-media">
+                <img src="histroy%20of%20the%20mfgb%20file/messerschmitt-KR175.jpg" alt="">
+              </span>
+              <span class="car-widget-label">
+                <span class="placeholder-badge">KR175</span>
+                <span class="placeholder-caption">1954 · Early Production</span>
+              </span>
+              <span class="car-widget-go" aria-hidden="true">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" focusable="false">
+                  <path d="M9 5l7 7-7 7"></path>
+                </svg>
+              </span>
+            </a>
+
+            <a class="car-widget" href="exhibits.html#exhibit-tg500" aria-label="View the 1959 FMR Tg500 on Our Exhibits">
+              <span class="car-widget-media">
+                <img src="the%20blue%20one.jpeg" alt="">
+              </span>
+              <span class="car-widget-label">
+                <span class="placeholder-badge">FMR Tg500</span>
+                <span class="placeholder-caption">1959 Tiger</span>
+              </span>
+              <span class="car-widget-go" aria-hidden="true">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" focusable="false">
+                  <path d="M9 5l7 7-7 7"></path>
+                </svg>
+              </span>
+            </a>
           </div>
         </div>
       </div>

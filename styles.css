@@ -486,18 +486,105 @@ h1, h2, h3, h4 {
   gap: var(--space-sm);
 }
 
-/* ---- 07c. Home Collection Band ---- */
-.collection-band {
-  display: grid;
-  gap: var(--space-lg);
-  align-items: center;
+/* ---- 07c. Home Collection Stack ----
+   Three exhibit widgets, one above the other, in the hero's second
+   column. Each one deep-links to Our Exhibits with its car promoted.
+   ------------------------------------------------------------------ */
+.hero-collection {
+  display: flex;
+  flex-direction: column;
+  gap: 0.9rem;
 }
 
-.collection-band-body {
+.car-stack {
   display: flex;
   flex-direction: column;
   gap: 0.75rem;
+}
+
+.car-widget {
+  display: grid;
+  grid-template-columns: 128px 1fr auto;
+  align-items: center;
+  gap: 1rem;
+  padding: 0.7rem;
+  color: inherit;
+  text-decoration: none;
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-sm);
+  transition: transform var(--transition), box-shadow var(--transition),
+    border-color var(--transition);
+}
+
+.car-widget:hover,
+.car-widget:focus-visible {
+  border-color: var(--color-gold);
+  transform: translateY(-3px);
+  box-shadow: var(--shadow-lg);
+}
+
+.car-widget-media {
+  display: block;
+  aspect-ratio: 4 / 3;
+  overflow: hidden;
+  background: var(--color-placeholder);
+  border-radius: var(--radius-sm);
+}
+
+.car-widget-media img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform var(--transition);
+}
+
+.car-widget:hover .car-widget-media img {
+  transform: scale(1.05);
+}
+
+.car-widget-label {
+  display: flex;
+  flex-direction: column;
   align-items: flex-start;
+  gap: 0.35rem;
+}
+
+.car-widget .placeholder-badge {
+  font-size: 0.78rem;
+  padding: 0.25rem 0.7rem;
+  box-shadow: none;
+}
+
+.car-widget .placeholder-caption {
+  position: static;
+  margin: 0;
+  font-size: 0.78rem;
+  color: var(--color-text-light);
+}
+
+.car-widget-go {
+  display: grid;
+  place-items: center;
+  width: 36px;
+  height: 36px;
+  color: var(--color-accent);
+  background: rgba(46, 107, 79, 0.08);
+  border-radius: 50%;
+  transition: background var(--transition-fast), color var(--transition-fast);
+}
+
+.car-widget-go svg {
+  width: 18px;
+  height: 18px;
+}
+
+.car-widget:hover .car-widget-go,
+.car-widget:focus-visible .car-widget-go {
+  background: var(--color-gold);
+  color: #fff;
 }
 
 /* .btn-secondary on light heroes uses the default outline style */
@@ -625,41 +712,6 @@ h1, h2, h3, h4 {
   z-index: 2;
   color: rgba(255, 255, 255, 0.92);
   text-shadow: 0 1px 3px rgba(0, 0, 0, 0.85);
-}
-
-/* ---- Interactive badge (links the photo through to its exhibit) ---- */
-.media-placeholder.has-photo .placeholder-badge.badge-link {
-  display: inline-flex;
-  align-items: center;
-  gap: 0.4rem;
-  text-decoration: none;
-  color: var(--color-ink);
-  padding: 0.4rem 0.9rem;
-  border-color: var(--color-gold);
-  transition: background var(--transition-fast), color var(--transition-fast),
-    border-color var(--transition-fast), transform var(--transition-fast),
-    box-shadow var(--transition-fast);
-}
-
-.media-placeholder.has-photo .placeholder-badge.badge-link:hover,
-.media-placeholder.has-photo .placeholder-badge.badge-link:focus-visible {
-  background: var(--color-gold);
-  border-color: var(--color-gold);
-  color: #fff;
-  transform: translateY(-2px);
-  box-shadow: var(--shadow-md);
-}
-
-.badge-link-icon {
-  width: 13px;
-  height: 13px;
-  flex: none;
-  opacity: 0.7;
-}
-
-.placeholder-badge.badge-link:hover .badge-link-icon,
-.placeholder-badge.badge-link:focus-visible .badge-link-icon {
-  opacity: 1;
 }
 
 /* ---- Whole-photo selector (promotes the exhibit) ---- */
@@ -1562,11 +1614,6 @@ body[data-page="history"] .timeline-item .timeline-body {
   .hero-grid {
     grid-template-columns: 1.1fr 0.9fr;
     align-items: center;
-    gap: var(--space-xl);
-  }
-
-  .collection-band {
-    grid-template-columns: 1.05fr 0.95fr;
     gap: var(--space-xl);
   }
 

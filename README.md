@@ -65,10 +65,11 @@ Fend Flitzer to the FMR Tg500 "Tiger" — and showcases the Foundation's feature
   without JavaScript) and doubles as the default, while the other cars live in
   `#spec-<key>` templates. Add a car with a `<template id="spec-<key>">`, a photo button
   carrying `data-spec-select="<key>"`, and a `data-tag` on its `.exhibit-tag` to restore
-  its own label when it is demoted.
-- **Clickable photo badges** — the label on a photo ("ME 200 · Featured",
-  "KR175 · Early Production") is a link through to the matching exhibit card, and the
-  badge/caption bar wraps gracefully when a photo gets too narrow for both.
+  its own label when it is demoted. A link such as `exhibits.html#exhibit-kr175` opens
+  the page with that car already promoted.
+- **Home collection stack** — the three cars sit as widgets one above the other in the
+  hero, each deep-linking to `exhibits.html#exhibit-<car>` so the visitor lands on that
+  car already promoted to the featured slot.
 - **1950s vintage "Micro-Dashboard"** — a chrome speedometer scroll-progress bar (0–60
   MPH), a brass ignition-key theme switch (Classic Racing Green / Night Drive Dark),
   and a chrome engine START button with sequential rev lights.
@@ -82,11 +83,11 @@ Fend Flitzer to the FMR Tg500 "Tiger" — and showcases the Foundation's feature
 
 ```
 messerschmitt-foundation-gb/
-├── index.html        # Home — hero, ME 200 spotlight, KR175 collection band & explore links
+├── index.html        # Home — hero with the collection stack & explore links
 ├── about.html        # About — mission, vehicle verification & key pillars
 ├── history.html      # History — interactive Kabinenroller timeline
 ├── imports.html      # UK Imports — live chassis register (embedded unchanged)
-├── exhibits.html     # Our Exhibits — ME 200, KR175, Tg500 cards + detail pop-up templates
+├── exhibits.html     # Our Exhibits — ME 200, KR175, Tg500 cards + specification templates
 ├── contact.html      # Contact — validated form, registry & visitor policy
 ├── styles.css        # Responsive CSS design system (custom properties & grids)
 ├── app.js            # Vanilla JS: nav drawer, active-page highlight, form, back-to-top
@@ -97,7 +98,7 @@ messerschmitt-foundation-gb/
 
 | File | Role |
 | ---- | ---- |
-| `index.html` | Home page: hero with the ME 200 exhibit spotlight, the KR175 collection band (clickable badge through to the exhibit), and explore cards that link to every section page. |
+| `index.html` | Home page: hero with the collection stack — three exhibit widgets (ME 200, KR175, FMR Tg500) that deep-link to Our Exhibits with that car promoted — plus explore cards that link to every section page. |
 | `about.html` | About page: the Foundation's mission, vehicle verification and maintenance work, plus the three key-pillar cards. |
 | `history.html` | History page: the visual Kabinenroller timeline (1948–1958). |
 | `imports.html` | UK Imports page: embeds the live MFGB Chassis Register dashboard (`fraserbyte.github.io/Messerschmitt`) unchanged in a full-height iframe. |

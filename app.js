@@ -1657,18 +1657,18 @@
 
     // Bring the grown card into view when it is off-screen — on a phone a
     // press would otherwise look like nothing happened.
-    function revealCard(card) {
+    function revealCard(card, immediate) {
       const box = card.getBoundingClientRect();
       const visible = Math.min(box.bottom, window.innerHeight) - Math.max(box.top, 0);
       const wanted = Math.min(box.height, window.innerHeight * 0.75);
       if (visible > wanted * 0.6) return;
       card.scrollIntoView({
-        behavior: prefersReducedMotion() ? "auto" : "smooth",
+        behavior: immediate || prefersReducedMotion() ? "auto" : "smooth",
         block: "start"
       });
     }
 
-    function promote(key) {
+    function promote(key, immediate) {
       if (key === featuredKey) return;
 
       const entry = entryFor(key);
@@ -1685,6 +1685,15 @@
       markFeatured(key);
       entry.body.appendChild(panel); // the sheet travels with its card
 
+      // Keep the address bar pointing at the car on show, so reloading or
+      // copying the link lands on the same exhibit. replaceState adds no
+      // history entry and fires no hashchange, so nothing loops.
+      try {
+        window.history.replaceState(null, "", "#exhibit-" + key);
+      } catch (err) {
+        /* history unavailable — the page still works, just without the hash */
+      }
+
       carLabel.textContent = entry.trigger.getAttribute("data-spec-name") || "";
       if (status) {
         const full =
@@ -1694,27 +1703,33 @@
         status.textContent = full + " is now the featured exhibit.";
       }
 
-      // Sheet out, swap, in — plus a brass flash on the frame.
+      // Sheet out, swap, in — plus a brass flash on the frame. A deep link
+      // swaps straight away so the page never arrives half-drawn.
       window.clearTimeout(swapTimer);
       window.clearTimeout(flashTimer);
-      body.classList.remove("is-in");
-      body.classList.add("is-out");
-      panel.classList.add("is-swapping");
-      flashTimer = window.setTimeout(() => panel.classList.remove("is-swapping"), 700);
+      body.classList.remove("is-in", "is-out");
 
-      swapTimer = window.setTimeout(() => {
+      if (immediate) {
         body.innerHTML = sheets[key];
-        body.classList.remove("is-out");
-        body.classList.add("is-in");
-        window.setTimeout(() => body.classList.remove("is-in"), 260);
-      }, 150);
+      } else {
+        body.classList.add("is-out");
+        panel.classList.add("is-swapping");
+        flashTimer = window.setTimeout(() => panel.classList.remove("is-swapping"), 700);
 
-      if (!prefersReducedMotion()) {
+        swapTimer = window.setTimeout(() => {
+          body.innerHTML = sheets[key];
+          body.classList.remove("is-out");
+          body.classList.add("is-in");
+          window.setTimeout(() => body.classList.remove("is-in"), 260);
+        }, 150);
+      }
+
+      if (!immediate && !prefersReducedMotion()) {
         replay(entry.card, "is-promoting");
         if (previous && previous !== entry) replay(previous.card, "is-demoting");
       }
 
-      revealCard(entry.card);
+      revealCard(entry.card, immediate);
     }
 
     entries.forEach((entry) => {
@@ -1732,6 +1747,21 @@
 
     // Mark the card that already holds the featured slot.
     markFeatured(featuredKey);
+
+    // Deep link — the home page widgets arrive as
+    // exhibits.html#exhibit-kr175, which opens with that car promoted.
+    function keyFromHash() {
+      const match = /^#exhibit-(.+)$/.exec(window.location.hash || "");
+      return match && entryFor(match[1]) ? match[1] : null;
+    }
+
+    const linked = keyFromHash();
+    if (linked && linked !== featuredKey) promote(linked, true);
+
+    window.addEventListener("hashchange", () => {
+      const key = keyFromHash();
+      if (key) promote(key);
+    });
   }
 
   /* ============================================================
