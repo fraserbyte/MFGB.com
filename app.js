@@ -22,11 +22,23 @@
   const navToggle = document.getElementById("nav-toggle");
   const mainNav = document.getElementById("main-nav");
 
+  // Below this width the header shows the drawer rather than the row of
+  // tabs. Keep it in step with the breakpoint in styles.css (the
+  // horizontal navigation appears in the > 1024px block).
+  const DESKTOP_NAV = "(min-width: 1025px)";
+
   function setNavState(isOpen) {
     navToggle.setAttribute("aria-expanded", String(isOpen));
     mainNav.setAttribute("aria-hidden", String(!isOpen));
     mainNav.classList.toggle("is-open", isOpen);
     navToggle.setAttribute("aria-label", isOpen ? "Close navigation" : "Toggle navigation");
+
+    // The drawer scrolls on its own; freezing the page behind it stops
+    // the layout scrolling away under an open menu, and drives the
+    // dimmer in the stylesheet.
+    const lock = isOpen && !window.matchMedia(DESKTOP_NAV).matches;
+    document.body.classList.toggle("nav-is-open", lock);
+    document.body.style.overflow = lock ? "hidden" : "";
   }
 
   function initNavToggle() {
@@ -46,6 +58,15 @@
       });
     });
 
+    // Tapping the dimmed page behind the drawer closes it, which is
+    // what a thumb reaches for before it finds the ✕.
+    document.addEventListener("click", (event) => {
+      if (navToggle.getAttribute("aria-expanded") !== "true") return;
+      const target = event.target;
+      if (!(target instanceof Element) || target.closest("#main-nav, #nav-toggle")) return;
+      setNavState(false);
+    });
+
     // Close on Escape and return focus to the toggle for keyboard users.
     document.addEventListener("keydown", (event) => {
       if (event.key === "Escape" && navToggle.getAttribute("aria-expanded") === "true") {
@@ -56,7 +77,7 @@
 
     // Reset the drawer state when resizing to a desktop layout.
     window.addEventListener("resize", () => {
-      if (window.matchMedia("(min-width: 768px)").matches) {
+      if (window.matchMedia(DESKTOP_NAV).matches) {
         setNavState(false);
       }
     });

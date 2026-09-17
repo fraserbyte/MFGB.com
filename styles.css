@@ -750,6 +750,18 @@ h1, h2, h3, h4 {
   color: #fff;
 }
 
+/* A soft scrim along the foot of every photo so the badge and the
+   caption stay readable whatever the picture does underneath. */
+.media-placeholder.has-photo::after {
+  content: "";
+  position: absolute;
+  inset: auto 0 0 0;
+  height: 48%;
+  z-index: 1;
+  pointer-events: none;
+  background: linear-gradient(180deg, rgba(10, 14, 20, 0) 0%, rgba(10, 14, 20, 0.62) 62%, rgba(10, 14, 20, 0.86) 100%);
+}
+
 /* ---- Badge / caption overlay bar ---------------------------------
    The badge and caption share the foot of the photo: side by side
    while both fit, wrapping onto two left-aligned lines once the
@@ -920,6 +932,15 @@ h1, h2, h3, h4 {
 /* Tall 1955 photo: keep the top of the image in view (the two people). */
 .history-spotlight-image-wrap img[src$="1955.jpg"] {
   object-position: top center;
+}
+
+/* The "Today" plate is artwork, not a photograph — cropping it to a
+   portrait screen blew its lettering up to a storey high and cut it
+   in half. Fit the whole plate and let its own ground colour carry
+   the rest of the frame. */
+.history-spotlight-image-wrap img[src$="today-placeholder.svg"] {
+  object-fit: contain;
+  background: #1a2433;
 }
 
 .history-spotlight-gradient {
@@ -1581,36 +1602,6 @@ body[data-page="history"] .timeline-item .timeline-body {
     padding-block: calc(var(--space-xl) + 1rem);
   }
 
-  .nav-toggle {
-    display: none;
-  }
-
-  .main-nav {
-    display: block;
-    position: static;
-    background: transparent;
-    border-top: none;
-  }
-
-  .nav-list {
-    display: flex;
-    align-items: center;
-    gap: 0.25rem;
-    padding: 0;
-  }
-
-  .nav-link {
-    padding: 0.6rem 0.85rem;
-    border-left: none;
-    border-bottom: 3px solid transparent;
-    border-radius: var(--radius-sm);
-  }
-
-  .nav-link.is-active {
-    border-left-color: transparent;
-    border-bottom-color: var(--color-accent);
-  }
-
   .hero-grid {
     grid-template-columns: 1.1fr 0.9fr;
     align-items: center;
@@ -1671,6 +1662,48 @@ body[data-page="history"] .timeline-item .timeline-body {
     padding-inline: 2.5rem;
   }
 
+  /* ---- Horizontal navigation ---------------------------------
+     The six tabs plus the two-line wordmark need about a thousand
+     pixels. Revealed at 768px they used to run straight over the
+     brand — "FOUNDATION OF GREAT BRITAIN" printed across "Home" —
+     so the drawer now holds the whole way up to the desktop
+     breakpoint, where the row genuinely fits. */
+  .nav-toggle {
+    display: none;
+  }
+
+  .main-nav {
+    display: block;
+    position: static;
+    max-height: none;
+    overflow: visible;
+    background: transparent;
+    border-top: none;
+    box-shadow: none;
+  }
+
+  .nav-list {
+    display: flex;
+    align-items: center;
+    gap: 0.25rem;
+    padding: 0;
+  }
+
+  .nav-link {
+    display: block;
+    min-height: 0;
+    padding: 0.6rem 0.7rem;
+    font-size: 1rem;
+    border-left: none;
+    border-bottom: 3px solid transparent;
+    border-radius: var(--radius-sm);
+  }
+
+  .nav-link.is-active {
+    border-left-color: transparent;
+    border-bottom-color: var(--color-accent);
+  }
+
   .explore-grid {
     grid-template-columns: repeat(4, 1fr);
   }
@@ -1697,6 +1730,15 @@ body[data-page="history"] .timeline-item .timeline-body {
   }
 }
 
+/* Wide desktop: once there is room to spare, the tabs go back to
+   their original spacing. Between 1025px and here they run a little
+   tighter so the row clears the wordmark. */
+@media (min-width: 1200px) {
+  .nav-link {
+    padding: 0.6rem 0.85rem;
+  }
+}
+
 /* ============================================================
    ME 200 "In the Wild" — background of the Explore section
    ------------------------------------------------------------
@@ -1717,6 +1759,22 @@ body[data-page="history"] .timeline-item .timeline-body {
 
 .section-explore-bg .section-heading {
   text-shadow: 0 1px 4px rgba(0, 0, 0, 0.65);
+}
+
+/* This band always sits on a darkened photograph, whichever way the
+   red button is switched, so its type is pinned light rather than
+   following the theme — in Day mode the heading ink was landing
+   dark on a dark picture. */
+.section-explore-bg .section-title {
+  color: #F5F8FC;
+}
+
+.section-explore-bg .section-subtitle {
+  color: rgba(238, 243, 249, 0.92);
+}
+
+.section-explore-bg .eyebrow {
+  color: #D9A85E;
 }
 
 /* ============================================================
@@ -2072,26 +2130,15 @@ html[data-theme="dark"] .dash-red .red-dot {
   outline-offset: 3px;
 }
 
-/* Compact the dashboard on small screens */
+/* Compact the canopy card on small screens. (The dashboard cluster
+   itself is sized in section 21, alongside the rest of the handheld
+   layout, so the two cannot drift apart.) */
 @media (max-width: 480px) {
-  .micro-dashboard {
-    bottom: 0.9rem;
-    left: 0.9rem;
-    padding: 0.55rem;
-    gap: 0.5rem;
-  }
-
-  .dash-choke,
-  .dash-switch,
-  .dash-red {
-    width: 40px;
-    height: 40px;
-  }
-
   .canopy-asset-frame {
     min-height: 280px;
   }
 }
+
 
 /* ============================================================
    19. UK Imports — Embedded Chassis Register
@@ -2116,6 +2163,23 @@ html[data-theme="dark"] .dash-red .red-dot {
   width: 100%;
   height: 100%;
   border: 0;
+}
+
+.imports-escape {
+  margin-top: var(--space-sm);
+  font-family: var(--font-heading);
+  font-size: 0.8rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.imports-escape a {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  min-height: 44px;
+  color: var(--color-gold);
 }
 
 /* ============================================================
@@ -2441,5 +2505,655 @@ html[data-theme="dark"] .dash-red .red-dot {
 @media (pointer: coarse) {
   .game-touch {
     display: flex;
+  }
+}
+
+/* ============================================================
+   21. Handheld Refinements (< 768px)
+   ------------------------------------------------------------
+   The layout above already stacks on a phone; this section is
+   about how it *reads* there. Everything below is scoped to the
+   handheld range, so the desktop design is untouched:
+
+     · a tighter spacing scale, so a page is scrolled not trudged
+     · a compact two-line masthead and a proper full-height drawer
+     · specification sheets that stack instead of fraying into
+       one-word columns
+     · the dashboard cluster pulled clear of the reading column
+     · the arcade game given a portrait layout of its own
+   ============================================================ */
+@media (max-width: 767px) {
+  /* ---- Rhythm -----------------------------------------------
+     Retuning the two largest steps of the spacing scale walks
+     through every section, hero and footer at once. */
+  :root {
+    --space-lg: 1.85rem;
+    --space-xl: 2.75rem;
+    --header-height: 58px;
+  }
+
+  .container {
+    padding-inline: 1.1rem;
+  }
+
+  /* ---- Masthead ---------------------------------------------
+     A smaller roundel and a tighter wordmark keep the brand on
+     two lines, so the sticky header costs ~58px instead of ~86px
+     of a phone screen. */
+  .header-inner {
+    gap: 0.75rem;
+    padding-block: 0.5rem;
+  }
+
+  .brand {
+    gap: 0.55rem;
+    min-width: 0;
+  }
+
+  .brand-logo {
+    height: 32px;
+  }
+
+  .brand-text {
+    font-size: 0.58rem;
+    letter-spacing: 0.055em;
+    line-height: 1.4;
+  }
+
+  .site-header.is-scrolled .header-inner {
+    min-height: calc(var(--header-height) - 6px);
+    padding-block: 0.35rem;
+  }
+
+  .site-header.is-scrolled .brand-logo {
+    height: 28px;
+  }
+
+  /* ---- Hero -------------------------------------------------
+     The section and the grid were each paying a full --space-xl,
+     which left a screen-and-a-half of nothing above the title. */
+  .hero-section {
+    padding-block: 0;
+  }
+
+  .hero-grid {
+    gap: var(--space-lg);
+    padding-block: 1.75rem var(--space-lg);
+  }
+
+  .hero-title {
+    font-size: clamp(1.7rem, 8vw, 2.2rem);
+    margin-block: 0.5rem 0.75rem;
+  }
+
+  .hero-lede {
+    font-size: 1rem;
+  }
+
+  .callout-box {
+    flex-direction: column;
+    gap: 0.35rem;
+    padding: 0.9rem 1rem;
+    font-size: 0.94rem;
+  }
+
+  /* Full-width stacked calls to action — easier to hit, and they
+     read as a deliberate pair rather than two stray pills. */
+  .hero-actions {
+    gap: 0.6rem;
+  }
+
+  .hero-actions .btn {
+    flex: 1 1 100%;
+    min-height: 50px;
+  }
+
+  /* ---- Collection stack -------------------------------------
+     Slimmer thumbnail column so the label has room for its two
+     lines without the caption folding word by word. */
+  .car-widget {
+    grid-template-columns: 96px 1fr auto;
+    gap: 0.8rem;
+    padding: 0.55rem;
+  }
+
+  .car-widget .placeholder-badge {
+    font-size: 0.74rem;
+    padding: 0.22rem 0.6rem;
+  }
+
+  .car-widget .placeholder-caption {
+    font-size: 0.7rem;
+    letter-spacing: 0.04em;
+  }
+
+  .car-widget-go {
+    width: 30px;
+    height: 30px;
+  }
+
+  .car-widget-go svg {
+    width: 15px;
+    height: 15px;
+  }
+
+  /* ---- Page heroes & sections -------------------------------- */
+  .page-hero .page-subtitle,
+  .section-subtitle {
+    font-size: 0.98rem;
+  }
+
+  /* Wide tracking at this width turned every eyebrow into three
+     shouted lines above the heading it introduces. */
+  .eyebrow {
+    font-size: 0.72rem;
+    letter-spacing: 0.12em;
+  }
+
+  .section-heading {
+    margin-bottom: var(--space-md);
+  }
+
+  /* The photo behind Explore needs a heavier veil at this size:
+     the cards sit almost edge to edge, so the headline has less
+     clean sky to sit against. */
+  .section-explore-bg {
+    background-image:
+      linear-gradient(180deg, var(--color-background) 0%, rgba(13, 18, 26, 0.82) 12%, rgba(13, 18, 26, 0.48) 34%, rgba(13, 18, 26, 0.5) 62%, rgba(13, 18, 26, 0.86) 86%, var(--color-background) 100%),
+      url("me 200 in the wild.jpeg");
+  }
+
+  /* Exhibit cards carry their own padding on .exhibit-body so the
+     photograph can run to the edge of the frame — keep them out of
+     the general card tightening. */
+  .card:not(.exhibit-card) {
+    padding: 1.15rem;
+  }
+
+  .card-icon {
+    width: 44px;
+    height: 44px;
+    margin-bottom: 0.75rem;
+  }
+
+  .card-icon svg {
+    width: 24px;
+    height: 24px;
+  }
+
+  /* ---- Photo overlays ---------------------------------------
+     Badge over caption: side by side, the caption ran into the
+     badge and off the edge of a narrow photo. */
+  .media-placeholder.has-photo .photo-overlay {
+    left: 0.65rem;
+    right: 0.65rem;
+    bottom: 0.65rem;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.3rem;
+  }
+
+  .media-placeholder.has-photo .placeholder-caption {
+    font-size: 0.72rem;
+  }
+
+  /* ---- Exhibits & specification sheets -----------------------
+     A two-column table inside a 350px card gave a 40% label
+     column and a shredded value column ("191cc Fichtel & Sachs
+     two-/stroke, air-/cooled, single-/cylinder"). On a phone the
+     rows stack: label above, value on the full width beneath. */
+  .exhibits-grid {
+    gap: var(--space-md);
+  }
+
+  .exhibit-body {
+    padding: 1.15rem;
+    gap: 0.6rem;
+  }
+
+  .spec-panel {
+    padding: 0.85rem 0.9rem;
+  }
+
+  .spec-table,
+  .spec-table tbody,
+  .spec-table tr,
+  .spec-table th,
+  .spec-table td {
+    display: block;
+    width: auto;
+  }
+
+  .spec-table tr {
+    padding-block: 0.6rem;
+    border-bottom: 1px solid var(--color-border);
+  }
+
+  .spec-table tr:last-child {
+    border-bottom: none;
+    padding-bottom: 0;
+  }
+
+  .spec-table tr:first-child {
+    padding-top: 0;
+  }
+
+  .spec-table th,
+  .spec-table td {
+    padding: 0;
+    border-bottom: none;
+    white-space: normal;
+  }
+
+  .spec-table th {
+    margin-bottom: 0.2rem;
+    font-size: 0.7rem;
+    letter-spacing: 0.08em;
+    color: var(--color-gold);
+  }
+
+  .spec-table td {
+    font-size: 0.95rem;
+    line-height: 1.55;
+  }
+
+  /* Row hover is a pointer idea; on touch it only ever flashes. */
+  .spec-table tr:hover th,
+  .spec-table tr:hover td,
+  .spec-panel .spec-table tr:hover th,
+  .spec-panel .spec-table tr:hover td {
+    background: transparent;
+  }
+
+  /* ---- History timeline --------------------------------------
+     The rail and the item indent together ate a fifth of the
+     screen. Tightened, with the card carrying a little more
+     weight so the text holds up over the spotlight photo. */
+  .timeline {
+    padding-left: 0.9rem;
+  }
+
+  .timeline-item,
+  body[data-page="history"] .timeline-item {
+    padding: 0.25rem 0 var(--space-md) 1rem;
+  }
+
+  .timeline-item.is-active {
+    transform: translateX(4px);
+  }
+
+  .timeline-marker {
+    left: -0.9rem;
+    width: 12px;
+    height: 12px;
+  }
+
+  body[data-page="history"] .timeline-item .timeline-body {
+    padding: 0.85rem 0.95rem;
+    background: rgba(9, 14, 18, 0.42);
+    border-radius: 0.85rem;
+  }
+
+  .timeline-title {
+    font-size: 1.05rem;
+  }
+
+  .timeline-text {
+    font-size: 0.95rem;
+    line-height: 1.6;
+  }
+
+  /* A darker wash over the fixed spotlight photo: on a phone the
+     text column covers most of the picture anyway, and legibility
+     has to win. */
+  .history-spotlight-gradient {
+    background:
+      linear-gradient(90deg, rgba(7, 12, 17, 0.78) 0%, rgba(14, 20, 25, 0.72) 30%, rgba(14, 20, 25, 0.6) 65%, rgba(14, 20, 25, 0.8) 100%),
+      linear-gradient(180deg, rgba(15, 20, 28, 0.35) 0%, rgba(10, 14, 19, 0.8) 100%);
+  }
+
+  .archive-group {
+    padding: 1.15rem;
+  }
+
+  .archive-list li {
+    padding: 0.7rem 0.8rem;
+  }
+
+  /* ---- Contact form ------------------------------------------ */
+  .contact-form {
+    padding: 1.15rem;
+    gap: 1.1rem;
+  }
+
+  .contact-form .btn {
+    width: 100%;
+    min-height: 50px;
+  }
+
+  .form-field textarea {
+    min-height: 120px;
+  }
+
+  /* ---- UK Imports embed --------------------------------------
+     The register is a desktop dashboard in a frame; give it as
+     much of the screen as there is, and offer a way out of the
+     frame just beneath it. */
+  .imports-embed {
+    height: calc(100dvh - var(--header-height) - 5rem);
+    min-height: 460px;
+    border-radius: var(--radius-md);
+  }
+
+  /* ---- Footer ------------------------------------------------
+     Six quick links in one column made the footer longer than
+     some of the pages above it. */
+  .footer-grid {
+    gap: var(--space-md);
+  }
+
+  .footer-nav ul {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 0.35rem 1rem;
+  }
+
+  .footer-nav a,
+  .footer-legal a {
+    display: inline-block;
+    padding-block: 0.3rem;
+  }
+
+  .footer-bottom {
+    gap: 0.9rem;
+    font-size: 0.84rem;
+  }
+
+  /* Room at the foot of the page for the floating dashboard. */
+  .site-footer {
+    padding-bottom: calc(4.5rem + env(safe-area-inset-bottom));
+  }
+
+  .back-to-top {
+    width: 44px;
+    height: 44px;
+  }
+
+  /* ---- Dashboard cluster -------------------------------------
+     Shrunk, and moved across to the right. A floating control has
+     to sit on top of something; on the left it covered the start
+     of every line of body copy, which is the one place a reader
+     cannot skip. On the ragged right edge it mostly floats over
+     white space, and it lands under the thumb either way. */
+  .micro-dashboard {
+    bottom: calc(0.75rem + env(safe-area-inset-bottom));
+    left: auto;
+    right: calc(0.75rem + env(safe-area-inset-right));
+    gap: 0.4rem;
+    padding: 0.45rem;
+    border-radius: 13px;
+    background: rgba(51, 65, 85, 0.82);
+    opacity: 0.94;
+  }
+
+  .micro-dashboard:focus-within,
+  .micro-dashboard:active {
+    opacity: 1;
+  }
+
+  .dash-choke {
+    width: 32px;
+    height: 38px;
+  }
+
+  .dash-choke .choke-knob {
+    width: 11px;
+    height: 17px;
+  }
+
+  .dash-switch,
+  .dash-red {
+    width: 38px;
+    height: 38px;
+  }
+
+  .dash-switch .switch-key {
+    top: 5px;
+    height: 12px;
+  }
+
+  .dash-red .red-dot {
+    top: 5px;
+  }
+}
+
+/* ============================================================
+   21b. Navigation Drawer (< 1025px)
+   ------------------------------------------------------------
+   Everything below the desktop breakpoint gets the drawer, so
+   these run wider than the handheld block above: a panel that
+   scrolls on its own, dims the page behind it, and gives every
+   link a comfortable thumb target.
+   ============================================================ */
+@media (max-width: 1024px) {
+  .main-nav {
+    max-height: calc(100vh - var(--header-height) - 1.5rem);
+    max-height: calc(100dvh - var(--header-height) - 1.5rem);
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
+    box-shadow: 0 18px 30px rgba(8, 12, 18, 0.45);
+  }
+
+  .main-nav.is-open {
+    animation: nav-drawer-in 200ms ease;
+  }
+
+  @keyframes nav-drawer-in {
+    from {
+      opacity: 0;
+      transform: translateY(-8px);
+    }
+    to {
+      opacity: 1;
+      transform: none;
+    }
+  }
+
+  .nav-list {
+    padding: 0.35rem 0 max(0.75rem, env(safe-area-inset-bottom));
+  }
+
+  .nav-link {
+    display: flex;
+    align-items: center;
+    min-height: 48px;
+    padding: 0.7rem 1.1rem;
+    font-size: 1.02rem;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.07);
+  }
+
+  .nav-list li:last-child .nav-link {
+    border-bottom: none;
+  }
+
+  /* Page dimmer behind the open drawer (class set from app.js). */
+  body.nav-is-open::before {
+    content: "";
+    position: fixed;
+    inset: 0;
+    z-index: 900;
+    background: rgba(8, 12, 18, 0.5);
+    -webkit-backdrop-filter: blur(2px);
+    backdrop-filter: blur(2px);
+  }
+
+  /* The dashboard cluster steps aside while the menu is open — in
+     landscape the drawer reaches all the way down to it. */
+  body.nav-is-open .micro-dashboard {
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity var(--transition-fast);
+  }
+}
+
+/* ============================================================
+   22. KR200 Racer — portrait layout
+   ------------------------------------------------------------
+   Held upright, a 16:10 stage centred in the viewport shrank to
+   a 390 × 244 letterbox with the touch pad sitting on top of the
+   START button. In portrait the stage becomes the whole screen:
+   the canvas keeps its aspect and sits in the middle, the touch
+   pad takes the space beneath it, and the HUD lifts clear of the
+   controls.
+   ============================================================ */
+@media (max-width: 900px) and (orientation: portrait) {
+  .kr200-game {
+    padding: 0;
+    align-items: stretch;
+  }
+
+  .game-stage {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    width: 100%;
+    height: 100vh;
+    height: 100dvh;
+    max-height: none;
+    aspect-ratio: auto;
+    border: 0;
+    border-radius: 0;
+    box-shadow: none;
+    /* The screen cannot fill a portrait phone without stretching the
+       track, so the surround is lit like a cabinet bezel instead of
+       sitting there as flat black. */
+    background: radial-gradient(ellipse at 50% 34%, #16241a 0%, #0b120d 72%);
+  }
+
+  .game-canvas {
+    flex: 0 0 auto;
+    width: 100%;
+    height: auto;
+    aspect-ratio: 16 / 10;
+    border-block: 4px solid #2b3a2e;
+  }
+
+  .game-touch {
+    position: static;
+    margin-top: auto;
+    padding: 0.85rem 0.75rem calc(0.85rem + env(safe-area-inset-bottom));
+  }
+
+  .game-touch button {
+    flex: 1 1 0;
+    min-width: 0;
+    padding: 26px 8px;
+    font-size: 17px;
+  }
+
+  /* Sound and exit sat in the same top-right corner as the lap
+     timer once the stage grew to the full screen; they move down
+     into the bezel, clear of the track. */
+  .game-actions {
+    top: calc(62.5vw + 34px);
+    left: 0;
+    right: 0;
+    justify-content: center;
+  }
+
+  .game-mute,
+  .game-close {
+    padding: 10px 14px;
+    font-size: 9px;
+  }
+
+  /* The stage is now the whole screen, so the HUD is clipped back to
+     the height of the canvas — 100vw at 16:10 — and every readout
+     stays over the track it belongs to. */
+  .game-hud {
+    bottom: auto;
+    height: 62.5vw;
+    font-size: clamp(9px, 3vw, 13px);
+  }
+
+  .hud-speed {
+    bottom: 10px;
+  }
+
+  /* Control legend moves out from under the track and into the
+     bezel beneath it. */
+  .hud-controls {
+    top: calc(62.5vw + 14px);
+    left: 0;
+    right: 0;
+    bottom: auto;
+    text-align: center;
+    font-size: 8px;
+  }
+
+  /* Title, pause and finish screens start below the bezel controls
+     rather than centring on the whole screen, which put them on top
+     of the sound and exit buttons. */
+  .game-screen {
+    justify-content: flex-start;
+    gap: 14px;
+    padding: calc(62.5vw + 80px) 18px 118px;
+    overflow-y: auto;
+  }
+
+  .game-title {
+    font-size: clamp(22px, 9vw, 40px);
+  }
+
+  .game-track-select {
+    width: 100%;
+  }
+
+  .game-track-btn {
+    flex: 1 1 42%;
+    padding: 12px 10px;
+  }
+
+  .game-btn {
+    padding: 16px 22px;
+  }
+
+  .game-results {
+    gap: 10px 20px;
+  }
+
+  /* A quiet nudge that the circuit is better sideways. */
+  #screen-title::after {
+    content: "\21BB  ROTATE FOR A WIDER TRACK";
+    font-size: 8px;
+    letter-spacing: 0.12em;
+    color: #9fc5a8;
+    opacity: 0.85;
+  }
+}
+
+/* ============================================================
+   23. Smallest phones (≤ 360px)
+   ------------------------------------------------------------
+   One more step down on the wordmark, so the masthead still holds
+   "FOUNDATION OF GREAT BRITAIN" on a single line and the header
+   stays two lines deep. Must follow section 21 to win over it.
+   ============================================================ */
+@media (max-width: 360px) {
+  .brand-text {
+    font-size: 0.53rem;
+    letter-spacing: 0.04em;
+  }
+
+  .container {
+    padding-inline: 0.95rem;
+  }
+
+  .car-widget {
+    grid-template-columns: 86px 1fr auto;
+    gap: 0.65rem;
+  }
+
+  .hero-title {
+    font-size: 1.62rem;
   }
 }
