@@ -55,6 +55,13 @@ Fend Flitzer to the FMR Tg500 "Tiger" — and showcases the Foundation's feature
 - **Interactive "Canopy Door" exhibit card** — a glassmorphism showcase of the ME 200
   whose acrylic lid hinges open on hover, tap, or keyboard to reveal the cabin's
   technical specs grid.
+- **Exhibit pop-up** — the info icon on an exhibit photo opens a modal holding that
+  car's longer description and full technical specification table. Content lives in an
+  inert `<template>` on `exhibits.html`, so adding another exhibit means adding a
+  template plus a button carrying `data-exhibit-detail="<template-id>"`.
+- **Clickable photo badges** — the label on a photo ("ME 200 · Featured",
+  "KR175 · Early Production") is a link through to the matching exhibit card, and the
+  badge/caption bar wraps gracefully when a photo gets too narrow for both.
 - **1950s vintage "Micro-Dashboard"** — a chrome speedometer scroll-progress bar (0–60
   MPH), a brass ignition-key theme switch (Classic Racing Green / Night Drive Dark),
   and a chrome engine START button with sequential rev lights.
@@ -68,11 +75,11 @@ Fend Flitzer to the FMR Tg500 "Tiger" — and showcases the Foundation's feature
 
 ```
 messerschmitt-foundation-gb/
-├── index.html        # Home — hero, featured exhibit spotlight & explore links
+├── index.html        # Home — hero, ME 200 spotlight, KR175 collection band & explore links
 ├── about.html        # About — mission, vehicle verification & key pillars
 ├── history.html      # History — interactive Kabinenroller timeline
 ├── imports.html      # UK Imports — live chassis register (embedded unchanged)
-├── exhibits.html     # Our Exhibits — ME 200, KR175, Tg500 with spec tables
+├── exhibits.html     # Our Exhibits — ME 200, KR175, Tg500 cards + detail pop-up templates
 ├── contact.html      # Contact — validated form, registry & visitor policy
 ├── styles.css        # Responsive CSS design system (custom properties & grids)
 ├── app.js            # Vanilla JS: nav drawer, active-page highlight, form, back-to-top
@@ -83,14 +90,14 @@ messerschmitt-foundation-gb/
 
 | File | Role |
 | ---- | ---- |
-| `index.html` | Home page: hero with the ME 200 exhibit spotlight, media placeholder, and explore cards that link to every section page. |
+| `index.html` | Home page: hero with the ME 200 exhibit spotlight, the KR175 collection band (clickable badge through to the exhibit), and explore cards that link to every section page. |
 | `about.html` | About page: the Foundation's mission, vehicle verification and maintenance work, plus the three key-pillar cards. |
 | `history.html` | History page: the visual Kabinenroller timeline (1948–1958). |
 | `imports.html` | UK Imports page: embeds the live MFGB Chassis Register dashboard (`fraserbyte.github.io/Messerschmitt`) unchanged in a full-height iframe. |
-| `exhibits.html` | Exhibits page: ME 200 (with full technical specification table), KR175, and FMR Tg500 cards. |
+| `exhibits.html` | Exhibits page: ME 200 (with full technical specification table), KR175 (info icon opens its specification pop-up), and FMR Tg500 cards. |
 | `contact.html` | Contact page: accessible form, Foundation details, UK registry, and visitor policy. |
 | `styles.css` | All styling. Design tokens live in `:root` (palette, typography, spacing, elevation, radii). Contains the `.media-placeholder` system, card components, page-hero banners, and mobile-first media queries. |
-| `app.js` | Modular IIFE with four independent initialisation routines: navigation toggle, active-page highlighting, form validation, and back-to-top visibility. |
+| `app.js` | Modular IIFE with independent initialisation routines: navigation toggle, active-page highlighting, form validation, back-to-top visibility, header compression, exhibit detail pop-up, and the KR200 Racer game. |
 | `README.md` | Documentation for local development, asset replacement, and GitHub Pages deployment. |
 
 > **Note on structure:** GitHub Pages serves the repository root by default, so
@@ -224,7 +231,7 @@ mkdir -p assets/images
 | Asset | Location | Suggested dimensions |
 | ----- | -------- | -------------------- |
 | ME 200 hero shot | `assets/images/me200.jpg` | 1600 × 900 (16:9) |
-| KR175 exhibit | `assets/images/kr175.jpg` | 1200 × 900 (4:3) |
+| KR175 exhibit | `histroy of the mfgb file/messerschmitt-KR175.jpg` (archive photo, used by `exhibits.html`, `index.html` and the `history.html` timeline) | 4:3 crop at 1200 × 900 |
 | FMR Tg500 exhibit | `assets/images/tg500.jpg` | 1200 × 900 (4:3) |
 | Open Graph cover | `assets/images/og-cover.jpg` | 1200 × 630 (OG spec) |
 

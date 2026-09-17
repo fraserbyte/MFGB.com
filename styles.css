@@ -486,6 +486,20 @@ h1, h2, h3, h4 {
   gap: var(--space-sm);
 }
 
+/* ---- 07c. Home Collection Band ---- */
+.collection-band {
+  display: grid;
+  gap: var(--space-lg);
+  align-items: center;
+}
+
+.collection-band-body {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  align-items: flex-start;
+}
+
 /* .btn-secondary on light heroes uses the default outline style */
 
 /* ============================================================
@@ -611,6 +625,103 @@ h1, h2, h3, h4 {
   z-index: 2;
   color: rgba(255, 255, 255, 0.92);
   text-shadow: 0 1px 3px rgba(0, 0, 0, 0.85);
+}
+
+/* ---- Interactive badge (links the photo through to its exhibit) ---- */
+.media-placeholder.has-photo .placeholder-badge.badge-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  text-decoration: none;
+  color: var(--color-ink);
+  padding: 0.4rem 0.9rem;
+  border-color: var(--color-gold);
+  transition: background var(--transition-fast), color var(--transition-fast),
+    border-color var(--transition-fast), transform var(--transition-fast),
+    box-shadow var(--transition-fast);
+}
+
+.media-placeholder.has-photo .placeholder-badge.badge-link:hover,
+.media-placeholder.has-photo .placeholder-badge.badge-link:focus-visible {
+  background: var(--color-gold);
+  border-color: var(--color-gold);
+  color: #fff;
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-md);
+}
+
+.badge-link-icon {
+  width: 13px;
+  height: 13px;
+  flex: none;
+  opacity: 0.7;
+}
+
+.placeholder-badge.badge-link:hover .badge-link-icon,
+.placeholder-badge.badge-link:focus-visible .badge-link-icon {
+  opacity: 1;
+}
+
+/* ---- Info icon over an exhibit photo (opens the detail pop-up) ---- */
+.exhibit-info {
+  position: absolute;
+  top: 0.75rem;
+  right: 0.75rem;
+  z-index: 3;
+  display: grid;
+  place-items: center;
+  width: 42px;
+  height: 42px;
+  padding: 0;
+  cursor: pointer;
+  color: var(--color-ink);
+  background: var(--color-surface);
+  border: 1px solid var(--color-gold);
+  border-radius: 50%;
+  box-shadow: var(--shadow-sm);
+  transition: background var(--transition-fast), color var(--transition-fast),
+    border-color var(--transition-fast), transform var(--transition-fast),
+    box-shadow var(--transition-fast);
+}
+
+.exhibit-info svg {
+  width: 20px;
+  height: 20px;
+}
+
+.exhibit-info:hover,
+.exhibit-info:focus-visible {
+  background: var(--color-gold);
+  border-color: var(--color-gold);
+  color: #fff;
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-md);
+}
+
+/* ---- Badge / caption overlay bar ---------------------------------
+   The badge and caption share the foot of the photo: side by side
+   while both fit, wrapping onto two left-aligned lines once the
+   photo (or the column it sits in) gets narrow. Driven by the
+   content itself, so it needs no breakpoints.
+   ------------------------------------------------------------------ */
+.media-placeholder.has-photo .photo-overlay {
+  position: absolute;
+  left: 0.75rem;
+  right: 0.75rem;
+  bottom: 0.75rem;
+  z-index: 2;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 0.5rem;
+}
+
+.media-placeholder.has-photo .photo-overlay .placeholder-badge,
+.media-placeholder.has-photo .photo-overlay .placeholder-caption {
+  position: static;
+  inset: auto;
+  margin: 0;
 }
 
 /* ============================================================
@@ -1323,6 +1434,11 @@ body[data-page="history"] .timeline-item .timeline-body {
   .hero-grid {
     grid-template-columns: 1.1fr 0.9fr;
     align-items: center;
+    gap: var(--space-xl);
+  }
+
+  .collection-band {
+    grid-template-columns: 1.05fr 0.95fr;
     gap: var(--space-xl);
   }
 
@@ -2150,5 +2266,136 @@ html[data-theme="dark"] .dash-red .red-dot {
 @media (pointer: coarse) {
   .game-touch {
     display: flex;
+  }
+}
+
+/* ============================================================
+   21. Exhibit Detail Pop-up
+   ------------------------------------------------------------
+   The backdrop shell is injected by app.js; the content comes
+   from an inert <template> on the exhibits page, so the pop-up
+   reuses the exhibit card's .spec-table formatting exactly.
+   ============================================================ */
+.exhibit-modal-backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: 3000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1.25rem;
+  background: rgba(15, 20, 28, 0.66);
+  -webkit-backdrop-filter: blur(3px);
+  backdrop-filter: blur(3px);
+  overflow-y: auto;
+}
+
+.exhibit-modal-backdrop[hidden] {
+  display: none;
+}
+
+.exhibit-modal {
+  position: relative;
+  width: min(660px, 100%);
+  max-height: calc(100vh - 2.5rem);
+  overflow-y: auto;
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-lg);
+  animation: exhibit-modal-in var(--transition);
+}
+
+@keyframes exhibit-modal-in {
+  from {
+    opacity: 0;
+    transform: translateY(12px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.exhibit-modal-media {
+  position: relative;
+  aspect-ratio: 16 / 9;
+  overflow: hidden;
+  border-bottom: 1px solid var(--color-border);
+  border-radius: var(--radius-lg) var(--radius-lg) 0 0;
+}
+
+.exhibit-modal-media img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.exhibit-modal-media .placeholder-caption {
+  position: absolute;
+  right: 0.9rem;
+  bottom: 0.9rem;
+  color: rgba(255, 255, 255, 0.92);
+  text-shadow: 0 1px 3px rgba(0, 0, 0, 0.85);
+}
+
+.exhibit-modal-body {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  padding: 1.5rem;
+}
+
+.exhibit-modal-title {
+  font-size: clamp(1.25rem, 3vw, 1.6rem);
+  color: var(--color-ink);
+}
+
+.exhibit-modal-text {
+  max-width: 60ch;
+  font-size: 0.97rem;
+  color: var(--color-text-light);
+}
+
+.exhibit-modal-close {
+  position: absolute;
+  top: 0.75rem;
+  right: 0.75rem;
+  z-index: 2;
+  display: grid;
+  place-items: center;
+  width: 40px;
+  height: 40px;
+  padding: 0;
+  cursor: pointer;
+  color: var(--color-ink);
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: 50%;
+  box-shadow: var(--shadow-sm);
+  transition: background var(--transition-fast), color var(--transition-fast),
+    border-color var(--transition-fast);
+}
+
+.exhibit-modal-close svg {
+  width: 18px;
+  height: 18px;
+}
+
+.exhibit-modal-close:hover,
+.exhibit-modal-close:focus-visible {
+  background: var(--color-gold);
+  border-color: var(--color-gold);
+  color: #fff;
+}
+
+@media (max-width: 480px) {
+  .exhibit-modal-media {
+    aspect-ratio: 4 / 3;
+  }
+
+  .exhibit-modal-body {
+    padding: 1.25rem;
   }
 }

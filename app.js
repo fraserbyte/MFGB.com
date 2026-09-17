@@ -1573,6 +1573,101 @@
   }
 
   /* ============================================================
+     10. Exhibit Detail Pop-up
+     ------------------------------------------------------------
+     Each info icon on the exhibits page carries
+     data-exhibit-detail="<template-id>", and the matching inert
+     <template> holds the detail content (description + spec
+     table) so it stays editable in the HTML. The backdrop shell
+     is injected here. ESC, the backdrop and the close button all
+     dismiss it, and focus returns to the icon that opened it.
+     ============================================================ */
+  function initExhibitDetail() {
+    const triggers = document.querySelectorAll("[data-exhibit-detail]");
+    if (triggers.length === 0) return;
+
+    let backdrop = null;
+    let lastFocused = null;
+
+    function close() {
+      if (!backdrop || backdrop.hidden) return;
+      backdrop.hidden = true;
+      backdrop.innerHTML = "";
+      document.removeEventListener("keydown", onKeydown);
+      document.body.style.overflow = "";
+      if (lastFocused && lastFocused.focus) lastFocused.focus();
+      lastFocused = null;
+    }
+
+    function getBackdrop() {
+      if (backdrop) return backdrop;
+      backdrop = document.createElement("div");
+      backdrop.className = "exhibit-modal-backdrop";
+      backdrop.id = "exhibit-modal-backdrop";
+      backdrop.hidden = true;
+      // Only a click on the backdrop itself dismisses the pop-up.
+      backdrop.addEventListener("click", (event) => {
+        if (event.target === backdrop) close();
+      });
+      document.body.appendChild(backdrop);
+      return backdrop;
+    }
+
+    function onKeydown(event) {
+      if (event.key === "Escape") {
+        event.preventDefault();
+        close();
+        return;
+      }
+      if (event.key !== "Tab") return;
+
+      // Keep keyboard focus inside the pop-up while it is open.
+      const focusables = backdrop.querySelectorAll(
+        'a[href], button:not([disabled]), [tabindex]:not([tabindex="-1"])'
+      );
+      if (focusables.length === 0) return;
+      const first = focusables[0];
+      const last = focusables[focusables.length - 1];
+
+      if (event.shiftKey && document.activeElement === first) {
+        event.preventDefault();
+        last.focus();
+      } else if (!event.shiftKey && document.activeElement === last) {
+        event.preventDefault();
+        first.focus();
+      }
+    }
+
+    function open(trigger) {
+      const template = document.getElementById(trigger.getAttribute("data-exhibit-detail"));
+      if (!template || !template.content) return;
+
+      const shell = getBackdrop();
+      shell.innerHTML = "";
+      shell.appendChild(template.content.cloneNode(true));
+      shell.hidden = false;
+      document.body.style.overflow = "hidden";
+      lastFocused = trigger;
+
+      const closeBtn = shell.querySelector(".exhibit-modal-close");
+      const card = shell.querySelector(".exhibit-modal");
+      if (closeBtn) closeBtn.addEventListener("click", close);
+
+      const focusTarget = closeBtn || card;
+      if (focusTarget) {
+        if (!closeBtn && card) card.setAttribute("tabindex", "-1");
+        focusTarget.focus();
+      }
+
+      document.addEventListener("keydown", onKeydown);
+    }
+
+    triggers.forEach((trigger) => {
+      trigger.addEventListener("click", () => open(trigger));
+    });
+  }
+
+  /* ============================================================
      09. Initialisation
      ============================================================ */
   function init() {
@@ -1585,6 +1680,7 @@
     initCanopyToggle();
     initThemeToggle();
     initHeaderCompress();
+    initExhibitDetail();
     const game = initKr200Game();
     initEngineToggle(game);
   }

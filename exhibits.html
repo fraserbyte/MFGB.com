@@ -97,11 +97,13 @@
 
         <div class="exhibits-grid">
           <!-- Exhibit Card 1: ME 200 (Featured) -->
-          <article class="card exhibit-card exhibit-featured">
+          <article class="card exhibit-card exhibit-featured" id="exhibit-me200">
             <div class="media-placeholder exhibit-placeholder has-photo" role="img" aria-label="The ME 200, a 1958 Messerschmitt KR200, returned to Fend House">
               <img class="media-photo" src="ME200%20returned%20to%20Fend%20House.jpg" alt="The ME 200, a 1958 Messerschmitt KR200, returned to Fend House">
-              <span class="placeholder-badge">ME 200 · Featured</span>
-              <span class="placeholder-caption">Returned to Fend House</span>
+              <div class="photo-overlay">
+                <span class="placeholder-badge">ME 200 · Featured</span>
+                <span class="placeholder-caption">Returned to Fend House</span>
+              </div>
             </div>
             <div class="exhibit-body">
               <p class="exhibit-tag">Featured Exhibit</p>
@@ -126,11 +128,26 @@
           </article>
 
           <!-- Exhibit Card 2: KR175 -->
-          <article class="card exhibit-card">
-            <div class="media-placeholder exhibit-placeholder has-photo" role="img" aria-label="The Foundation's 1954 Messerschmitt KR175">
-              <img class="media-photo" src="Messerschmitt_KR175.jpg" alt="The Foundation's 1954 Messerschmitt KR175">
-              <span class="placeholder-badge">KR175</span>
-              <span class="placeholder-caption">1954 · Early Production</span>
+          <article class="card exhibit-card" id="exhibit-kr175">
+            <div class="media-placeholder exhibit-placeholder has-photo">
+              <img class="media-photo" src="histroy%20of%20the%20mfgb%20file/messerschmitt-KR175.jpg" alt="The Foundation's 1954 Messerschmitt KR175">
+              <div class="photo-overlay">
+                <span class="placeholder-badge">KR175</span>
+                <span class="placeholder-caption">1954 · Early Production</span>
+              </div>
+              <button
+                class="exhibit-info"
+                id="kr175-info"
+                type="button"
+                data-exhibit-detail="kr175-detail"
+                aria-haspopup="dialog"
+                aria-label="More information about the 1954 Messerschmitt KR175">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false">
+                  <circle cx="12" cy="12" r="9"></circle>
+                  <path d="M12 16.5v-5"></path>
+                  <path d="M12 8h.01"></path>
+                </svg>
+              </button>
             </div>
             <div class="exhibit-body">
               <p class="exhibit-tag">Early Production</p>
@@ -144,11 +161,13 @@
           </article>
 
           <!-- Exhibit Card 3: FMR Tg500 -->
-          <article class="card exhibit-card">
+          <article class="card exhibit-card" id="exhibit-tg500">
             <div class="media-placeholder exhibit-placeholder has-photo" role="img" aria-label="The Foundation's 1959 FMR Tg500 Tiger">
               <img class="media-photo" src="the%20blue%20one.jpeg" alt="The Foundation's 1959 FMR Tg500 Tiger">
-              <span class="placeholder-badge">FMR Tg500</span>
-              <span class="placeholder-caption">The Foundation's Tiger</span>
+              <div class="photo-overlay">
+                <span class="placeholder-badge">FMR Tg500</span>
+                <span class="placeholder-caption">The Foundation's Tiger</span>
+              </div>
             </div>
             <div class="exhibit-body">
               <p class="exhibit-tag">High Performance</p>
@@ -163,6 +182,54 @@
         </div>
       </div>
     </section>
+
+    <!-- ============ EXHIBIT DETAIL POP-UP CONTENT ============
+         Held in an inert <template>; app.js clones the matching
+         template into the pop-up shell when an exhibit's info
+         icon is pressed. Add a new template + a button with
+         data-exhibit-detail="<template-id>" to add another. -->
+    <template id="kr175-detail">
+      <div class="exhibit-modal" role="dialog" aria-modal="true" aria-labelledby="kr175-detail-title">
+        <button class="exhibit-modal-close" type="button" aria-label="Close exhibit details">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false">
+            <path d="M6 6l12 12"></path>
+            <path d="M18 6L6 18"></path>
+          </svg>
+        </button>
+
+        <div class="exhibit-modal-media">
+          <img src="histroy%20of%20the%20mfgb%20file/messerschmitt-KR175.jpg" alt="The Foundation's 1954 Messerschmitt KR175">
+          <span class="placeholder-caption">1954 · Early Production</span>
+        </div>
+
+        <div class="exhibit-modal-body">
+          <p class="exhibit-tag">Early Production</p>
+          <h2 class="exhibit-modal-title" id="kr175-detail-title">1954 Messerschmitt KR175</h2>
+          <p class="exhibit-modal-text">
+            The Kabinenroller in its first form. A 173cc Fichtel &amp; Sachs single-cylinder
+            two-stroke sits ahead of the single rear wheel, with two front wheels carrying
+            direct steering and tandem seating beneath a side-hinged acrylic canopy. The
+            engine runs in either direction, so reverse needs no reverse gear.
+          </p>
+          <p class="exhibit-modal-text">
+            This example represents the very first chapter of the Messerschmitt microcar
+            story on British roads — an early production car with the initial canopy design.
+          </p>
+
+          <table class="spec-table" aria-label="1954 Messerschmitt KR175 technical specifications">
+            <caption class="visually-hidden">1954 Messerschmitt KR175 technical specifications</caption>
+            <tbody>
+              <tr><th scope="row">Engine</th><td>173cc Fichtel &amp; Sachs two-stroke, air-cooled, single-cylinder</td></tr>
+              <tr><th scope="row">Power</th><td>9 PS (approx. 8.9 bhp)</td></tr>
+              <tr><th scope="row">Weight</th><td>Approx. 220 kg (kerb)</td></tr>
+              <tr><th scope="row">Top Speed</th><td>Approx. 80 km/h (50 mph)</td></tr>
+              <tr><th scope="row">Transmission</th><td>3-speed manual, hand-operated cockpit lever; engine started in both directions for reverse</td></tr>
+              <tr><th scope="row">Layout</th><td>Two front wheels, single rear wheel; tandem two-seat cabin</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </template>
   </main>
 
   <!-- ============ FOOTER ============ -->
