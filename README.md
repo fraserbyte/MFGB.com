@@ -70,9 +70,8 @@ Fend Flitzer to the FMR Tg500 "Tiger" — and showcases the Foundation's feature
 - **Home collection stack** — the three cars sit as widgets one above the other in the
   hero, each deep-linking to `exhibits.html#exhibit-<car>` so the visitor lands on that
   car already promoted to the featured slot.
-- **1950s vintage "Micro-Dashboard"** — a chrome speedometer scroll-progress bar (0–60
-  MPH), a brass ignition-key theme switch (Classic Racing Green / Night Drive Dark),
-  and a chrome engine START button with sequential rev lights.
+- **1950s vintage "Micro-Dashboard"** — a floating red dash button that switches the
+  site between Classic Racing Green and Night Drive Dark.
 - **Structured data** — Organization and Vehicle JSON-LD schema for rich search results.
 - **Placeholder media system** — clean CSS containers ready to be swapped for real
   photography without breaking layout.
@@ -105,7 +104,7 @@ messerschmitt-foundation-gb/
 | `exhibits.html` | Exhibits page: ME 200, KR175 and FMR Tg500 cards. Pressing a smaller box promotes it into the featured slot — image, description, specification sheet and "Featured Exhibit" tag — while the outgoing featured card takes its place. |
 | `contact.html` | Contact page: accessible form, Foundation details, UK registry, and visitor policy. |
 | `styles.css` | All styling. Design tokens live in `:root` (palette, typography, spacing, elevation, radii). Contains the `.media-placeholder` system, card components, page-hero banners, and mobile-first media queries. |
-| `app.js` | Modular IIFE with independent initialisation routines: navigation toggle, active-page highlighting, form validation, back-to-top visibility, header compression, exhibit promotion, and the KR200 Racer game. |
+| `app.js` | Modular IIFE with independent initialisation routines: navigation toggle, active-page highlighting, form validation, back-to-top visibility, theme toggle, header compression, and exhibit promotion. |
 | `README.md` | Documentation for local development, asset replacement, and GitHub Pages deployment. |
 
 > **Note on structure:** GitHub Pages serves the repository root by default, so

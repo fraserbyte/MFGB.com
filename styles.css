@@ -73,7 +73,7 @@
 /* ============================================================
    01b. Night Drive Dark Theme
    ------------------------------------------------------------
-   Toggled by the vintage ignition switch via the data-theme
+   Toggled by the floating dash button via the data-theme
    attribute on <html>. Only overrides design tokens — all
    components adapt automatically.
    ============================================================ */
@@ -1996,94 +1996,21 @@ html[data-theme="dark"] .canopy-lid {
 }
 
 /* ============================================================
-   17. 1950s Vintage "Micro-Dashboard" Controls
+   17. Floating Dash Button
    ------------------------------------------------------------
-   Floating dashboard: brass ignition theme switch + chrome
-   engine START button with rev lights.
+   One control is left in the dashboard cluster: the vintage
+   dash light, which switches the site between Classic Racing
+   Green and Night Drive Dark. The cluster keeps its position
+   clear of the reading column, but the panel chrome is gone,
+   so the button now floats on its own.
    ============================================================ */
 
-/* --- Floating vintage dashboard cluster --- */
+/* --- Floating dash button --- */
 .micro-dashboard {
   position: fixed;
   bottom: 1.25rem;
   left: 1.25rem;
   z-index: 1500;
-  display: flex;
-  align-items: center;
-  gap: 0.6rem;
-  padding: 0.65rem;
-  border-radius: 16px;
-  background: rgba(51, 65, 85, 0.9);
-  -webkit-backdrop-filter: blur(12px);
-  backdrop-filter: blur(12px);
-  border: 1px solid rgba(255, 255, 255, 0.16);
-  box-shadow: var(--shadow-lg);
-}
-
-/* Choke — pull to prime the engine (far left) */
-.dash-choke {
-  display: grid;
-  place-items: center;
-  width: 38px;
-  height: 44px;
-  border-radius: 10px;
-  border: 2px solid #6B7484;
-  background: #DEE2E8;
-  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.6), 0 2px 4px rgba(0, 0, 0, 0.3);
-  cursor: pointer;
-  transition: background 0.15s ease;
-}
-
-.dash-choke .choke-knob {
-  width: 13px;
-  height: 20px;
-  border-radius: 7px 7px 3px 3px;
-  background: #2B313A;
-  box-shadow: inset 0 0 0 1px rgba(0, 0, 0, 0.5);
-  transform: translateY(-3px);
-  transition: transform 0.15s ease;
-}
-
-.dash-choke.is-pulled {
-  background: #C6CDD7;
-}
-
-.dash-choke.is-pulled .choke-knob {
-  transform: translateY(3px);
-}
-
-/* Ignition switch — turn the key */
-.dash-switch {
-  position: relative;
-  width: 46px;
-  height: 46px;
-  border-radius: 50%;
-  border: 2px solid #5D6673;
-  background: #23282F;
-  box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.6), 0 2px 4px rgba(0, 0, 0, 0.3);
-  cursor: pointer;
-  transition: background 0.2s ease, box-shadow 0.2s ease;
-}
-
-.dash-switch .switch-key {
-  position: absolute;
-  top: 7px;
-  left: 50%;
-  width: 4px;
-  height: 14px;
-  border-radius: 2px;
-  background: #CFD6DF;
-  transform: translateX(-50%);
-  transition: transform 0.25s ease;
-}
-
-.dash-switch.is-turned {
-  background: #2C3A2E;
-  box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.6), 0 0 8px rgba(99, 184, 135, 0.55);
-}
-
-.dash-switch.is-turned .switch-key {
-  transform: translateX(-50%) rotate(70deg);
 }
 
 /* Red button — toggle light / dark mode */
@@ -2123,14 +2050,12 @@ html[data-theme="dark"] .dash-red .red-dot {
 
 /* Focus rings for the new interactive controls */
 .canopy-lid:focus-visible,
-.dash-choke:focus-visible,
-.dash-switch:focus-visible,
 .dash-red:focus-visible {
   outline: var(--focus-ring);
   outline-offset: 3px;
 }
 
-/* Compact the canopy card on small screens. (The dashboard cluster
+/* Compact the canopy card on small screens. (The dashboard button
    itself is sized in section 21, alongside the rest of the handheld
    layout, so the two cannot drift apart.) */
 @media (max-width: 480px) {
@@ -2183,332 +2108,6 @@ html[data-theme="dark"] .dash-red .red-dot {
 }
 
 /* ============================================================
-   20. Retro KR200 Racer — arcade game overlay
-   ------------------------------------------------------------
-   Launched from the dashboard's START button. A retro top-down
-   time-trial around the Foundation's test circuit. The overlay
-   and all screens are injected by app.js, so the styles below
-   cover every page automatically.
-   ============================================================ */
-.kr200-game {
-  position: fixed;
-  inset: 0;
-  z-index: 4000;
-  display: none;
-  align-items: center;
-  justify-content: center;
-  padding: 2vh 2vw;
-  background: #0e1812;
-  color: #f3efe6;
-  font-family: "Press Start 2P", "Courier New", ui-monospace, monospace;
-}
-
-.kr200-game.is-open {
-  display: flex;
-}
-
-.game-stage {
-  position: relative;
-  width: min(960px, 96vw);
-  aspect-ratio: 16 / 10;
-  max-height: 96vh;
-  border: 6px solid #2b3a2e;
-  border-radius: 10px;
-  box-shadow: 0 0 0 2px #0a120c, 0 24px 60px rgba(0, 0, 0, 0.55);
-  overflow: hidden;
-  background: #2f6b3c;
-}
-
-.game-canvas {
-  display: block;
-  width: 100%;
-  height: 100%;
-}
-
-/* CRT scanlines + vignette */
-.game-crt {
-  position: absolute;
-  inset: 0;
-  z-index: 5;
-  pointer-events: none;
-}
-
-.game-crt::before {
-  content: "";
-  position: absolute;
-  inset: 0;
-  background: repeating-linear-gradient(0deg, rgba(0, 0, 0, 0.16) 0 1px, transparent 1px 3px);
-}
-
-.game-crt::after {
-  content: "";
-  position: absolute;
-  inset: 0;
-  background: radial-gradient(ellipse at center, transparent 52%, rgba(0, 0, 0, 0.42) 100%);
-}
-
-/* HUD */
-.game-hud {
-  position: absolute;
-  inset: 0;
-  z-index: 6;
-  pointer-events: none;
-  padding: 14px 16px;
-  font-size: clamp(8px, 2.1vmin, 13px);
-  line-height: 1.7;
-  color: #f3efe6;
-  text-shadow: 0 2px 0 rgba(0, 0, 0, 0.75);
-}
-
-.game-hud[hidden] {
-  display: none;
-}
-
-.hud-lap {
-  position: absolute;
-  top: 14px;
-  left: 16px;
-  font-size: 1.35em;
-}
-
-.hud-time {
-  position: absolute;
-  top: 14px;
-  right: 16px;
-  font-size: 1.35em;
-}
-
-.hud-best {
-  position: absolute;
-  top: 16px;
-  left: 50%;
-  transform: translateX(-50%);
-  opacity: 0.85;
-}
-
-.hud-score {
-  position: absolute;
-  top: 42px;
-  left: 50%;
-  transform: translateX(-50%);
-  font-size: 1.1em;
-  color: #ffd98a;
-}
-
-.hud-speed {
-  position: absolute;
-  right: 16px;
-  bottom: 14px;
-  font-size: 1.5em;
-}
-
-.hud-controls {
-  position: absolute;
-  left: 16px;
-  bottom: 14px;
-  font-size: 0.72em;
-  opacity: 0.72;
-}
-
-/* Screens (title / paused / finish) */
-.game-screen {
-  position: absolute;
-  inset: 0;
-  z-index: 7;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  gap: 18px;
-  text-align: center;
-  padding: 24px;
-  background: rgba(10, 18, 12, 0.74);
-  -webkit-backdrop-filter: blur(2px);
-  backdrop-filter: blur(2px);
-}
-
-.game-screen[hidden] {
-  display: none;
-}
-
-.game-eyebrow {
-  margin: 0;
-  font-size: clamp(8px, 1.6vmin, 10px);
-  letter-spacing: 0.18em;
-  color: #9fc5a8;
-}
-
-.game-title {
-  margin: 0;
-  font-family: inherit;
-  font-size: clamp(26px, 6.5vmin, 48px);
-  letter-spacing: 0.06em;
-  color: #f3efe6;
-  text-shadow: 0 4px 0 rgba(0, 0, 0, 0.65);
-}
-
-.game-tagline {
-  margin: 0;
-  font-size: clamp(8px, 1.8vmin, 12px);
-  color: #cfd8cc;
-}
-
-.game-hint {
-  margin: 0;
-  font-size: clamp(7px, 1.5vmin, 10px);
-  color: #9aa8a0;
-}
-
-.game-btn {
-  font-family: inherit;
-  font-size: clamp(10px, 2vmin, 14px);
-  letter-spacing: 0.04em;
-  color: #141414;
-  background: #f3c74f;
-  border: 3px solid #141414;
-  border-radius: 4px;
-  padding: 14px 24px;
-  cursor: pointer;
-  box-shadow: 0 5px 0 #141414;
-  transition: transform 0.05s ease, box-shadow 0.05s ease, background 0.15s ease;
-}
-
-.game-btn:hover {
-  background: #ffe07a;
-}
-
-.game-btn:active {
-  transform: translateY(4px);
-  box-shadow: 0 1px 0 #141414;
-}
-
-.game-btn-ghost {
-  background: #3f4d43;
-  color: #f3efe6;
-}
-
-.game-btn-ghost:hover {
-  background: #53644f;
-}
-
-/* Track selector on the title screen */
-.game-track-select {
-  display: flex;
-  gap: 10px;
-  flex-wrap: wrap;
-  justify-content: center;
-}
-
-.game-track-btn {
-  font-family: inherit;
-  font-size: clamp(8px, 1.7vmin, 10px);
-  letter-spacing: 0.04em;
-  color: #cfd8cc;
-  background: rgba(10, 18, 12, 0.55);
-  border: 2px solid #2b3a2e;
-  border-radius: 4px;
-  padding: 10px 16px;
-  cursor: pointer;
-  transition: background 0.15s ease, color 0.15s ease, border-color 0.15s ease;
-}
-
-.game-track-btn:hover {
-  background: rgba(30, 46, 34, 0.8);
-  color: #f3efe6;
-}
-
-.game-track-btn.is-selected {
-  background: #2e6b4f;
-  border-color: #6fae8a;
-  color: #f6fbf7;
-}
-
-.game-results {
-  display: grid;
-  grid-template-columns: repeat(2, auto);
-  gap: 12px 28px;
-  margin: 0;
-}
-
-.game-results dt {
-  font-size: clamp(8px, 1.6vmin, 10px);
-  color: #9fc5a8;
-}
-
-.game-results dd {
-  margin: 6px 0 0;
-  font-size: clamp(14px, 3vmin, 20px);
-  color: #f3efe6;
-}
-
-.game-results-actions {
-  display: flex;
-  gap: 14px;
-  flex-wrap: wrap;
-  justify-content: center;
-}
-
-/* Floating buttons (exit / mute) */
-.game-actions {
-  position: absolute;
-  top: 10px;
-  right: 10px;
-  z-index: 8;
-  display: flex;
-  gap: 8px;
-}
-
-.game-mute,
-.game-close {
-  font-family: inherit;
-  font-size: clamp(7px, 1.6vmin, 9px);
-  color: #f3efe6;
-  background: rgba(10, 18, 12, 0.6);
-  border: 2px solid #2b3a2e;
-  border-radius: 4px;
-  padding: 8px 10px;
-  cursor: pointer;
-}
-
-.game-mute:hover,
-.game-close:hover {
-  background: rgba(20, 32, 22, 0.82);
-}
-
-/* Touch controls (coarse pointers only) */
-.game-touch {
-  display: none;
-  position: absolute;
-  inset: auto 0 0 0;
-  z-index: 8;
-  justify-content: center;
-  gap: 10px;
-  padding: 10px;
-}
-
-.game-touch button {
-  font-family: inherit;
-  font-size: clamp(9px, 2vmin, 11px);
-  color: #f3efe6;
-  background: rgba(10, 18, 12, 0.55);
-  border: 2px solid #2b3a2e;
-  border-radius: 6px;
-  min-width: 62px;
-  padding: 12px 8px;
-  touch-action: none;
-}
-
-.game-touch button:active {
-  background: rgba(30, 46, 34, 0.75);
-}
-
-@media (pointer: coarse) {
-  .game-touch {
-    display: flex;
-  }
-}
-
-/* ============================================================
    21. Handheld Refinements (< 768px)
    ------------------------------------------------------------
    The layout above already stacks on a phone; this section is
@@ -2519,8 +2118,7 @@ html[data-theme="dark"] .dash-red .red-dot {
      · a compact two-line masthead and a proper full-height drawer
      · specification sheets that stack instead of fraying into
        one-word columns
-     · the dashboard cluster pulled clear of the reading column
-     · the arcade game given a portrait layout of its own
+     · the dashboard button pulled clear of the reading column
    ============================================================ */
 @media (max-width: 767px) {
   /* ---- Rhythm -----------------------------------------------
@@ -2878,7 +2476,7 @@ html[data-theme="dark"] .dash-red .red-dot {
     height: 44px;
   }
 
-  /* ---- Dashboard cluster -------------------------------------
+  /* ---- Dash button -------------------------------------------
      Shrunk, and moved across to the right. A floating control has
      to sit on top of something; on the left it covered the start
      of every line of body copy, which is the one place a reader
@@ -2888,37 +2486,11 @@ html[data-theme="dark"] .dash-red .red-dot {
     bottom: calc(0.75rem + env(safe-area-inset-bottom));
     left: auto;
     right: calc(0.75rem + env(safe-area-inset-right));
-    gap: 0.4rem;
-    padding: 0.45rem;
-    border-radius: 13px;
-    background: rgba(51, 65, 85, 0.82);
-    opacity: 0.94;
   }
 
-  .micro-dashboard:focus-within,
-  .micro-dashboard:active {
-    opacity: 1;
-  }
-
-  .dash-choke {
-    width: 32px;
-    height: 38px;
-  }
-
-  .dash-choke .choke-knob {
-    width: 11px;
-    height: 17px;
-  }
-
-  .dash-switch,
   .dash-red {
     width: 38px;
     height: 38px;
-  }
-
-  .dash-switch .switch-key {
-    top: 5px;
-    height: 12px;
   }
 
   .dash-red .red-dot {
@@ -2986,148 +2558,12 @@ html[data-theme="dark"] .dash-red .red-dot {
     backdrop-filter: blur(2px);
   }
 
-  /* The dashboard cluster steps aside while the menu is open — in
+  /* The dash button steps aside while the menu is open — in
      landscape the drawer reaches all the way down to it. */
   body.nav-is-open .micro-dashboard {
     opacity: 0;
     pointer-events: none;
     transition: opacity var(--transition-fast);
-  }
-}
-
-/* ============================================================
-   22. KR200 Racer — portrait layout
-   ------------------------------------------------------------
-   Held upright, a 16:10 stage centred in the viewport shrank to
-   a 390 × 244 letterbox with the touch pad sitting on top of the
-   START button. In portrait the stage becomes the whole screen:
-   the canvas keeps its aspect and sits in the middle, the touch
-   pad takes the space beneath it, and the HUD lifts clear of the
-   controls.
-   ============================================================ */
-@media (max-width: 900px) and (orientation: portrait) {
-  .kr200-game {
-    padding: 0;
-    align-items: stretch;
-  }
-
-  .game-stage {
-    display: flex;
-    flex-direction: column;
-    justify-content: flex-start;
-    width: 100%;
-    height: 100vh;
-    height: 100dvh;
-    max-height: none;
-    aspect-ratio: auto;
-    border: 0;
-    border-radius: 0;
-    box-shadow: none;
-    /* The screen cannot fill a portrait phone without stretching the
-       track, so the surround is lit like a cabinet bezel instead of
-       sitting there as flat black. */
-    background: radial-gradient(ellipse at 50% 34%, #16241a 0%, #0b120d 72%);
-  }
-
-  .game-canvas {
-    flex: 0 0 auto;
-    width: 100%;
-    height: auto;
-    aspect-ratio: 16 / 10;
-    border-block: 4px solid #2b3a2e;
-  }
-
-  .game-touch {
-    position: static;
-    margin-top: auto;
-    padding: 0.85rem 0.75rem calc(0.85rem + env(safe-area-inset-bottom));
-  }
-
-  .game-touch button {
-    flex: 1 1 0;
-    min-width: 0;
-    padding: 26px 8px;
-    font-size: 17px;
-  }
-
-  /* Sound and exit sat in the same top-right corner as the lap
-     timer once the stage grew to the full screen; they move down
-     into the bezel, clear of the track. */
-  .game-actions {
-    top: calc(62.5vw + 34px);
-    left: 0;
-    right: 0;
-    justify-content: center;
-  }
-
-  .game-mute,
-  .game-close {
-    padding: 10px 14px;
-    font-size: 9px;
-  }
-
-  /* The stage is now the whole screen, so the HUD is clipped back to
-     the height of the canvas — 100vw at 16:10 — and every readout
-     stays over the track it belongs to. */
-  .game-hud {
-    bottom: auto;
-    height: 62.5vw;
-    font-size: clamp(9px, 3vw, 13px);
-  }
-
-  .hud-speed {
-    bottom: 10px;
-  }
-
-  /* Control legend moves out from under the track and into the
-     bezel beneath it. */
-  .hud-controls {
-    top: calc(62.5vw + 14px);
-    left: 0;
-    right: 0;
-    bottom: auto;
-    text-align: center;
-    font-size: 8px;
-  }
-
-  /* Title, pause and finish screens start below the bezel controls
-     rather than centring on the whole screen, which put them on top
-     of the sound and exit buttons. */
-  .game-screen {
-    justify-content: flex-start;
-    gap: 14px;
-    padding: calc(62.5vw + 80px) 18px 118px;
-    overflow-y: auto;
-  }
-
-  .game-title {
-    font-size: clamp(22px, 9vw, 40px);
-  }
-
-  .game-track-select {
-    width: 100%;
-  }
-
-  .game-track-btn {
-    flex: 1 1 42%;
-    padding: 12px 10px;
-  }
-
-  .game-btn {
-    padding: 16px 22px;
-  }
-
-  .game-results {
-    gap: 10px 20px;
-  }
-
-  /* A quiet nudge that the circuit is better sideways. */
-  #screen-title::after {
-    content: "\21BB  ROTATE FOR A WIDER TRACK";
-    font-size: 8px;
-    letter-spacing: 0.12em;
-    color: #9fc5a8;
-    opacity: 0.85;
   }
 }
 
