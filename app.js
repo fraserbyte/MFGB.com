@@ -1573,109 +1573,7 @@
   }
 
   /* ============================================================
-     10. Exhibit Detail Pop-up
-     ------------------------------------------------------------
-     Each info icon on the exhibits page carries
-     data-exhibit-detail="<template-id>", and the matching inert
-     <template> holds the detail content (description + spec
-     table) so it stays editable in the HTML. The backdrop shell
-     is injected here. ESC, the backdrop and the close button all
-     dismiss it, and focus returns to the icon that opened it.
-     ============================================================ */
-  function initExhibitDetail() {
-    const triggers = document.querySelectorAll("[data-exhibit-detail]");
-    if (triggers.length === 0) return;
-
-    let backdrop = null;
-    let lastFocused = null;
-
-    function close() {
-      if (!backdrop || backdrop.hidden) return;
-      backdrop.hidden = true;
-      backdrop.innerHTML = "";
-      document.removeEventListener("keydown", onKeydown);
-      document.body.style.overflow = "";
-      if (lastFocused && lastFocused.focus) lastFocused.focus();
-      lastFocused = null;
-    }
-
-    function getBackdrop() {
-      if (backdrop) return backdrop;
-      backdrop = document.createElement("div");
-      backdrop.className = "exhibit-modal-backdrop";
-      backdrop.id = "exhibit-modal-backdrop";
-      backdrop.hidden = true;
-      // Only a click on the backdrop itself dismisses the pop-up.
-      backdrop.addEventListener("click", (event) => {
-        if (event.target === backdrop) close();
-      });
-      document.body.appendChild(backdrop);
-      return backdrop;
-    }
-
-    function onKeydown(event) {
-      if (event.key === "Escape") {
-        event.preventDefault();
-        close();
-        return;
-      }
-      if (event.key !== "Tab") return;
-
-      // Keep keyboard focus inside the pop-up while it is open.
-      const focusables = backdrop.querySelectorAll(
-        'a[href], button:not([disabled]), [tabindex]:not([tabindex="-1"])'
-      );
-      if (focusables.length === 0) return;
-      const first = focusables[0];
-      const last = focusables[focusables.length - 1];
-
-      if (event.shiftKey && document.activeElement === first) {
-        event.preventDefault();
-        last.focus();
-      } else if (!event.shiftKey && document.activeElement === last) {
-        event.preventDefault();
-        first.focus();
-      }
-    }
-
-    function open(trigger) {
-      const template = document.getElementById(trigger.getAttribute("data-exhibit-detail"));
-      if (!template || !template.content) return;
-
-      const shell = getBackdrop();
-      shell.innerHTML = "";
-      shell.appendChild(template.content.cloneNode(true));
-      shell.hidden = false;
-      document.body.style.overflow = "hidden";
-      lastFocused = trigger;
-
-      // Fill any specification slot from the shared per-car sheet, so the
-      // pop-up and the featured panel can never drift apart.
-      Array.prototype.forEach.call(shell.querySelectorAll("[data-spec-slot]"), (slot) => {
-        const sheet = document.getElementById("spec-" + slot.getAttribute("data-spec-slot"));
-        if (sheet) slot.appendChild(sheet.content.cloneNode(true));
-      });
-
-      const closeBtn = shell.querySelector(".exhibit-modal-close");
-      const card = shell.querySelector(".exhibit-modal");
-      if (closeBtn) closeBtn.addEventListener("click", close);
-
-      const focusTarget = closeBtn || card;
-      if (focusTarget) {
-        if (!closeBtn && card) card.setAttribute("tabindex", "-1");
-        focusTarget.focus();
-      }
-
-      document.addEventListener("keydown", onKeydown);
-    }
-
-    triggers.forEach((trigger) => {
-      trigger.addEventListener("click", () => open(trigger));
-    });
-  }
-
-  /* ============================================================
-     11. Featured Exhibit — promote any exhibit box
+     10. Featured Exhibit — promote any exhibit box
      ------------------------------------------------------------
      Pressing one of the smaller exhibit boxes promotes it into the
      featured slot: that card grows to full width and brings its own
@@ -1691,9 +1589,8 @@
 
      Each sheet is one source of truth: the ME 200 sheet is authored
      inline in the page (so the specification still reads without
-     JavaScript) and doubles as the default; the other cars come from
-     inert <template>s — the same sheets the exhibit pop-up reads, so
-     the two can never drift apart.
+     JavaScript) and doubles as the default, and the other cars come
+     from inert <template>s.
      ============================================================ */
   function initExhibitSpecPanel() {
     const panel = document.querySelector("[data-spec-panel]");
@@ -1850,7 +1747,6 @@
     initCanopyToggle();
     initThemeToggle();
     initHeaderCompress();
-    initExhibitDetail();
     initExhibitSpecPanel();
     const game = initKr200Game();
     initEngineToggle(game);

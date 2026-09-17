@@ -662,43 +662,7 @@ h1, h2, h3, h4 {
   opacity: 1;
 }
 
-/* ---- Info icon over an exhibit photo (opens the detail pop-up) ---- */
-.exhibit-info {
-  position: absolute;
-  top: 0.75rem;
-  right: 0.75rem;
-  z-index: 3;
-  display: grid;
-  place-items: center;
-  width: 42px;
-  height: 42px;
-  padding: 0;
-  cursor: pointer;
-  color: var(--color-ink);
-  background: var(--color-surface);
-  border: 1px solid var(--color-gold);
-  border-radius: 50%;
-  box-shadow: var(--shadow-sm);
-  transition: background var(--transition-fast), color var(--transition-fast),
-    border-color var(--transition-fast), transform var(--transition-fast),
-    box-shadow var(--transition-fast);
-}
-
-.exhibit-info svg {
-  width: 20px;
-  height: 20px;
-}
-
-.exhibit-info:hover,
-.exhibit-info:focus-visible {
-  background: var(--color-gold);
-  border-color: var(--color-gold);
-  color: #fff;
-  transform: translateY(-2px);
-  box-shadow: var(--shadow-md);
-}
-
-/* ---- Whole-photo selector (swaps the specification sheet) ---- */
+/* ---- Whole-photo selector (promotes the exhibit) ---- */
 .exhibit-select {
   position: absolute;
   inset: 0;
@@ -1253,9 +1217,9 @@ body[data-page="history"] .timeline-item .timeline-body {
 }
 
 /* ---- Specification panel ------------------------------------------
-   The featured card's sheet. Pressing an exhibit photo swaps the
-   sheet inside it, with a short out/in animation on the body and a
-   brass flash on the frame.
+   The featured card's sheet. Promoting an exhibit replaces the sheet
+   inside it, with a short out/in animation on the body and a brass
+   flash on the frame.
    ------------------------------------------------------------------ */
 .spec-panel {
   display: flex;
@@ -2430,136 +2394,5 @@ html[data-theme="dark"] .dash-red .red-dot {
 @media (pointer: coarse) {
   .game-touch {
     display: flex;
-  }
-}
-
-/* ============================================================
-   21. Exhibit Detail Pop-up
-   ------------------------------------------------------------
-   The backdrop shell is injected by app.js; the content comes
-   from an inert <template> on the exhibits page, so the pop-up
-   reuses the exhibit card's .spec-table formatting exactly.
-   ============================================================ */
-.exhibit-modal-backdrop {
-  position: fixed;
-  inset: 0;
-  z-index: 3000;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  padding: 1.25rem;
-  background: rgba(15, 20, 28, 0.66);
-  -webkit-backdrop-filter: blur(3px);
-  backdrop-filter: blur(3px);
-  overflow-y: auto;
-}
-
-.exhibit-modal-backdrop[hidden] {
-  display: none;
-}
-
-.exhibit-modal {
-  position: relative;
-  width: min(660px, 100%);
-  max-height: calc(100vh - 2.5rem);
-  overflow-y: auto;
-  background: var(--color-surface);
-  border: 1px solid var(--color-border);
-  border-radius: var(--radius-lg);
-  box-shadow: var(--shadow-lg);
-  animation: exhibit-modal-in var(--transition);
-}
-
-@keyframes exhibit-modal-in {
-  from {
-    opacity: 0;
-    transform: translateY(12px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
-.exhibit-modal-media {
-  position: relative;
-  aspect-ratio: 16 / 9;
-  overflow: hidden;
-  border-bottom: 1px solid var(--color-border);
-  border-radius: var(--radius-lg) var(--radius-lg) 0 0;
-}
-
-.exhibit-modal-media img {
-  display: block;
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-}
-
-.exhibit-modal-media .placeholder-caption {
-  position: absolute;
-  right: 0.9rem;
-  bottom: 0.9rem;
-  color: rgba(255, 255, 255, 0.92);
-  text-shadow: 0 1px 3px rgba(0, 0, 0, 0.85);
-}
-
-.exhibit-modal-body {
-  display: flex;
-  flex-direction: column;
-  gap: 0.75rem;
-  padding: 1.5rem;
-}
-
-.exhibit-modal-title {
-  font-size: clamp(1.25rem, 3vw, 1.6rem);
-  color: var(--color-ink);
-}
-
-.exhibit-modal-text {
-  max-width: 60ch;
-  font-size: 0.97rem;
-  color: var(--color-text-light);
-}
-
-.exhibit-modal-close {
-  position: absolute;
-  top: 0.75rem;
-  right: 0.75rem;
-  z-index: 2;
-  display: grid;
-  place-items: center;
-  width: 40px;
-  height: 40px;
-  padding: 0;
-  cursor: pointer;
-  color: var(--color-ink);
-  background: var(--color-surface);
-  border: 1px solid var(--color-border);
-  border-radius: 50%;
-  box-shadow: var(--shadow-sm);
-  transition: background var(--transition-fast), color var(--transition-fast),
-    border-color var(--transition-fast);
-}
-
-.exhibit-modal-close svg {
-  width: 18px;
-  height: 18px;
-}
-
-.exhibit-modal-close:hover,
-.exhibit-modal-close:focus-visible {
-  background: var(--color-gold);
-  border-color: var(--color-gold);
-  color: #fff;
-}
-
-@media (max-width: 480px) {
-  .exhibit-modal-media {
-    aspect-ratio: 4 / 3;
-  }
-
-  .exhibit-modal-body {
-    padding: 1.25rem;
   }
 }

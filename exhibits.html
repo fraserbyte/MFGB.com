@@ -164,19 +164,6 @@
                 data-spec-full="1954 Messerschmitt KR175"
                 aria-label="Show the technical specification for the 1954 Messerschmitt KR175"
                 hidden></button>
-              <button
-                class="exhibit-info"
-                id="kr175-info"
-                type="button"
-                data-exhibit-detail="kr175-detail"
-                aria-haspopup="dialog"
-                aria-label="More information about the 1954 Messerschmitt KR175">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false">
-                  <circle cx="12" cy="12" r="9"></circle>
-                  <path d="M12 16.5v-5"></path>
-                  <path d="M12 8h.01"></path>
-                </svg>
-              </button>
             </div>
             <div class="exhibit-body">
               <p class="exhibit-tag" data-tag="Early Production">Early Production</p>
@@ -220,50 +207,9 @@
       </div>
     </section>
 
-    <!-- ============ EXHIBIT DETAIL POP-UP CONTENT ============
-         Held in an inert <template>; app.js clones the matching
-         template into the pop-up shell when an exhibit's info
-         icon is pressed. Add a new template + a button with
-         data-exhibit-detail="<template-id>" to add another. -->
-    <template id="kr175-detail">
-      <div class="exhibit-modal" role="dialog" aria-modal="true" aria-labelledby="kr175-detail-title">
-        <button class="exhibit-modal-close" type="button" aria-label="Close exhibit details">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false">
-            <path d="M6 6l12 12"></path>
-            <path d="M18 6L6 18"></path>
-          </svg>
-        </button>
-
-        <div class="exhibit-modal-media">
-          <img src="histroy%20of%20the%20mfgb%20file/messerschmitt-KR175.jpg" alt="The Foundation's 1954 Messerschmitt KR175">
-          <span class="placeholder-caption">1954 · Early Production</span>
-        </div>
-
-        <div class="exhibit-modal-body">
-          <p class="exhibit-tag">Early Production</p>
-          <h2 class="exhibit-modal-title" id="kr175-detail-title">1954 Messerschmitt KR175</h2>
-          <p class="exhibit-modal-text">
-            The Kabinenroller in its first form. A 173cc Fichtel &amp; Sachs single-cylinder
-            two-stroke sits ahead of the single rear wheel, with two front wheels carrying
-            direct steering and tandem seating beneath a side-hinged acrylic canopy. The
-            engine runs in either direction, so reverse needs no reverse gear.
-          </p>
-          <p class="exhibit-modal-text">
-            This example represents the very first chapter of the Messerschmitt microcar
-            story on British roads — an early production car with the initial canopy design.
-          </p>
-
-          <!-- Filled from the shared sheet below, so the pop-up and the
-               featured panel always show identical figures. -->
-          <div class="exhibit-modal-spec" data-spec-slot="kr175"></div>
-        </div>
-      </div>
-    </template>
-
     <!-- ============ PER-CAR SPECIFICATION SHEETS ============
          One source of truth per car. Each sheet is cloned into the
-         featured specification panel when its photo is pressed, and
-         into the exhibit pop-up via data-spec-slot.
+         featured specification panel when its box is promoted.
          The Tg500 figures are provisional, publicly available numbers
          — replace them with Foundation-sourced data when ready. -->
     <template id="spec-kr175">
