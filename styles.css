@@ -913,6 +913,119 @@ h1, h2, h3, h4 {
   max-width: 72ch;
 }
 
+/* ---- 09b. Foundation Panel (About page) ----
+   The Fend House details, the donation link and the archive summary,
+   migrated from the Foundation's previous page. Only the arrangement is
+   carried over — every colour, font and radius here is the site's own,
+   so the panel sits in the page rather than on top of it.
+   ------------------------------------------------------------------ */
+.foundation-panel {
+  margin-bottom: var(--space-lg);
+}
+
+/* Register name, charity number and address, wrapping onto as many lines
+   as the width needs. */
+.foundation-masthead {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.3rem 0.9rem;
+  padding-bottom: var(--space-sm);
+  margin-bottom: var(--space-md);
+  border-bottom: 1px solid var(--color-border);
+}
+
+.foundation-masthead span {
+  font-size: 0.82rem;
+  color: var(--color-text-light);
+}
+
+.foundation-masthead span:first-child {
+  font-family: var(--font-heading);
+  font-weight: 700;
+  letter-spacing: 0.03em;
+  color: var(--color-ink);
+}
+
+/* The donation line borrows the callout treatment — accent edge, quiet
+   surface — so it reads as the one thing on the panel worth pressing. */
+.foundation-donate {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 0.35rem 0.9rem;
+  padding: 0.75rem 1rem;
+  margin-bottom: var(--space-md);
+  background: var(--color-surface-muted);
+  border: 1px solid var(--color-border);
+  border-left: 3px solid var(--color-accent);
+  border-radius: var(--radius-md);
+}
+
+.foundation-donate a {
+  font-family: var(--font-heading);
+  font-size: 0.82rem;
+  font-weight: 700;
+  letter-spacing: 0.01em;
+  overflow-wrap: anywhere;
+}
+
+.foundation-donate span {
+  font-size: 0.88rem;
+  color: var(--color-text-light);
+}
+
+.foundation-grid {
+  display: grid;
+  gap: var(--space-md);
+}
+
+.foundation-photo img {
+  width: 100%;
+  height: auto;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-sm);
+}
+
+.foundation-facts {
+  display: grid;
+  gap: 0.85rem;
+}
+
+.foundation-facts p {
+  font-size: 0.95rem;
+}
+
+.foundation-facts strong {
+  font-family: var(--font-heading);
+  font-size: 0.88rem;
+  letter-spacing: 0.01em;
+  color: var(--color-ink);
+}
+
+/* Stacked, the two columns would both run away with themselves: the
+   photograph is only 500px wide and would be stretched to nearly twice
+   that, and the facts would set at well over a hundred characters a
+   line. Cap both, left-aligned so they share an edge. */
+@media (max-width: 1024px) {
+  .foundation-photo img {
+    max-width: 500px;
+  }
+
+  .foundation-facts p {
+    max-width: 72ch;
+  }
+}
+
+/* Photograph beside the facts once there is width for both. */
+@media (min-width: 1025px) {
+  .foundation-grid {
+    grid-template-columns: 0.85fr 1.15fr;
+    column-gap: var(--space-lg);
+    align-items: start;
+  }
+}
+
 /* ============================================================
    10. Cards & Pillars
    ============================================================ */
