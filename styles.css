@@ -587,6 +587,32 @@ h1, h2, h3, h4 {
   color: #fff;
 }
 
+/* ---- 07d. Home Hero Photograph ----
+   The period two-car photograph that opens the hero. It is a framed
+   print rather than a bleeding background, wearing the same hairline
+   and shadow as the exhibit widgets it sits beside, so the row reads
+   as one set of objects. Letterboxed by default: at every width below
+   the three-column layout the frame is far wider than it is tall, so
+   a centre crop trims sky and gravel rather than the cars, and keeps
+   the photograph from claiming a whole screen before the headline.
+   Above 1200px the column is narrow enough to show the full frame, so
+   the crop is lifted there and the photograph keeps its own ratio.
+   ------------------------------------------------------------------ */
+.hero-photo {
+  margin: 0;
+}
+
+.hero-photo img {
+  width: 100%;
+  height: auto;
+  aspect-ratio: 16 / 9;
+  object-fit: cover;
+  background: var(--color-placeholder);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-md);
+}
+
 /* .btn-secondary on light heroes uses the default outline style */
 
 /* ============================================================
@@ -1608,6 +1634,14 @@ body[data-page="history"] .timeline-item .timeline-body {
     gap: var(--space-xl);
   }
 
+  /* A third column does not fit yet — the H1 would lose its measure and
+     the car widgets their labels — so the photograph runs the full width
+     above the text-and-collection row. The three-column layout at
+     1200px puts it back in a column of its own. */
+  .hero-photo {
+    grid-column: 1 / -1;
+  }
+
   .pillars-grid {
     grid-template-columns: repeat(3, 1fr);
     gap: var(--space-md);
@@ -1736,6 +1770,36 @@ body[data-page="history"] .timeline-item .timeline-body {
 @media (min-width: 1200px) {
   .nav-link {
     padding: 0.6rem 0.85rem;
+  }
+
+  /* ---- Hero: photograph | text | collection --------------------
+     The container only reaches its 1200px ceiling here, which is the
+     first width that leaves three columns viable: the H1 still gets a
+     readable measure and the car widgets still fit a 128px thumbnail
+     beside their two labels. The gutter drops from --space-xl to
+     --space-lg to buy back the 48px that pays for the third column,
+     and the H1 is stepped down a notch because its column no longer
+     grows with the viewport. */
+  .hero-grid {
+    grid-template-columns: 0.85fr 1.2fr 1fr;
+    gap: var(--space-lg);
+  }
+
+  /* Back into a column of its own, ending the full-width banner the
+     768px block set. */
+  .hero-photo {
+    grid-column: auto;
+  }
+
+  .hero-title {
+    font-size: clamp(1.6rem, 3.2vw, 2.5rem);
+  }
+
+  /* Wide enough a column to show the whole frame, so the letterbox
+     crop from section 07d is lifted. */
+  .hero-photo img {
+    aspect-ratio: auto;
+    object-fit: fill;
   }
 }
 
