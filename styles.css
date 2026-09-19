@@ -609,11 +609,35 @@ h1, h2, h3, h4 {
 .hero-photo {
   --reveal-x: 8%;
   --reveal-y: 10.667%;
+  margin: 0;
+}
+
+/* The 4:3 box the plates are laid out in. It is a child of the figure
+   rather than the figure itself so that the caption below can sit in
+   flow without the ratio box growing to swallow it — the plates size
+   themselves against the frame, and would be a caption taller if the
+   aspect-ratio sat on the figure. */
+.hero-deck-frame {
   position: relative;
   aspect-ratio: 4 / 3;
-  margin: 0;
   /* Keeps the plates' z-indexes out of the page's own competition. */
   isolation: isolate;
+}
+
+/* A caption belongs to one plate and is only shown while that plate is
+   the one on show. It keeps its height when hidden, so the deck does not
+   resize as the stack turns. */
+.hero-deck-caption {
+  margin: 0.65rem 0 0;
+  font-size: 0.78rem;
+  line-height: 1.5;
+  color: var(--color-text-light);
+  opacity: 0;
+  transition: opacity 320ms ease;
+}
+
+.hero-deck-caption.is-shown {
+  opacity: 1;
 }
 
 .hero-deck-slide {

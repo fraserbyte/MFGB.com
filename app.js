@@ -710,6 +710,12 @@
     );
     if (slides.length < 2) return;
 
+    // Captions name a plate by its index in the deck and are only shown
+    // while that plate is the one on show.
+    const captions = Array.prototype.slice.call(
+      deck.querySelectorAll(".hero-deck-caption")
+    );
+
     // How long a photograph holds the front. Keep it in step with the
     // transform transition in styles.css section 07d.
     const HOLD = 6000;
@@ -727,6 +733,11 @@
       slides.forEach((slide, index) => {
         const depth = (index - front + slides.length) % slides.length;
         slide.setAttribute("data-depth", String(depth));
+      });
+
+      captions.forEach((caption) => {
+        const owner = Number(caption.getAttribute("data-caption-for"));
+        caption.classList.toggle("is-shown", owner === front);
       });
     }
 

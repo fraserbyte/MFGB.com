@@ -39,7 +39,7 @@
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Montserrat:wght@600;700;800&display=swap" rel="stylesheet">
 
   <!-- Styles -->
-  <link rel="stylesheet" href="styles.css?v=20260919e">
+  <link rel="stylesheet" href="styles.css?v=20260919f">
 
   <!-- Structured Data: Organization & WebSite Schema -->
   <script type="application/ld+json">
@@ -134,19 +134,24 @@
              here as well as in the script, so the stack is already
              arranged before the script runs. -->
         <figure class="hero-photo" id="hero-deck">
-          <img class="hero-deck-slide" data-depth="0"
-            src="histroy%20of%20the%20mfgb%20file/Gemini_Generated_Image_4q6mex4q6mex4q6m.jpeg"
-            alt="1950s colour photograph of a red KR 200 and the ME 200 parked on a rural roadside, with a couple standing beside the cars"
-            width="1170" height="912"
-            fetchpriority="high" decoding="async">
-          <img class="hero-deck-slide" data-depth="1" data-focus="high"
-            src="histroy%20of%20the%20mfgb%20file/simonsmesserschmitt_orig.jpg"
-            alt="A man standing beside a cream and red Messerschmitt KR200 with its canopy hinged open, on a lawn beneath mature trees"
-            width="655" height="800" decoding="async">
-          <img class="hero-deck-slide" data-depth="2"
-            src="histroy%20of%20the%20mfgb%20file/sam-3530.jpg"
-            alt="A line of small vintage microcars parked on a lawn at a gathering, with a tall hedge and trees behind"
-            width="1024" height="768" decoding="async">
+          <div class="hero-deck-frame">
+            <img class="hero-deck-slide" data-depth="0"
+              src="histroy%20of%20the%20mfgb%20file/Gemini_Generated_Image_4q6mex4q6mex4q6m.jpeg"
+              alt="1950s colour photograph of a red KR 200 and the ME 200 parked on a rural roadside, with a couple standing beside the cars"
+              width="1170" height="912"
+              fetchpriority="high" decoding="async">
+            <img class="hero-deck-slide" data-depth="1" data-focus="high"
+              src="histroy%20of%20the%20mfgb%20file/simonsmesserschmitt_orig.jpg"
+              alt="A man standing beside a cream and red Messerschmitt KR200 with its canopy hinged open, on a lawn beneath mature trees"
+              width="655" height="800" decoding="async">
+            <img class="hero-deck-slide" data-depth="2"
+              src="histroy%20of%20the%20mfgb%20file/sam-3530.jpg"
+              alt="A line of small vintage microcars parked on a lawn at a gathering, with a tall hedge and trees behind"
+              width="1024" height="768" decoding="async">
+          </div>
+          <!-- Shown only while its plate is the one on show — see app.js
+               module 09. data-caption-for is the plate's index in the deck. -->
+          <figcaption class="hero-deck-caption is-shown" data-caption-for="0">Benefactor Margaret Collins and her new KR200 reg: XR200 with our Founder, Phil Boothroyd</figcaption>
         </figure>
 
         <div class="hero-content">
@@ -349,6 +354,6 @@
     </div>
   </footer>
 
-  <script src="app.js?v=20260919b"></script>
+  <script src="app.js?v=20260919f"></script>
 </body>
 </html>
