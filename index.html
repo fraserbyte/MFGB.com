@@ -39,7 +39,7 @@
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Montserrat:wght@600;700;800&display=swap" rel="stylesheet">
 
   <!-- Styles -->
-  <link rel="stylesheet" href="styles.css?v=20260919g">
+  <link rel="stylesheet" href="styles.css?v=20260919h">
 
   <!-- Structured Data: Organization & WebSite Schema -->
   <script type="application/ld+json">
@@ -148,10 +148,30 @@
               src="histroy%20of%20the%20mfgb%20file/sam-3530.jpg"
               alt="A line of small vintage microcars parked on a lawn at a gathering, with a tall hedge and trees behind"
               width="1024" height="768" decoding="async">
+            <img class="hero-deck-slide" data-depth="3"
+              src="histroy%20of%20the%20mfgb%20file/mfgb%20image.jpg"
+              alt="A line of microcars parked diagonally at an outdoor gathering, with a banner and mature trees behind"
+              width="1024" height="768" decoding="async">
           </div>
+
           <!-- Shown only while its plate is the one on show — see app.js
                module 09. data-caption-for is the plate's index in the deck. -->
           <figcaption class="hero-deck-caption is-shown" data-caption-for="0">Benefactor Margaret Collins and her new KR200 reg: XR200 with our Founder, Phil Boothroyd</figcaption>
+
+          <!-- Manual stepping. Swiping the frame does the same thing on a
+               touch screen; see app.js module 09. -->
+          <div class="hero-deck-controls">
+            <button class="hero-deck-step" type="button" data-deck-step="-1" aria-label="Show the previous photograph">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" focusable="false" aria-hidden="true">
+                <path d="M15 5l-7 7 7 7"></path>
+              </svg>
+            </button>
+            <button class="hero-deck-step" type="button" data-deck-step="1" aria-label="Show the next photograph">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" focusable="false" aria-hidden="true">
+                <path d="M9 5l7 7-7 7"></path>
+              </svg>
+            </button>
+          </div>
         </figure>
 
         <div class="hero-content">
@@ -354,6 +374,6 @@
     </div>
   </footer>
 
-  <script src="app.js?v=20260919f"></script>
+  <script src="app.js?v=20260919h"></script>
 </body>
 </html>

@@ -609,6 +609,14 @@ h1, h2, h3, h4 {
 .hero-photo {
   --reveal-x: 8%;
   --reveal-y: 10.667%;
+  /* The figure is a grid so the caption and the step buttons can share a
+     row beneath the frame without a wrapper — a figcaption has to stay a
+     direct child of the figure. */
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  column-gap: 0.9rem;
+  row-gap: 0.65rem;
+  align-items: center;
   margin: 0;
 }
 
@@ -618,17 +626,21 @@ h1, h2, h3, h4 {
    themselves against the frame, and would be a caption taller if the
    aspect-ratio sat on the figure. */
 .hero-deck-frame {
+  grid-column: 1 / -1;
   position: relative;
   aspect-ratio: 4 / 3;
   /* Keeps the plates' z-indexes out of the page's own competition. */
   isolation: isolate;
+  /* A sideways drag belongs to the deck; up and down still scrolls the
+     page, so a diagonal flick is never swallowed. */
+  touch-action: pan-y;
 }
 
 /* A caption belongs to one plate and is only shown while that plate is
    the one on show. It keeps its height when hidden, so the deck does not
    resize as the stack turns. */
 .hero-deck-caption {
-  margin: 0.65rem 0 0;
+  grid-column: 1;
   font-size: 0.78rem;
   line-height: 1.5;
   color: var(--color-text-light);
@@ -638,6 +650,41 @@ h1, h2, h3, h4 {
 
 .hero-deck-caption.is-shown {
   opacity: 1;
+}
+
+.hero-deck-controls {
+  grid-column: 2;
+  display: flex;
+  gap: 0.4rem;
+}
+
+/* Same circular control as the Collection widgets, so the two panels read
+   as one set of objects. */
+.hero-deck-step {
+  display: grid;
+  place-items: center;
+  width: 36px;
+  height: 36px;
+  padding: 0;
+  color: var(--color-accent);
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: 50%;
+  box-shadow: var(--shadow-sm);
+  transition: background var(--transition-fast), color var(--transition-fast),
+    border-color var(--transition-fast);
+}
+
+.hero-deck-step:hover,
+.hero-deck-step:focus-visible {
+  background: var(--color-gold);
+  border-color: var(--color-gold);
+  color: #fff;
+}
+
+.hero-deck-step svg {
+  width: 17px;
+  height: 17px;
 }
 
 .hero-deck-slide {
@@ -677,6 +724,15 @@ h1, h2, h3, h4 {
   transform: translate(var(--reveal-x), calc(var(--reveal-y) * -1)) scale(0.97);
   opacity: 0.78;
   z-index: 1;
+}
+
+/* The fan has room for the plate on show and two behind it. A deck with
+   more plates than that parks the extras in the back slot and fades them
+   out, so four or five photographs still read as a stack of three.
+   data-depth="3" is the state before app.js takes the deck over. */
+.hero-deck-slide[data-depth="3"],
+.hero-deck-slide.is-buried {
+  opacity: 0;
 }
 
 /* Each plate keeps the crop line that suits it. The portrait one is

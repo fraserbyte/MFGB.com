@@ -727,12 +727,18 @@
     let held = false; // pointer resting on the deck
     let timer = null;
 
+    // The fan has room for the plate on show and two behind it. Anything
+    // deeper shares the back slot and is faded out, so a deck of four or
+    // five photographs still reads as a stack of three.
+    const FAN = 3;
+
     // Depth counts backwards from the plate on show, so one turn of the
     // stack takes every plate exactly one place nearer the front.
     function paint() {
       slides.forEach((slide, index) => {
         const depth = (index - front + slides.length) % slides.length;
-        slide.setAttribute("data-depth", String(depth));
+        slide.setAttribute("data-depth", String(Math.min(depth, FAN - 1)));
+        slide.classList.toggle("is-buried", depth >= FAN);
       });
 
       captions.forEach((caption) => {
@@ -741,16 +747,20 @@
       });
     }
 
-    function deal() {
-      front = (front - 1 + slides.length) % slides.length;
+    // direction +1 brings the next plate forward, -1 pushes the stack back.
+    function step(direction) {
+      front = (front - direction + slides.length) % slides.length;
       paint();
+      // A manual move earns a full hold before the rotation resumes, so the
+      // deck never steps out from under the reader's finger.
+      run();
     }
 
     function run() {
       window.clearInterval(timer);
       timer = null;
       if (held || document.hidden || reduceMotion()) return;
-      timer = window.setInterval(deal, HOLD);
+      timer = window.setInterval(() => step(1), HOLD);
     }
 
     function hold(value) {
@@ -762,11 +772,55 @@
     deck.addEventListener("pointerleave", () => hold(false));
     document.addEventListener("visibilitychange", run);
 
-    // Someone who changes the preference mid-visit should not have to
+    // A reader who changes the preference mid-visit should not have to
     // reload the page for it to take effect.
     const motionQuery = window.matchMedia("(prefers-reduced-motion: reduce)");
     if (motionQuery.addEventListener) {
       motionQuery.addEventListener("change", run);
+    }
+
+    // ---- Manual control -------------------------------------------------
+    // Buttons for a pointer or a keyboard, a swipe for a thumb. Both move
+    // the stack the same way the rotation does, and both restart the hold
+    // so a deliberate move is not immediately undone.
+    Array.prototype.slice
+      .call(deck.querySelectorAll("[data-deck-step]"))
+      .forEach((button) => {
+        button.addEventListener("click", () => {
+          step(Number(button.getAttribute("data-deck-step")) || 1);
+        });
+      });
+
+    const frame = deck.querySelector(".hero-deck-frame");
+    const SWIPE = 40; // px of travel before a drag counts as a swipe
+
+    if (frame) {
+      let fromX = 0;
+      let fromY = 0;
+      let tracking = false;
+
+      frame.addEventListener("pointerdown", (event) => {
+        if (event.pointerType === "mouse" && event.button !== 0) return;
+        tracking = true;
+        fromX = event.clientX;
+        fromY = event.clientY;
+      });
+
+      frame.addEventListener("pointerup", (event) => {
+        if (!tracking) return;
+        tracking = false;
+
+        const dx = event.clientX - fromX;
+        const dy = event.clientY - fromY;
+        // Horizontal intent only. A diagonal drag is far more likely to be
+        // someone scrolling the page, and must not be swallowed.
+        if (Math.abs(dx) < SWIPE || Math.abs(dx) < Math.abs(dy)) return;
+        step(dx < 0 ? 1 : -1);
+      });
+
+      frame.addEventListener("pointercancel", () => {
+        tracking = false;
+      });
     }
 
     paint();
