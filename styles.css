@@ -587,30 +587,78 @@ h1, h2, h3, h4 {
   color: #fff;
 }
 
-/* ---- 07d. Home Hero Photograph ----
-   The period two-car photograph that opens the hero. It is a framed
-   print rather than a bleeding background, wearing the same hairline
-   and shadow as the exhibit widgets it sits beside, so the row reads
-   as one set of objects. Letterboxed by default: at every width below
-   the three-column layout the frame is far wider than it is tall, so
-   a centre crop trims sky and gravel rather than the cars, and keeps
-   the photograph from claiming a whole screen before the headline.
-   Above 1200px the column is narrow enough to show the full frame, so
-   the crop is lifted there and the photograph keeps its own ratio.
+/* ---- 07d. Home Hero Photograph Deck ----
+   The hero's three photographs sit in a shuffled stack: the one on show
+   is full size, the two behind peek out up and to the right, and app.js
+   module 09 deals the stack forward every few seconds — the next plate
+   rising to the front while the old front steps back.
+
+   The reveal is budgeted inside the frame rather than around it. The
+   frame keeps a --reveal-x strip down its right side and a matching
+   --reveal-y strip above, the plate on show is inset by exactly those
+   strips, and the plates behind are translated by half and then all of
+   the way out. Nothing spills past the frame, so the deck can never
+   tread on the column gutter or the hero text at any width.
+
+   --reveal-y is --reveal-x restated as a share of the height: the frame
+   is 4:3, so the same number of pixels is 8 / 0.75 = 10.667%. The
+   translate percentages resolve against each plate's own size, which is
+   slightly smaller than the frame, so the plates land just inside the
+   strips rather than exactly on their edges.
    ------------------------------------------------------------------ */
 .hero-photo {
+  --reveal-x: 8%;
+  --reveal-y: 10.667%;
+  position: relative;
+  aspect-ratio: 4 / 3;
   margin: 0;
+  /* Keeps the plates' z-indexes out of the page's own competition. */
+  isolation: isolate;
 }
 
-.hero-photo img {
-  width: 100%;
-  height: auto;
-  aspect-ratio: 16 / 9;
+.hero-deck-slide {
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  width: calc(100% - var(--reveal-x));
+  height: calc(100% - var(--reveal-y));
   object-fit: cover;
   background: var(--color-placeholder);
   border: 1px solid var(--color-border);
   border-radius: var(--radius-md);
   box-shadow: var(--shadow-md);
+  /* The back-out curve is what makes a plate read as *coming forward*:
+     it overshoots the upright position and settles back into it. Keep
+     the duration in step with HOLD in app.js module 09. */
+  transition: transform 700ms cubic-bezier(0.2, 1.22, 0.36, 1),
+    opacity 700ms ease;
+}
+
+/* The plate on show — full size, upright, in front. */
+.hero-deck-slide[data-depth="0"] {
+  transform: none;
+  opacity: 1;
+  z-index: 3;
+}
+
+/* First and second behind it, each half and then all of the way out.
+   The easy scale gives the two behind a sense of sitting further away. */
+.hero-deck-slide[data-depth="1"] {
+  transform: translate(calc(var(--reveal-x) / 2), calc(var(--reveal-y) / -2)) scale(0.985);
+  opacity: 0.9;
+  z-index: 2;
+}
+
+.hero-deck-slide[data-depth="2"] {
+  transform: translate(var(--reveal-x), calc(var(--reveal-y) * -1)) scale(0.97);
+  opacity: 0.78;
+  z-index: 1;
+}
+
+/* Each plate keeps the crop line that suits it. The portrait one is
+   framed high, because centring it would take the owner's head off. */
+.hero-deck-slide[data-focus="high"] {
+  object-position: center 15%;
 }
 
 /* .btn-secondary on light heroes uses the default outline style */
@@ -1635,11 +1683,18 @@ body[data-page="history"] .timeline-item .timeline-body {
   }
 
   /* A third column does not fit yet — the H1 would lose its measure and
-     the car widgets their labels — so the photograph runs the full width
-     above the text-and-collection row. The three-column layout at
-     1200px puts it back in a column of its own. */
+     the car widgets their labels — so the deck sits above the
+     text-and-collection row. It is capped rather than run full width:
+     a stack of photographs should read as one object, and a 1100px
+     frame would push the headline off a tablet screen entirely.
+
+     The cap is a width, not a max-width: every plate is absolutely
+     positioned, so the figure has no content to size itself from, and
+     auto margins would otherwise collapse it to nothing. */
   .hero-photo {
     grid-column: 1 / -1;
+    width: min(34rem, 100%);
+    margin-inline: auto;
   }
 
   .pillars-grid {
@@ -1785,21 +1840,16 @@ body[data-page="history"] .timeline-item .timeline-body {
     gap: var(--space-lg);
   }
 
-  /* Back into a column of its own, ending the full-width banner the
-     768px block set. */
+  /* Back into a column of its own, filling it rather than sitting at the
+     capped width the 768px block set. */
   .hero-photo {
     grid-column: auto;
+    width: auto;
+    margin-inline: 0;
   }
 
   .hero-title {
     font-size: clamp(1.6rem, 3.2vw, 2.5rem);
-  }
-
-  /* Wide enough a column to show the whole frame, so the letterbox
-     crop from section 07d is lifted. */
-  .hero-photo img {
-    aspect-ratio: auto;
-    object-fit: fill;
   }
 }
 

@@ -10,7 +10,8 @@
    05. Canopy Door Toggle (glassmorphism exhibit card)
    06. Ignition Key Theme Toggle (Night Drive Dark)
    08. Engine Rev Indicator
-   09. Initialisation
+   09. Home Hero Photograph Deck (shuffling stack in the home hero)
+   10. Initialisation
    ============================================================ */
 
 (function () {
@@ -685,7 +686,84 @@
   }
 
   /* ============================================================
-     09. Initialisation
+     09. Home Hero Photograph Deck
+     ------------------------------------------------------------
+     The three photographs in the home hero sit in a shuffled stack:
+     the one on show is full size and the two behind peek out up and to
+     the right. Every few seconds the stack is dealt one place forward,
+     which slides the plate at the back up to the front and steps the
+     old front back behind it. styles.css section 07d owns the geometry
+     and the animation curve; this module only decides which plate is
+     where.
+
+     The stack is held still for a reader who has asked for reduced
+     motion, while the pointer is resting on it, and while the tab is in
+     the background. A photograph is not worth animating at someone who
+     has asked the machine to calm down.
+     ============================================================ */
+  function initHeroDeck() {
+    const deck = document.getElementById("hero-deck");
+    if (!deck) return;
+
+    const slides = Array.prototype.slice.call(
+      deck.querySelectorAll(".hero-deck-slide")
+    );
+    if (slides.length < 2) return;
+
+    // How long a photograph holds the front. Keep it in step with the
+    // transform transition in styles.css section 07d.
+    const HOLD = 6000;
+
+    const reduceMotion = () =>
+      window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+    let front = 0; // index of the photograph currently on show
+    let held = false; // pointer resting on the deck
+    let timer = null;
+
+    // Depth counts backwards from the plate on show, so one turn of the
+    // stack takes every plate exactly one place nearer the front.
+    function paint() {
+      slides.forEach((slide, index) => {
+        const depth = (index - front + slides.length) % slides.length;
+        slide.setAttribute("data-depth", String(depth));
+      });
+    }
+
+    function deal() {
+      front = (front - 1 + slides.length) % slides.length;
+      paint();
+    }
+
+    function run() {
+      window.clearInterval(timer);
+      timer = null;
+      if (held || document.hidden || reduceMotion()) return;
+      timer = window.setInterval(deal, HOLD);
+    }
+
+    function hold(value) {
+      held = value;
+      run();
+    }
+
+    deck.addEventListener("pointerenter", () => hold(true));
+    deck.addEventListener("pointerleave", () => hold(false));
+    document.addEventListener("visibilitychange", run);
+
+    // Someone who changes the preference mid-visit should not have to
+    // reload the page for it to take effect.
+    const motionQuery = window.matchMedia("(prefers-reduced-motion: reduce)");
+    if (motionQuery.addEventListener) {
+      motionQuery.addEventListener("change", run);
+    }
+
+    paint();
+    run();
+  }
+
+  /* ============================================================
+     10. Initialisation
      ============================================================ */
   function init() {
     initNavToggle();
@@ -698,6 +776,7 @@
     initThemeToggle();
     initHeaderCompress();
     initExhibitSpecPanel();
+    initHeroDeck();
   }
 
   if (document.readyState === "loading") {
