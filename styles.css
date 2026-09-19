@@ -1837,7 +1837,7 @@ body[data-page="history"] .timeline-item .timeline-body {
 
      Three things pay for the extra width: the gutter drops from
      --space-xl to --space-md (80px back to the photograph), the H1
-     steps down again, and the widget thumbnails slim to 100px so
+     steps down again, and the widget thumbnails slim to 94px so
      "FMR Tg500" still sets on one line. */
   .hero-grid {
     grid-template-columns: 1.5fr 1.05fr 0.95fr;
@@ -1860,10 +1860,79 @@ body[data-page="history"] .timeline-item .timeline-body {
 
   /* The widest badge, "FMR Tg500", needs 101px on one line, so the
      thumbnail and gutter give up a little more to leave the label
-     comfortably clear of a wrap at the narrow end of this range. */
+     comfortably clear of a wrap at the narrow end of this range. The
+     1280px block below starts widening both again as the column grows. */
   .car-widget {
     grid-template-columns: 94px 1fr auto;
     gap: 0.8rem;
+  }
+}
+
+/* ============================================================
+   Wide screens — the hero breathes (>= 1280px)
+   ------------------------------------------------------------
+   Everything above is written for a 1200px container, and the container
+   used to stop dead there. On a large display that left the whole site
+   huddled in the middle of a lot of empty screen while the hero sat at
+   its most compressed: a 24px gutter, a 36px headline, and a text column
+   narrow enough to set the headline as a ribbon.
+
+   Past 1280px the container now grows with the viewport, up to 1520px,
+   so the space is actually used. The hero then ramps two things in step
+   with it — the gutter between the three components, and the size of the
+   text inside them.
+
+   Every ramp below is a straight line anchored to 1280px, so each one
+   meets the 1200px block exactly at the join and there is no jump when
+   the browser crosses the breakpoint:
+
+                           1280px   1600px   1920px
+     container             1200     1400     1520  (capped)
+     hero gutter             24       40       56
+     text column            322      372      398
+     headline              36.2     43.2     44.8  (capped)
+     lede                  16.8     18.4     20.0
+     eyebrow               12.5     13.2     14.1
+     widget thumbnail        94      113      120  (capped)
+
+   The headline stops at 2.8rem rather than running on: its column and
+   its type do not grow at the same rate, and past about 45px the
+   headline starts breaking a line earlier and setting nine lines where
+   it set seven, which is more cramped than before, not less.
+
+   At the far end that leaves the hero photograph around 570px wide —
+   still the largest of the three columns, and a good deal taller in the
+   frame than the 345px it stood at before.
+   ============================================================ */
+@media (min-width: 1280px) {
+  :root {
+    --container-max: clamp(1200px, 62.5vw + 400px, 1520px);
+  }
+
+  .hero-grid {
+    gap: clamp(1.5rem, 5vw - 2.5rem, 3.5rem);
+  }
+
+  .hero-title {
+    font-size: clamp(1.5rem, 2.2vw + 0.5rem, 2.8rem);
+  }
+
+  .hero-lede {
+    font-size: clamp(1.05rem, 0.5vw + 0.65rem, 1.3rem);
+  }
+
+  .hero-section .eyebrow {
+    font-size: clamp(0.78rem, 0.25vw + 0.58rem, 0.9rem);
+  }
+
+  .callout-box {
+    font-size: clamp(0.98rem, 0.35vw + 0.7rem, 1.12rem);
+  }
+
+  /* Room again for a fuller thumbnail as the column widens. */
+  .car-widget {
+    grid-template-columns: clamp(94px, 6vw + 17px, 120px) 1fr auto;
+    gap: 0.9rem;
   }
 }
 
