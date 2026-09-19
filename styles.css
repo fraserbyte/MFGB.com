@@ -1685,15 +1685,15 @@ body[data-page="history"] .timeline-item .timeline-body {
   /* A third column does not fit yet — the H1 would lose its measure and
      the car widgets their labels — so the deck sits above the
      text-and-collection row. It is capped rather than run full width:
-     a stack of photographs should read as one object, and a 1100px
-     frame would push the headline off a tablet screen entirely.
+     a stack of photographs should read as one object, and a frame the
+     full 1100px would push the headline off a tablet screen entirely.
 
      The cap is a width, not a max-width: every plate is absolutely
      positioned, so the figure has no content to size itself from, and
      auto margins would otherwise collapse it to nothing. */
   .hero-photo {
     grid-column: 1 / -1;
-    width: min(34rem, 100%);
+    width: min(44rem, 100%);
     margin-inline: auto;
   }
 
@@ -1828,16 +1828,20 @@ body[data-page="history"] .timeline-item .timeline-body {
   }
 
   /* ---- Hero: photograph | text | collection --------------------
-     The container only reaches its 1200px ceiling here, which is the
-     first width that leaves three columns viable: the H1 still gets a
-     readable measure and the car widgets still fit a 128px thumbnail
-     beside their two labels. The gutter drops from --space-xl to
-     --space-lg to buy back the 48px that pays for the third column,
-     and the H1 is stepped down a notch because its column no longer
-     grows with the viewport. */
+     The container reaches its 1200px ceiling here, and the photograph
+     now leads the row at roughly 460px — the largest of the three
+     columns by some way. The text and the car widgets are held at the
+     narrowest widths they still work at: the H1 keeps a readable
+     measure, and the widgets keep room for a thumbnail beside their
+     two labels.
+
+     Three things pay for the extra width: the gutter drops from
+     --space-xl to --space-md (80px back to the photograph), the H1
+     steps down again, and the widget thumbnails slim to 100px so
+     "FMR Tg500" still sets on one line. */
   .hero-grid {
-    grid-template-columns: 0.85fr 1.2fr 1fr;
-    gap: var(--space-lg);
+    grid-template-columns: 1.5fr 1.05fr 0.95fr;
+    gap: var(--space-md);
   }
 
   /* Back into a column of its own, filling it rather than sitting at the
@@ -1848,8 +1852,18 @@ body[data-page="history"] .timeline-item .timeline-body {
     margin-inline: 0;
   }
 
+  /* This column no longer grows with the viewport, so a 2.5rem headline
+     would set as a narrow ribbon. */
   .hero-title {
-    font-size: clamp(1.6rem, 3.2vw, 2.5rem);
+    font-size: clamp(1.5rem, 2.9vw, 2.25rem);
+  }
+
+  /* The widest badge, "FMR Tg500", needs 101px on one line, so the
+     thumbnail and gutter give up a little more to leave the label
+     comfortably clear of a wrap at the narrow end of this range. */
+  .car-widget {
+    grid-template-columns: 94px 1fr auto;
+    gap: 0.8rem;
   }
 }
 
