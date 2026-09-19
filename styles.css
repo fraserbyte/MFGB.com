@@ -1008,15 +1008,6 @@ h1, h2, h3, h4 {
   object-position: top center;
 }
 
-/* The "Today" plate is artwork, not a photograph — cropping it to a
-   portrait screen blew its lettering up to a storey high and cut it
-   in half. Fit the whole plate and let its own ground colour carry
-   the rest of the frame. */
-.history-spotlight-image-wrap img[src$="today-placeholder.svg"] {
-  object-fit: contain;
-  background: #1a2433;
-}
-
 .history-spotlight-gradient {
   position: absolute;
   inset: 0;
