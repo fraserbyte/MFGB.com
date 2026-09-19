@@ -9,13 +9,13 @@
 
   <title>Our Exhibits | Messerschmitt Foundation of Great Britain</title>
   <meta name="title" content="Our Exhibits — Messerschmitt Microcars">
-  <meta name="description" content="Explore the Foundation's collection: the ME 200 (1958 KR200) featured exhibit, the 1954 KR175, and the 1959 FMR Tg500 — with full technical specifications.">
+  <meta name="description" content="The Foundation's collection: the ME 200 (1958 KR200), the 1954 KR175, the 1958 KR 200, and the 1959 FMR Tg500 — with full technical specifications.">
   <meta name="robots" content="index, follow">
 
   <meta property="og:type" content="website">
   <meta property="og:site_name" content="Messerschmitt Foundation of Great Britain">
   <meta property="og:title" content="Our Exhibits">
-  <meta property="og:description" content="ME 200 — a 1958 KR200 — is our featured exhibit, alongside the KR175 and the FMR Tg500 Tiger.">
+  <meta property="og:description" content="ME 200 — a 1958 KR200 — is our featured exhibit, alongside the KR175, the KR 200, and the FMR Tg500 Tiger.">
   <meta property="og:url" content="https://your-username.github.io/messerschmitt-foundation-gb/exhibits.html">
 
   <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='6' fill='%23334155'/%3E%3Ctext x='16' y='22' font-family='Georgia,serif' font-size='16' fill='%238C6A35' text-anchor='middle'%3EM%3C/text%3E%3C/svg%3E">
@@ -197,6 +197,35 @@
               </p>
             </div>
           </article>
+
+          <!-- Exhibit Card 4: KR 200 -->
+          <article class="card exhibit-card" id="exhibit-kr200">
+            <div class="media-placeholder exhibit-placeholder has-photo">
+              <img class="media-photo" loading="lazy" decoding="async" src="histroy%20of%20the%20mfgb%20file/KR200MFGB-web.jpg" alt="The Foundation's 1958 Messerschmitt KR200, a red example with its bubble canopy closed">
+              <div class="photo-overlay">
+                <span class="placeholder-badge">KR 200</span>
+                <span class="placeholder-caption">The Foundation's KR200</span>
+              </div>
+              <button
+                class="exhibit-select"
+                type="button"
+                data-spec-select="kr200"
+                data-spec-name="KR 200"
+                data-spec-full="1958 Messerschmitt KR200"
+                aria-label="Show the technical specification for the 1958 Messerschmitt KR200"
+                hidden></button>
+            </div>
+            <div class="exhibit-body">
+              <p class="exhibit-tag" data-tag="Standard Production">Standard Production</p>
+              <h3 class="card-title">1958 Messerschmitt KR200</h3>
+              <p class="card-text">
+                A red 1958 KR200 wearing the clear bubble canopy and tandem seating
+                that made the Kabinenroller famous. Mechanically it matches the
+                ME 200 — 191cc Fichtel &amp; Sachs two-stroke, hand-lever gearchange —
+                and gives the collection a second surviving example of the model.
+              </p>
+            </div>
+          </article>
         </div>
       </div>
     </section>
@@ -204,6 +233,9 @@
     <!-- ============ PER-CAR SPECIFICATION SHEETS ============
          One source of truth per car. Each sheet is cloned into the
          featured specification panel when its box is promoted.
+         The ME 200 and KR 200 sheets both carry the standard KR200 model
+         figures, since no Foundation-sourced data for either car has
+         come in yet — give each its own numbers when it does.
          The Tg500 figures are provisional, publicly available numbers
          — replace them with Foundation-sourced data when ready. -->
     <template id="spec-kr175">
@@ -228,6 +260,18 @@
           <tr><th scope="row">Weight</th><td>Approx. 390 kg (kerb)</td></tr>
           <tr><th scope="row">Top Speed</th><td>Approx. 125 km/h (78 mph)</td></tr>
           <tr><th scope="row">Transmission</th><td>4-speed manual with reverse gear; rear-wheel drive</td></tr>
+        </tbody>
+      </table>
+    </template>
+    <template id="spec-kr200">
+      <table class="spec-table" aria-label="1958 Messerschmitt KR200 technical specifications">
+        <caption class="visually-hidden">1958 Messerschmitt KR200 technical specifications</caption>
+        <tbody>
+          <tr><th scope="row">Engine</th><td>191cc Fichtel &amp; Sachs two-stroke, air-cooled, single-cylinder</td></tr>
+          <tr><th scope="row">Power</th><td>10 PS (approx. 9.8 bhp)</td></tr>
+          <tr><th scope="row">Weight</th><td>Approx. 225 kg (kerb)</td></tr>
+          <tr><th scope="row">Top Speed</th><td>Approx. 100 km/h (62 mph)</td></tr>
+          <tr><th scope="row">Transmission</th><td>4-speed manual, hand-operated cockpit lever; engine starts in both directions for reverse</td></tr>
         </tbody>
       </table>
     </template>
