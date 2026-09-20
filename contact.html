@@ -90,7 +90,11 @@
         <h2 class="visually-hidden" id="contact-title">Contact form and Foundation details</h2>
 
         <div class="contact-grid">
-          <form class="contact-form" id="contact-form" novalidate>
+          <!-- The `action` is a fallback for visitors without JavaScript: browsers
+               hand a mailto form to the local email app. With JavaScript the
+               handler in app.js composes a tidier enquiry and reports back on
+               the page instead. -->
+          <form class="contact-form" id="contact-form" action="mailto:karofahrer@yahoo.co.uk" method="post" enctype="text/plain" novalidate>
             <div class="form-field">
               <label for="full-name">Full Name</label>
               <input type="text" id="full-name" name="full-name" autocomplete="name" required>
@@ -130,10 +134,10 @@
               <h3 class="card-title">Foundation Details</h3>
               <address class="contact-address">
                 Messerschmitt Foundation of Great Britain<br>
-                Heritage &amp; Technical Archive Office<br>
-                Great Britain<br>
-                <a href="mailto:enquiries@mfgb.org.uk">enquiries@mfgb.org.uk</a><br>
-                <a href="tel:+442071234567">+44 (0)20 7123 4567</a>
+                Fend House, Front Street<br>
+                Pebworth CV37 8XQ<br>
+                <a href="mailto:karofahrer@yahoo.co.uk">karofahrer@yahoo.co.uk</a><br>
+                <a href="tel:+447478272574">07478 272574</a>
               </address>
             </div>
 
@@ -197,6 +201,6 @@
     </div>
   </footer>
 
-  <script src="app.js?v=20260919h"></script>
+  <script src="app.js?v=20260920a"></script>
 </body>
 </html>

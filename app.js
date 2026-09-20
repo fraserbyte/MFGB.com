@@ -316,6 +316,87 @@
   const form = document.getElementById("contact-form");
   const formStatus = document.getElementById("form-status");
 
+  /* Where enquiries from the contact form are delivered.
+
+     This site is static — nginx serves files and nothing more, so there is no
+     server here that a form POST could reach. `mailto:` is therefore used to
+     hand the enquiry to the visitor's own email app: it needs no account, no
+     third party, and no cost, and the message arrives from the visitor's real
+     address (so a reply goes straight back to them).
+
+     To move to true server-side delivery later, set `endpoint` to a form
+     service URL (Web3Forms, Formspree, Getform, …) and add its key if required.
+     The handler will then POST the enquiry there and the visitor never leaves
+     the page. No markup change is needed — only this object. */
+  const CONTACT_DELIVERY = {
+    email: "karofahrer@yahoo.co.uk",
+    endpoint: "",
+    accessKey: ""
+  };
+
+  /* The <option value> is what the form sends; this is what a human reads. */
+  const SUBJECT_LABELS = {
+    general: "General Inquiry",
+    verification: "Vehicle Verification",
+    "exhibit-access": "Exhibit Access",
+    technical: "Technical Assistance"
+  };
+
+  function composeEnquiry(formData) {
+    const name = formData.get("full-name").trim();
+    const email = formData.get("email").trim();
+    const message = formData.get("message").trim();
+    const label = SUBJECT_LABELS[formData.get("subject-type")] || "General Inquiry";
+
+    return {
+      name: name,
+      email: email,
+      label: label,
+      message: message,
+      subject: label + " - website enquiry from " + name,
+      body: [
+        "Name: " + name,
+        "Email: " + email,
+        "Subject: " + label,
+        "",
+        message,
+        "",
+        "--",
+        "Sent from the contact form at mfbg.com"
+      ].join("\r\n")
+    };
+  }
+
+  function sendViaEmailApp(enquiry) {
+    const href =
+      "mailto:" + CONTACT_DELIVERY.email +
+      "?subject=" + encodeURIComponent(enquiry.subject) +
+      "&body=" + encodeURIComponent(enquiry.body);
+
+    window.location.href = href;
+  }
+
+  function sendViaEndpoint(enquiry) {
+    const payload = {
+      subject: enquiry.subject,
+      name: enquiry.name,
+      email: enquiry.email,
+      enquiryType: enquiry.label,
+      message: enquiry.message
+    };
+
+    if (CONTACT_DELIVERY.accessKey) payload.access_key = CONTACT_DELIVERY.accessKey;
+
+    return fetch(CONTACT_DELIVERY.endpoint, {
+      method: "POST",
+      headers: { "Content-Type": "application/json", Accept: "application/json" },
+      body: JSON.stringify(payload)
+    }).then((response) => {
+      if (!response.ok) throw new Error("Enquiry rejected with status " + response.status);
+      return response;
+    });
+  }
+
   function setFieldError(fieldId, message) {
     const field = document.getElementById(fieldId);
     const errorSlot = document.getElementById("error-" + fieldId);
@@ -379,12 +460,46 @@
         return;
       }
 
-      // No backend is wired up yet: simulate a successful send.
-      setFormStatus("Thank you — your enquiry has been received. We will reply within 5 working days.", false);
-      form.reset();
+      const enquiry = composeEnquiry(formData);
+      const submitButton = form.querySelector("button[type='submit']");
 
-      // Move focus to the status message so screen readers announce it.
-      if (formStatus) formStatus.focus();
+      if (!CONTACT_DELIVERY.endpoint) {
+        /* Hand the enquiry to the visitor's email app. Their answers are left in
+           the form deliberately: if no mail app opens, the draft is still there
+           to copy, rather than having just been wiped. */
+        sendViaEmailApp(enquiry);
+        setFormStatus(
+          "Your enquiry is ready to send in your email app — press Send there. " +
+          "If nothing opened, please email " + CONTACT_DELIVERY.email + " directly.",
+          false
+        );
+        if (formStatus) formStatus.focus();
+        return;
+      }
+
+      setFormStatus("Sending your enquiry…", false);
+      if (submitButton) submitButton.disabled = true;
+
+      sendViaEndpoint(enquiry)
+        .then(() => {
+          setFormStatus(
+            "Thank you — your enquiry has been received. We will reply within 5 working days.",
+            false
+          );
+          form.reset();
+        })
+        .catch(() => {
+          setFormStatus(
+            "Sorry — your enquiry could not be sent just now. Please email " +
+            CONTACT_DELIVERY.email + " directly.",
+            true
+          );
+        })
+        .finally(() => {
+          if (submitButton) submitButton.disabled = false;
+          // Move focus to the status message so screen readers announce it.
+          if (formStatus) formStatus.focus();
+        });
     });
   }
 
