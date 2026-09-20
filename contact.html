@@ -125,6 +125,13 @@
               <span class="form-error" id="error-message" aria-live="polite"></span>
             </div>
 
+            <!-- Decoy field for spam bots. Hidden from visitors and from screen
+                 readers, and never required — a person cannot tick something
+                 they cannot see, so only a bot fills this in, which marks the
+                 submission as spam. Do not remove: without it the Foundation's
+                 inbox takes every automated junk message the form receives. -->
+            <input type="checkbox" name="botcheck" data-spam-trap tabindex="-1" autocomplete="off" aria-hidden="true" style="display:none">
+
             <button class="btn btn-primary" type="submit">Send Message</button>
             <p class="form-status" id="form-status" role="status" aria-live="polite" tabindex="-1"></p>
           </form>
@@ -201,6 +208,6 @@
     </div>
   </footer>
 
-  <script src="app.js?v=20260920a"></script>
+  <script src="app.js?v=20260920b"></script>
 </body>
 </html>

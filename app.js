@@ -324,15 +324,34 @@
      third party, and no cost, and the message arrives from the visitor's real
      address (so a reply goes straight back to them).
 
-     To move to true server-side delivery later, set `endpoint` to a form
-     service URL (Web3Forms, Formspree, Getform, …) and add its key if required.
-     The handler will then POST the enquiry there and the visitor never leaves
-     the page. No markup change is needed — only this object. */
+     TO SWITCH TO IN-PAGE DELIVERY — the visitor never leaves the site — fill
+     in the two blank lines of the object below:
+
+       1. Go to https://web3forms.com and enter karofahrer@yahoo.co.uk.
+          There is no password and no account to create: the access key is
+          emailed to that address, usually within a minute.
+       2. Set `endpoint` to "https://api.web3forms.com/submit".
+       3. Paste the key into `accessKey`.
+
+     The key is NOT a secret. It only routes mail to the address it was created
+     for, so it is safe in a public repository — the worst an attacker can do
+     with it is send the Foundation more email. Spam is therefore the only real
+     risk, which is what the decoy field in the markup is for.
+
+     Both fields must be filled: with `endpoint` empty the form keeps handing
+     enquiries to the visitor's email app instead, so the site is never left in
+     a state where a submitted enquiry goes nowhere.
+
+     Formspree works too, but names two fields differently — rename `subject`
+     to `_subject` and `email` to `_replyto` in sendViaEndpoint below. */
   const CONTACT_DELIVERY = {
     email: "karofahrer@yahoo.co.uk",
-    endpoint: "",
-    accessKey: ""
+    endpoint: "", // "https://api.web3forms.com/submit" to go live
+    accessKey: "" // the key that arrives by email
   };
+
+  const ENQUIRY_RECEIVED =
+    "Thank you — your enquiry has been received. We will reply within 5 working days.";
 
   /* The <option value> is what the form sends; this is what a human reads. */
   const SUBJECT_LABELS = {
@@ -377,23 +396,36 @@
   }
 
   function sendViaEndpoint(enquiry) {
+    /* Field names below are Web3Forms' documented names. `email` doubles as the
+       reply-to unless `replyto` is sent, which is what we want: the Foundation
+       presses Reply and reaches the visitor. `from_name` is what shows in the
+       inbox instead of the default "Notifications". */
     const payload = {
+      access_key: CONTACT_DELIVERY.accessKey,
       subject: enquiry.subject,
+      from_name: "MFGB website enquiry",
       name: enquiry.name,
       email: enquiry.email,
       enquiryType: enquiry.label,
       message: enquiry.message
     };
 
-    if (CONTACT_DELIVERY.accessKey) payload.access_key = CONTACT_DELIVERY.accessKey;
-
     return fetch(CONTACT_DELIVERY.endpoint, {
       method: "POST",
       headers: { "Content-Type": "application/json", Accept: "application/json" },
       body: JSON.stringify(payload)
     }).then((response) => {
-      if (!response.ok) throw new Error("Enquiry rejected with status " + response.status);
-      return response;
+      return response
+        .json()
+        .catch(() => ({}))
+        .then((data) => {
+          // Web3Forms answers with { success, message }; check both the HTTP
+          // status and that flag, so a 200 carrying a rejection is still caught.
+          if (!response.ok || data.success === false) {
+            throw new Error(data.message || "Enquiry rejected with status " + response.status);
+          }
+          return data;
+        });
     });
   }
 
@@ -480,12 +512,19 @@
       setFormStatus("Sending your enquiry…", false);
       if (submitButton) submitButton.disabled = true;
 
+      /* Decoy field: only a bot ticks something it cannot see. Answer as though
+         all is well and send nothing, so the bot gets no signal to retry. */
+      const decoy = form.querySelector("[data-spam-trap]");
+      if (decoy && decoy.checked) {
+        setFormStatus(ENQUIRY_RECEIVED, false);
+        form.reset();
+        if (submitButton) submitButton.disabled = false;
+        return;
+      }
+
       sendViaEndpoint(enquiry)
         .then(() => {
-          setFormStatus(
-            "Thank you — your enquiry has been received. We will reply within 5 working days.",
-            false
-          );
+          setFormStatus(ENQUIRY_RECEIVED, false);
           form.reset();
         })
         .catch(() => {
