@@ -319,10 +319,12 @@
   /* Where enquiries from the contact form are delivered.
 
      This site is static — nginx serves files and nothing more, so there is no
-     server here that a form POST could reach. `mailto:` is therefore used to
-     hand the enquiry to the visitor's own email app: it needs no account, no
-     third party, and no cost, and the message arrives from the visitor's real
-     address (so a reply goes straight back to them).
+     server here that a form POST could reach. With `endpoint` empty the form
+     therefore offers the visitor a choice of where to send from — see
+     COMPOSE_CHANNELS below. Each choice opens a new tab holding the enquiry
+     already written, which keeps the cost and the third party at zero and means
+     the message arrives from the visitor's real address, so a reply goes
+     straight back to them.
 
      TO SWITCH TO IN-PAGE DELIVERY — the visitor never leaves the site — fill
      in the two blank lines of the object below:
@@ -386,15 +388,6 @@
     };
   }
 
-  function sendViaEmailApp(enquiry) {
-    const href =
-      "mailto:" + CONTACT_DELIVERY.email +
-      "?subject=" + encodeURIComponent(enquiry.subject) +
-      "&body=" + encodeURIComponent(enquiry.body);
-
-    window.location.href = href;
-  }
-
   function sendViaEndpoint(enquiry) {
     /* Field names below are Web3Forms' documented names. `email` doubles as the
        reply-to unless `replyto` is sent, which is what we want: the Foundation
@@ -427,6 +420,72 @@
           return data;
         });
     });
+  }
+
+  /* Where the visitor can send from when no endpoint is configured. A single
+     mailto: link is not enough on its own: most people read mail in a browser
+     with no mail app registered, where clicking it does nothing at all and the
+     enquiry disappears without trace. Offering the three big webmail services
+     costs one click and always produces a written message, and whoever has a
+     mail app still gets the last option.
+
+     Each href() takes the recipient, subject and body and returns a compose
+     URL. `to` needs no encoding — it is our own address, not user input. */
+  const COMPOSE_CHANNELS = [
+    {
+      label: "Gmail",
+      href: (to, subject, body) =>
+        "https://mail.google.com/mail/?view=cm&fs=1&to=" + to +
+        "&su=" + encodeURIComponent(subject) +
+        "&body=" + encodeURIComponent(body)
+    },
+    {
+      label: "Yahoo Mail",
+      href: (to, subject, body) =>
+        "https://compose.mail.yahoo.com/?to=" + to +
+        "&subject=" + encodeURIComponent(subject) +
+        "&body=" + encodeURIComponent(body)
+    },
+    {
+      label: "Outlook",
+      href: (to, subject, body) =>
+        "https://outlook.live.com/mail/0/deeplink/compose?to=" + to +
+        "&subject=" + encodeURIComponent(subject) +
+        "&body=" + encodeURIComponent(body)
+    },
+    {
+      label: "My mail app",
+      href: (to, subject, body) =>
+        "mailto:" + to +
+        "?subject=" + encodeURIComponent(subject) +
+        "&body=" + encodeURIComponent(body)
+    }
+  ];
+
+  function showSendOptions(enquiry) {
+    const panel = document.getElementById("form-send");
+    const options = document.getElementById("form-send-options");
+    if (!panel || !options) return;
+
+    options.textContent = "";
+
+    COMPOSE_CHANNELS.forEach((channel) => {
+      const link = document.createElement("a");
+      link.className = "form-send-option";
+      link.textContent = channel.label;
+      link.href = channel.href(CONTACT_DELIVERY.email, enquiry.subject, enquiry.body);
+      // A new tab, so the visitor does not lose what they wrote here.
+      link.target = "_blank";
+      link.rel = "noopener noreferrer";
+      options.appendChild(link);
+    });
+
+    panel.hidden = false;
+  }
+
+  function hideSendOptions() {
+    const panel = document.getElementById("form-send");
+    if (panel) panel.hidden = true;
   }
 
   function setFieldError(fieldId, message) {
@@ -482,6 +541,7 @@
       event.preventDefault();
       clearFormErrors();
       setFormStatus("", false);
+      hideSendOptions();
 
       const formData = new FormData(form);
 
@@ -496,13 +556,14 @@
       const submitButton = form.querySelector("button[type='submit']");
 
       if (!CONTACT_DELIVERY.endpoint) {
-        /* Hand the enquiry to the visitor's email app. Their answers are left in
-           the form deliberately: if no mail app opens, the draft is still there
-           to copy, rather than having just been wiped. */
-        sendViaEmailApp(enquiry);
+        /* Show the visitor where they can send from rather than launching the
+           one we picked. Nothing is navigated to automatically: a mailto: link
+           does nothing at all for anyone without a mail app registered, and
+           their answers are left in the form so nothing is lost either way. */
+        showSendOptions(enquiry);
         setFormStatus(
-          "Your enquiry is ready to send in your email app — press Send there. " +
-          "If nothing opened, please email " + CONTACT_DELIVERY.email + " directly.",
+          "Your enquiry is ready — choose where to send it from below, " +
+          "and it will open in a new tab with your message already written.",
           false
         );
         if (formStatus) formStatus.focus();
@@ -526,11 +587,16 @@
         .then(() => {
           setFormStatus(ENQUIRY_RECEIVED, false);
           form.reset();
+          hideSendOptions();
         })
         .catch(() => {
+          /* The enquiry is not lost. Offer the compose links so the visitor can
+             send it themselves, rather than being told to start again — and
+             their answers are still in the form behind the panel. */
+          showSendOptions(enquiry);
           setFormStatus(
-            "Sorry — your enquiry could not be sent just now. Please email " +
-            CONTACT_DELIVERY.email + " directly.",
+            "Sorry — your enquiry could not be sent just now. You can still send " +
+            "it yourself using the options below.",
             true
           );
         })
